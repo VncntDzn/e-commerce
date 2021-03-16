@@ -1,21 +1,23 @@
 import Navbar from 'layouts/Navbar';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Card, CardHeader, CardContent } from '@material-ui/core';
 import theme from 'theme/customTheme';
-
+import { Signin } from 'pages/auth'
+import { Grid, } from '@material-ui/core';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Navbar />
-      <Card raised>
-        <CardHeader title="Vincent" />
-        <CardContent>
-          Hi
-       </CardContent>
-      </Card>
+      <Grid container
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: '90vh' }}>
+        <Signin />
+      </Grid>
+
     </ThemeProvider>
   );
 }

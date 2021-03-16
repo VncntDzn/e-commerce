@@ -1,9 +1,12 @@
-import Navbar from 'layouts/Navbar'
-function App() {
+import Navbar from 'layouts/Navbar';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from 'theme/customTheme';
+
+const App = () => {
   return (
-    <div className="App">
+    <ThemeProvider theme={theme}>
       <Navbar />
-    </div>
+    </ThemeProvider>
   );
 }
 

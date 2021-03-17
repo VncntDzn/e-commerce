@@ -10,7 +10,8 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Navbar />
-      <Grid container
+      <Grid
+        container
         direction="column"
         alignItems="center"
         justify="center"

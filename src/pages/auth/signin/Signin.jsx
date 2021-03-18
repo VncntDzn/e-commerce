@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  TextField,
-  Button,
-  Box,
-  Container,
-} from '@material-ui/core';
-
+import { Card, CardHeader, CardContent, Button, Box } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { signinSchema } from 'helpers';
 import { Field } from 'components';
@@ -39,7 +30,7 @@ const Signin = (props) => {
               <Field name='email' type='email' placeholder='Email' />
               <Field name='password' placeholder='Password' type='password' />
               <Button
-                color='primary'
+                color='secondary'
                 variant='contained'
                 fullWidth
                 type='submit'

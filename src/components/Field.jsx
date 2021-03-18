@@ -9,7 +9,9 @@ const Field = ({ ...props }) => {
     <>
       <TextField fullWidth {...field} {...props} />
       {meta.touched && meta.error ? (
-        <div className='error'>{meta.error}</div>
+        <div className='error' style={{ color: 'red' }}>
+          {meta.error}
+        </div>
       ) : null}
     </>
   );

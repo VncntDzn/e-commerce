@@ -14,11 +14,16 @@ import {
   ListItemText,
   Divider,
   Grid,
+  TextField,
 } from '@material-ui/core';
 import MenuOpenRoundedIcon from '@material-ui/icons/MenuOpenRounded';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 
 const Navbar = (props) => {
   const [toggleNavbar, setNavbar] = useState(false);
@@ -30,7 +35,7 @@ const Navbar = (props) => {
     <>
       <AppBar position='fixed'>
         <Toolbar>
-          <Hidden mdUp>
+          <Hidden lgUp>
             <IconButton
               onClick={handleNavbar}
               edge='start'
@@ -40,19 +45,73 @@ const Navbar = (props) => {
               <MenuRoundedIcon />
             </IconButton>
           </Hidden>
-          <Grid
-            container
-            direction='row'
-            justify='space-between'
-            alignItems='center'
-          >
-            <Typography variant='h6'>E-comm</Typography>
-            <Grid>
-              <Button color='inherit'>Cart</Button>
-              <Hidden xsDown>
-                <Button color='inherit'>Link 1</Button>
-                <Button color='inherit'>Link 2</Button>
+
+          <Grid container direction='row' alignItems='center'>
+            <Grid
+              container
+              item={true}
+              alignContent='center'
+              alignItems='center'
+              lg={1}
+              xs={4}
+            >
+              <Typography variant='h6'>E-comm</Typography>
+            </Grid>
+            <Grid
+              container
+              item={true}
+              direction='row'
+              justify='space-between'
+              alignContent='flex-end'
+              alignItems='center'
+              lg={11}
+              xs={8}
+            >
+              <Hidden mdDown>
+                <Grid
+                  container
+                  lg={5}
+                  item={true}
+                  direction='row'
+                  justify='space-around'
+                >
+                  <Typography variant='h6'>All</Typography>
+                  <Typography variant='h6'>Today's Deal</Typography>
+                  <Typography variant='h6'>Gift Cards</Typography>
+                  <Typography variant='h6'>Registry & Gifting</Typography>
+                </Grid>
               </Hidden>
+              <Grid
+                container
+                lg={4}
+                md={12}
+                item={true}
+                direction='row'
+                alignContent='center'
+                justify='flex-end'
+                alignItems='flex-end'
+              >
+                <Hidden xsDown>
+                  <Hidden smDown>
+                    <Grid item style={{ marginBottom: '0.3rem' }}>
+                      <SearchOutlinedIcon />
+                    </Grid>
+                    <Grid item style={{ marginBottom: '0.5rem' }}>
+                      <TextField placeholder='Search' />
+                    </Grid>
+                  </Hidden>
+                  <IconButton color='inherit' aria-label='menu'>
+                    <AccountCircleOutlinedIcon />
+                  </IconButton>
+
+                  <IconButton color='inherit' aria-label='menu'>
+                    <FavoriteBorderOutlinedIcon />
+                  </IconButton>
+                </Hidden>
+                <IconButton color='inherit' aria-label='menu'>
+                  <ShoppingCartOutlinedIcon />
+                </IconButton>
+              </Grid>
             </Grid>
           </Grid>
         </Toolbar>

@@ -75,10 +75,12 @@ const Navbar = (props) => {
                   direction='row'
                   justify='space-around'
                 >
-                  <Typography variant='h6'>All</Typography>
-                  <Typography variant='h6'>Today's Deal</Typography>
-                  <Typography variant='h6'>Gift Cards</Typography>
-                  <Typography variant='h6'>Registry & Gifting</Typography>
+                  <Typography variant='subtitle1'>All</Typography>
+                  <Typography variant='subtitle1'>Today's Deal</Typography>
+                  <Typography variant='subtitle1'>Gift Cards</Typography>
+                  <Typography variant='subtitle1'>
+                    Registry & Gifting
+                  </Typography>
                 </Grid>
               </Hidden>
               <Grid

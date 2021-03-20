@@ -1,5 +1,4 @@
-import { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -7,26 +6,21 @@ import {
   IconButton,
   Typography,
   Hidden,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
   Grid,
   TextField,
   Link,
-  Menu,
+  Button,
 } from '@material-ui/core';
-import MenuOpenRoundedIcon from '@material-ui/icons/MenuOpenRounded';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
+import { Menu, MenuItem } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import CartMenu from './menu/CartMenu';
+import customTheme from 'theme/customTheme';
 
 const Navbar = (props) => {
   const useStyles = makeStyles({
@@ -34,15 +28,17 @@ const Navbar = (props) => {
       color: 'black',
     },
     button: {
-      '&.active': {
+      '&:active': {
         borderBottom: '3px solid red',
+      },
+      '&:focus': {
+        borderBottom: `3px solid ${customTheme.palette.secondary.main}`,
       },
     },
   });
   const classes = useStyles();
-  const [category, setCategory] = useState(false);
   const [toggleNavbar, setNavbar] = useState(false);
-  const drawerRef = useRef(null);
+
   const handleNavbar = () => {
     setNavbar(!toggleNavbar);
   };
@@ -91,14 +87,27 @@ const Navbar = (props) => {
                   justify='space-around'
                   alignItems='center'
                 >
-                  <Link href='#' className={classes.link}>
-                    <Typography variant='subtitle1' className={classes.button}>
-                      <IconButton color='inherit' aria-label='menu'>
-                        <DashboardOutlinedIcon />
-                      </IconButton>
-                      All
-                    </Typography>
-                  </Link>
+                  <Button className={classes.button}>
+                    <Menu
+                      className={classes.button}
+                      menuButton={
+                        <div style={{ display: 'flex', cursor: 'pointer' }}>
+                          <DashboardOutlinedIcon />
+                          <Typography
+                            variant='subtitle1'
+                            className={classes.button}
+                          >
+                            All
+                          </Typography>
+                        </div>
+                      }
+                    >
+                      <MenuItem>
+                        <CartMenu />
+                      </MenuItem>
+                    </Menu>
+                  </Button>
+
                   <Link href='#' className={classes.link}>
                     <Typography variant='subtitle1'>Today's Deal</Typography>
                   </Link>
@@ -139,7 +148,11 @@ const Navbar = (props) => {
                     <FavoriteBorderOutlinedIcon />
                   </IconButton>
                 </Hidden>
-                <IconButton color='inherit' aria-label='menu'>
+                <IconButton
+                  onClick={() => console.log(1)}
+                  color='inherit'
+                  aria-label='menu'
+                >
                   <ShoppingCartOutlinedIcon />
                 </IconButton>
               </Grid>
@@ -147,28 +160,6 @@ const Navbar = (props) => {
           </Grid>
         </Toolbar>
       </AppBar>
-      <Drawer ref={drawerRef} anchor='left' open={toggleNavbar}>
-        <IconButton
-          onClick={handleNavbar}
-          edge='start'
-          color='inherit'
-          aria-label='menu'
-        >
-          <MenuOpenRoundedIcon />
-        </IconButton>
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <h1>Accounts here</h1>
-      </Drawer>
     </>
   );
 };

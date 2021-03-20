@@ -3,21 +3,17 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from 'theme/customTheme';
 import { Signin } from 'pages/auth'
-import { Grid, } from '@material-ui/core';
-
+import { Grid, Box } from '@material-ui/core';
+import { Slideshow } from 'pages/home'
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Navbar />
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: '90vh' }}>
-        {/* <Signin /> */}
-      </Grid>
+      <Box style={{ marginTop: '5rem' }}>
+        <Slideshow />
+
+      </Box>
 
     </ThemeProvider>
   );

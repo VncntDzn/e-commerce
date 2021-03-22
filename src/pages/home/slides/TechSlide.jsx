@@ -18,11 +18,10 @@ const TechSlide = () => {
   const useStyles = makeStyles((theme) => ({
     container: {
       backgroundColor: customTheme.palette.tertiary.light,
-      border: '3px solid red',
     },
     containerProd: {
       position: 'relative',
-      border: '3px solid blue',
+
       [theme.breakpoints.down('xs')]: {
         backgroundColor: 'purple',
       },
@@ -30,9 +29,8 @@ const TechSlide = () => {
     card: {
       borderRadius: '20px',
       marginTop: '3vh',
-
       width: 'fit-content',
-      border: '3px solid green',
+      padding: '10px',
     },
     image: {
       objectFit: 'contain',
@@ -52,8 +50,8 @@ const TechSlide = () => {
 
   const classes = useStyles();
   return (
-    <Grid>
-      <Box mx={3}>
+    <Grid style={{ backgroundColor: `${customTheme.palette.tertiary.light}` }}>
+      <Box mx={3} py={2}>
         <Typography className={classes.fluid_header} variant='h1'>
           SHOP COMPUTERS & ACCESSORIES
         </Typography>
@@ -66,7 +64,7 @@ const TechSlide = () => {
         </Box>
       </Box>
 
-      <Grid container direction='row' style={{ border: '3px solid blue' }}>
+      <Grid container direction='row'>
         <Box
           display='flex'
           flexDirection='row'
@@ -78,23 +76,22 @@ const TechSlide = () => {
             flexDirection='column'
             justifyContent='center'
             alignItems='center'
-            style={{
-              border: '3px solid red',
-            }}
           >
             <Hidden xsDown>
               <img className={classes.image} src={Headset} alt='Headset' />
             </Hidden>
-            <Card className={classes.card}>
-              <CardContent style={{ paddingBottom: 0 }}>
-                <Typography>Computer & Accessories</Typography>
-                <Typography>JBL T460BT Black Headphones</Typography>
-                <Rating name='size-small' defaultValue={4} size='small' />
-              </CardContent>
-              <CardActions style={{ padding: 0 }}>
-                <Button variant='text'>View More</Button>
-              </CardActions>
-            </Card>
+            <Box m={3}>
+              <Card className={classes.card}>
+                <CardContent style={{ paddingBottom: 0 }}>
+                  <Typography>Computer & Accessories</Typography>
+                  <Typography>JBL T460BT Black Headphones</Typography>
+                  <Rating name='size-small' defaultValue={4} size='small' />
+                </CardContent>
+                <CardActions style={{ padding: 0 }}>
+                  <Button variant='text'>View More</Button>
+                </CardActions>
+              </Card>
+            </Box>
           </Box>
           <Hidden xsDown>
             <Box

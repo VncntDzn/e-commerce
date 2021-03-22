@@ -4,14 +4,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from 'theme/customTheme';
 import { Signin } from 'pages/auth'
 import { Grid, Box } from '@material-ui/core';
-import { Slideshow } from 'pages/home'
+import { CarouselProvider } from 'pages/home'
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Navbar />
       <Box style={{ marginTop: '5rem' }}>
-        <Slideshow />
+        <CarouselProvider />
 
       </Box>
 

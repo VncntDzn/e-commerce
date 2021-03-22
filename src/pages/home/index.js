@@ -1,3 +1,3 @@
-import Slideshow from './Slideshow';
+import CarouselProvider from './CarouselProvider';
 
-export { Slideshow }
+export { CarouselProvider }

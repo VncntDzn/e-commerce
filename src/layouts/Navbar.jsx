@@ -10,6 +10,8 @@ import {
   TextField,
   Link,
   Button,
+  Drawer,
+  Box,
 } from '@material-ui/core';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
@@ -37,10 +39,9 @@ const Navbar = (props) => {
     },
   });
   const classes = useStyles();
-  const [toggleNavbar, setNavbar] = useState(false);
-
-  const handleNavbar = () => {
-    setNavbar(!toggleNavbar);
+  const [showDrawer, setDrawerMenu] = useState(false);
+  const openDrawer = () => {
+    setDrawerMenu(!showDrawer);
   };
   return (
     <>
@@ -48,7 +49,7 @@ const Navbar = (props) => {
         <Toolbar>
           <Hidden lgUp>
             <IconButton
-              onClick={handleNavbar}
+              onClick={openDrawer}
               edge='start'
               color='inherit'
               aria-label='menu'
@@ -148,11 +149,7 @@ const Navbar = (props) => {
                     <FavoriteBorderOutlinedIcon />
                   </IconButton>
                 </Hidden>
-                <IconButton
-                  onClick={() => console.log(1)}
-                  color='inherit'
-                  aria-label='menu'
-                >
+                <IconButton color='inherit' aria-label='menu'>
                   <ShoppingCartOutlinedIcon />
                 </IconButton>
               </Grid>
@@ -160,6 +157,10 @@ const Navbar = (props) => {
           </Grid>
         </Toolbar>
       </AppBar>
+
+      <Drawer anchor='left' open={showDrawer} onClose={openDrawer}>
+        <h1>Hi</h1>
+      </Drawer>
     </>
   );
 };

@@ -9,6 +9,7 @@ import {
   ListItemText,
   ListItemAvatar,
   Hidden,
+  Typography,
 } from '@material-ui/core';
 import Tom from './assets/tom.jpg';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,8 +22,19 @@ const Recommendations = (props) => {
   const useStyles = makeStyles((theme) => ({
     container: {
       backgroundColor: customTheme.palette.secondary.light,
-      marginTop: theme.spacing(4),
+      marginTop: theme.spacing(2),
       padding: theme.spacing(2),
+    },
+    containerContact: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    containerList: {
+      [theme.breakpoints.up('sm')]: {
+        placeContent: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+      },
     },
     avatarLarge: {
       height: theme.spacing(10),
@@ -32,103 +44,79 @@ const Recommendations = (props) => {
 
   const classes = useStyles();
   return (
-    <Grid container className={classes.container}>
-      <Grid
-        item
-        container
-        direction='row'
-        justify='flex-start'
-        alignItems='center'
-      >
-        <List dense aria-label='secondary mailbox folders'>
-          <Box
-            display='flex'
-            flexDirection='row'
-            alignItems='center'
-            justifyContent='flex-start'
-          >
-            <ListItemAvatar>
-              <Avatar
-                className={classes.avatarLarge}
-                alt='Travis Howard'
-                src={Tom}
+    <Grid
+      container
+      className={classes.container}
+      display='flex'
+      justifyContent='center'
+    >
+      <Box display='flex' justifyContent='center' width='100vw'>
+        <Grid className={classes.containerContact} item container md={6} lg={5}>
+          <List className={classes.containerList} dense>
+            <ListItem button>
+              <ListItemAvatar style={{ paddingRight: '1rem' }}>
+                <Avatar
+                  className={classes.avatarLarge}
+                  alt='Travis Howard'
+                  src={Tom}
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary='Hi Tomas, this is some recommendation'
+                secondary='Recommendation'
               />
-            </ListItemAvatar>
+            </ListItem>
 
             <ListItem button>
-              <ListItemText primary='Hi Tomas, recommendations for you.' />
-            </ListItem>
-          </Box>
-        </List>
-        <List dense aria-label='secondary mailbox folders'>
-          <Box
-            display='flex'
-            flexDirection='row'
-            alignItems='center'
-            justifyContent='flex-start'
-          >
-            <ListItemAvatar>
-              <Avatar
-                className={classes.avatarLarge}
-                alt='Travis Howard'
-                src={Tom}
-              />
-            </ListItemAvatar>
-            <ListItem button>
+              <ListItemAvatar style={{ paddingRight: '1rem' }}>
+                <Avatar
+                  className={classes.avatarLarge}
+                  alt='Travis Howard'
+                  src={Tom}
+                />
+              </ListItemAvatar>
               <ListItemText
-                primary='Your orders'
-                secondary='View your orders'
+                primary='Recommendation'
+                secondary='Recommendation'
               />
             </ListItem>
-          </Box>
-        </List>
-        <Hidden xsDown>
-          <List dense aria-label='secondary mailbox folders'>
-            <Box
-              display='flex'
-              flexDirection='row'
-              alignItems='center'
-              justifyContent='flex-start'
-            >
-              <ListItemAvatar>
-                <Avatar
-                  className={classes.avatarLarge}
-                  alt='Travis Howard'
-                  src={Tom}
-                />
-              </ListItemAvatar>
+          </List>
+        </Grid>
+
+        <Hidden smDown>
+          <Grid md={6} item lg={5}>
+            <List className={classes.containerList} dense>
               <ListItem button>
+                <ListItemAvatar style={{ paddingRight: '1rem' }}>
+                  <Avatar
+                    className={classes.avatarLarge}
+                    alt='Travis Howard'
+                    src={Tom}
+                  />
+                </ListItemAvatar>
                 <ListItemText
-                  primary='Your orders'
-                  secondary='View your orders'
+                  primary='Hi Tomas, this is some recommendation'
+                  secondary='Recommendation'
                 />
               </ListItem>
-            </Box>
-          </List>
-          <List dense aria-label='secondary mailbox folders'>
-            <Box
-              display='flex'
-              flexDirection='row'
-              alignItems='center'
-              justifyContent='flex-start'
-            >
-              <ListItemAvatar>
-                <Avatar
-                  className={classes.avatarLarge}
-                  alt='Travis Howard'
-                  src={Tom}
-                />
-              </ListItemAvatar>
+
               <ListItem button>
+                <ListItemAvatar style={{ paddingRight: '1rem' }}>
+                  <Avatar
+                    className={classes.avatarLarge}
+                    alt='Travis Howard'
+                    src={Tom}
+                  />
+                </ListItemAvatar>
                 <ListItemText
-                  primary='Your orders'
-                  secondary='View your orders'
+                  primary='Recommendation'
+                  secondary='Recommendation'
                 />
               </ListItem>
-            </Box>
-          </List>
+            </List>
+          </Grid>
         </Hidden>
-      </Grid>
+      </Box>
     </Grid>
   );
 };

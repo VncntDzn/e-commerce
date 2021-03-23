@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Typography, Box, Grid, Hidden } from '@material-ui/core';
+
 import { makeStyles } from '@material-ui/core/styles';
 import customTheme from 'theme/customTheme';
-import puppy from './assets/puppy.png';
+import HappyPeople from './assets/community.png';
 
-const ShippingBanner = (props) => {
+const Community = (props) => {
   const useStyles = makeStyles((theme) => ({
     container: {
       backgroundColor: customTheme.palette.tertiary.light,
@@ -42,20 +43,19 @@ const ShippingBanner = (props) => {
             Discover E-comm
           </Typography>
           <Typography className={classes.fluid_header}>
-            E-COMM DELIVERS TO YOU
+            SUBSCRIBE TO THE NEWS
           </Typography>
           <Typography className={classes.fluid_paragraph} variant='h6'>
-            Worldwide shipping. We ship to over 100 countries and regions, right
-            to your doorstep.
+            Be aware of all discounts and bargains! Don't miss your benefit!
           </Typography>
           <Box width={'100%'} mt={2}>
-            <Button variant='outlined'>View More</Button>
+            <Button variant='outlined'>Subscribe</Button>
           </Box>
         </Grid>
 
         <Hidden smDown>
           <Grid lg={3} item md={6}>
-            <img src={puppy} alt='Puppy inside a box' />
+            <img src={HappyPeople} alt='Puppy inside a box' />
           </Grid>
         </Hidden>
       </Box>
@@ -63,6 +63,6 @@ const ShippingBanner = (props) => {
   );
 };
 
-ShippingBanner.propTypes = {};
+Community.propTypes = {};
 
-export default ShippingBanner;
+export default Community;

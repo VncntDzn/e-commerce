@@ -3,6 +3,8 @@ import Recommendations from './recommendations/Recommendations';
 import Categories from './categories/Categories';
 import ShippingBanner from './shipping/ShippingBanner';
 import Promotions from './promotions/Promotions';
+import Community from './Community';
+import Footer from './Footer';
 
 export {
   CarouselProvider,
@@ -10,4 +12,6 @@ export {
   Categories,
   ShippingBanner,
   Promotions,
+  Community,
+  Footer,
 };

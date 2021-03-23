@@ -18,22 +18,37 @@ const TechSlide = () => {
   const useStyles = makeStyles((theme) => ({
     container: {
       backgroundColor: customTheme.palette.tertiary.light,
-    },
-    containerProd: {
-      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-evenly',
+      width: '100vw',
 
-      [theme.breakpoints.down('xs')]: {
-        backgroundColor: 'purple',
+      [theme.breakpoints.up('md')]: {
+        flexDirection: 'row',
+        placeContent: 'center',
+        justifyContent: 'space-evenly',
       },
     },
+    containerSlogan: {
+      display: 'flex',
+      flexDirection: 'column',
+
+      [theme.breakpoints.up('lg')]: {
+        placeContent: 'center',
+      },
+    },
+
     card: {
       borderRadius: '20px',
-      marginTop: '3vh',
       width: 'fit-content',
-      padding: '10px',
+      padding: '2px',
+      display: 'flex',
+      flexDirection: 'column',
+      placeContent: 'center',
     },
     image: {
       objectFit: 'contain',
+      alignSelf: 'center',
       [theme.breakpoints.up('sm')]: {
         height: '20vh',
         width: '20vw',
@@ -50,90 +65,54 @@ const TechSlide = () => {
 
   const classes = useStyles();
   return (
-    <Grid style={{ backgroundColor: `${customTheme.palette.tertiary.light}` }}>
-      <Box mx={3} py={2}>
-        <Typography className={classes.fluid_header} variant='h1'>
-          SHOP COMPUTERS & ACCESSORIES
-        </Typography>
-        <Typography className={classes.fluid_paragraph}>
-          Shop laptops, desktops, monitors, tablets, PC Gaming, hard drives and
-          storage accessories and more.
-        </Typography>
-        <Box mt={1}>
-          <Button variant='outlined'>View More</Button>
+    <Grid className={classes.container} container direction='row'>
+      <Grid className={classes.containerSlogan} item md={6} lg={5}>
+        <Box mx={3} py={2}>
+          <Typography className={classes.fluid_header} variant='h1'>
+            SHOP COMPUTERS & ACCESSORIES
+          </Typography>
+          <Typography className={classes.fluid_paragraph}>
+            Shop laptops, desktops, monitors, tablets, PC Gaming, hard drives
+            and storage accessories and more.
+          </Typography>
+          <Box mt={1}>
+            <Button variant='outlined'>View More</Button>
+          </Box>
         </Box>
-      </Box>
+      </Grid>
 
-      <Grid container direction='row'>
+      <Grid item lg={3} md={6} className={classes.containerProduct}>
         <Box
+          m={3}
           display='flex'
           flexDirection='row'
-          justifyContent='center'
-          alignItems='center'
+          justifyContent='space-evenly'
         >
-          <Box
-            display='flex'
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='center'
-          >
+          <Card className={classes.card}>
             <Hidden xsDown>
               <img className={classes.image} src={Headset} alt='Headset' />
             </Hidden>
-            <Box m={3}>
-              <Card className={classes.card}>
-                <CardContent style={{ paddingBottom: 0 }}>
-                  <Typography>Computer & Accessories</Typography>
-                  <Typography>JBL T460BT Black Headphones</Typography>
-                  <Rating name='size-small' defaultValue={4} size='small' />
-                </CardContent>
-                <CardActions style={{ padding: 0 }}>
-                  <Button variant='text'>View More</Button>
-                </CardActions>
-              </Card>
-            </Box>
-          </Box>
-          <Hidden xsDown>
-            <Box
-              display='flex'
-              flexDirection='column'
-              justifyContent='center'
-              alignItems='center'
-            >
-              <Hidden xsDown>
-                <img className={classes.image} src={Headset} alt='Headset' />
-              </Hidden>
-              <Card className={classes.card}>
-                <CardContent style={{ paddingBottom: 0 }}>
-                  <Typography>Computer & Accessories</Typography>
-                  <Typography>JBL T460BT Black Headphones</Typography>
-                  <Rating name='size-small' defaultValue={4} size='small' />
-                </CardContent>
-                <CardActions style={{ padding: 0 }}>
-                  <Button variant='text'>View More</Button>
-                </CardActions>
-              </Card>
-            </Box>
-            <Box
-              display='flex'
-              flexDirection='column'
-              justifyContent='center'
-              alignItems='center'
-            >
-              <Hidden xsDown>
-                <img className={classes.image} src={Headset} alt='Headset' />
-              </Hidden>
-              <Card className={classes.card}>
-                <CardContent style={{ paddingBottom: 0 }}>
-                  <Typography>Computer & Accessories</Typography>
-                  <Typography>JBL T460BT Black Headphones</Typography>
-                  <Rating name='size-small' defaultValue={4} size='small' />
-                </CardContent>
-                <CardActions style={{ padding: 0 }}>
-                  <Button variant='text'>View More</Button>
-                </CardActions>
-              </Card>
-            </Box>
+            <CardContent style={{ paddingBottom: 0 }}>
+              <Typography>Computer & Accessories</Typography>
+              <Typography>JBL T460BT Black Headphones</Typography>
+              <Rating name='size-small' defaultValue={4} size='small' />
+            </CardContent>
+            <CardActions style={{ padding: 0 }}>
+              <Button variant='text'>View More</Button>
+            </CardActions>
+          </Card>
+          <Hidden only={['xs', 'md', 'lg', 'xl']}>
+            <Card className={classes.card}>
+              <img className={classes.image} src={Headset} alt='Headset' />
+              <CardContent style={{ paddingBottom: 0 }}>
+                <Typography>Computer & Accessories</Typography>
+                <Typography>JBL T460BT Black Headphones</Typography>
+                <Rating name='size-small' defaultValue={4} size='small' />
+              </CardContent>
+              <CardActions style={{ padding: 0 }}>
+                <Button variant='text'>View More</Button>
+              </CardActions>
+            </Card>
           </Hidden>
         </Box>
       </Grid>

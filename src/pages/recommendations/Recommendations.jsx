@@ -23,7 +23,6 @@ const Recommendations = (props) => {
       backgroundColor: customTheme.palette.secondary.light,
       marginTop: theme.spacing(4),
       padding: theme.spacing(2),
-      border: '3px solid red',
     },
     avatarLarge: {
       height: theme.spacing(10),
@@ -40,7 +39,6 @@ const Recommendations = (props) => {
         direction='row'
         justify='flex-start'
         alignItems='center'
-        style={{ border: '3px solid green' }}
       >
         <List dense aria-label='secondary mailbox folders'>
           <Box

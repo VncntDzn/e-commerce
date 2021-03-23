@@ -5,6 +5,7 @@ import theme from 'theme/customTheme';
 import { Signin } from 'pages/auth'
 import { Grid, Box } from '@material-ui/core';
 import { CarouselProvider, Recommendations } from 'pages/home'
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'react-material-ui-carousel';
-import { TechSlide } from './slides/';
+import { TechSlide, ApplianceSlide } from './slides/';
 
 const CarouselProvider = (props) => {
   const items = [
@@ -12,7 +12,7 @@ const CarouselProvider = (props) => {
   return (
     <Carousel>
       <TechSlide />
-      <TechSlide />
+      <ApplianceSlide />
     </Carousel>
   );
 };

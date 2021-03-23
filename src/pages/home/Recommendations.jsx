@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Grid, Box } from '@material-ui/core';
 
 const Recommendations = (props) => {
   return (
-    <div>
+    <Grid>
       <h1>Hi</h1>
-    </div>
+    </Grid>
   );
 };
 

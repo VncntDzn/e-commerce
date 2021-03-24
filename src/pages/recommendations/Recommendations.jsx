@@ -44,12 +44,7 @@ const Recommendations = (props) => {
 
   const classes = useStyles();
   return (
-    <Grid
-      container
-      className={classes.container}
-      display='flex'
-      justifyContent='center'
-    >
+    <Grid container className={classes.container}>
       <Box display='flex' justifyContent='center' width='100vw'>
         <Grid className={classes.containerContact} item container md={6} lg={5}>
           <List className={classes.containerList} dense>

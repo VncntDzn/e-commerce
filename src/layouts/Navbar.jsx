@@ -25,9 +25,11 @@ import CartMenu from './menu/CartMenu';
 import customTheme from 'theme/customTheme';
 
 const Navbar = (props) => {
-  const useStyles = makeStyles({
-    link: {
-      color: 'black',
+  const useStyles = makeStyles((theme) => ({
+    boxContainer: {
+      [theme.breakpoints.up('lg')]: {
+        margin: '0 6rem',
+      },
     },
     button: {
       '&:active': {
@@ -37,7 +39,7 @@ const Navbar = (props) => {
         borderBottom: `3px solid ${customTheme.palette.secondary.main}`,
       },
     },
-  });
+  }));
   const classes = useStyles();
   const [showDrawer, setDrawerMenu] = useState(false);
   const openDrawer = () => {
@@ -47,46 +49,25 @@ const Navbar = (props) => {
     <>
       <AppBar position='fixed'>
         <Toolbar>
-          <Hidden lgUp>
-            <IconButton
-              onClick={openDrawer}
-              edge='start'
-              color='inherit'
-              aria-label='menu'
-            >
-              <MenuRoundedIcon />
-            </IconButton>
-          </Hidden>
-
-          <Grid container direction='row' alignItems='center'>
-            <Grid
-              container
-              item={true}
-              alignContent='center'
-              alignItems='center'
-              lg={1}
-              xs={4}
-            >
+          <Box
+            className={classes.boxContainer}
+            width='100vw'
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+          >
+            <Grid container item direction='row' xs={6}>
               <Typography variant='h6'>E-comm</Typography>
-            </Grid>
-            <Grid
-              container
-              item={true}
-              direction='row'
-              justify='space-between'
-              alignContent='flex-end'
-              alignItems='center'
-              lg={11}
-              xs={8}
-            >
               <Hidden mdDown>
                 <Grid
                   container
-                  lg={5}
-                  item={true}
+                  md={5}
+                  lg={7}
+                  item
                   direction='row'
                   justify='space-around'
                   alignItems='center'
+                  style={{ marginLeft: '2rem' }}
                 >
                   <Button className={classes.button}>
                     <Menu
@@ -109,58 +90,55 @@ const Navbar = (props) => {
                     </Menu>
                   </Button>
 
-                  <Link href='#' className={classes.link}>
+                  <Button href='#' className={classes.button}>
                     <Typography variant='subtitle1'>Today's Deal</Typography>
-                  </Link>
-                  <Link className={classes.link}>
+                  </Button>
+                  <Button className={classes.button}>
                     <Typography variant='subtitle1'>Gift Cards</Typography>
-                  </Link>
-                  <Link className={classes.link}>
+                  </Button>
+                  <Button className={classes.button}>
                     <Typography variant='subtitle1'>
                       Registry & Gifting
                     </Typography>
-                  </Link>
+                  </Button>
                 </Grid>
               </Hidden>
-              <Grid
-                container
-                lg={4}
-                md={12}
-                item={true}
-                direction='row'
-                alignContent='center'
-                justify='flex-end'
-                alignItems='flex-end'
-              >
-                <Hidden xsDown>
-                  <Hidden smDown>
-                    <Grid item style={{ marginBottom: '0.3rem' }}>
-                      <SearchOutlinedIcon />
-                    </Grid>
-                    <Grid item style={{ marginBottom: '0.5rem' }}>
-                      <TextField placeholder='Search' />
-                    </Grid>
-                  </Hidden>
-                  <IconButton color='inherit' aria-label='menu'>
-                    <AccountCircleOutlinedIcon />
-                  </IconButton>
-
-                  <IconButton color='inherit' aria-label='menu'>
-                    <FavoriteBorderOutlinedIcon />
-                  </IconButton>
+            </Grid>
+            <Grid
+              container
+              xs={6}
+              lg={6}
+              md={5}
+              item
+              direction='row'
+              alignContent='center'
+              justify='flex-end'
+              alignItems='flex-end'
+            >
+              <Hidden xsDown>
+                <Hidden smDown>
+                  <Grid item style={{ marginBottom: '0.3rem' }}>
+                    <SearchOutlinedIcon />
+                  </Grid>
+                  <Grid item style={{ marginBottom: '0.5rem' }}>
+                    <TextField placeholder='Search' />
+                  </Grid>
                 </Hidden>
                 <IconButton color='inherit' aria-label='menu'>
-                  <ShoppingCartOutlinedIcon />
+                  <AccountCircleOutlinedIcon />
                 </IconButton>
-              </Grid>
+
+                <IconButton color='inherit' aria-label='menu'>
+                  <FavoriteBorderOutlinedIcon />
+                </IconButton>
+              </Hidden>
+              <IconButton color='inherit' aria-label='menu'>
+                <ShoppingCartOutlinedIcon />
+              </IconButton>
             </Grid>
-          </Grid>
+          </Box>
         </Toolbar>
       </AppBar>
-
-      <Drawer anchor='left' open={showDrawer} onClose={openDrawer}>
-        <h1>Hi</h1>
-      </Drawer>
     </>
   );
 };

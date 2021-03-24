@@ -8,12 +8,9 @@ import {
   Hidden,
   Grid,
   TextField,
-  Link,
   Button,
-  Drawer,
   Box,
 } from '@material-ui/core';
-import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
@@ -23,6 +20,8 @@ import { Menu, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import CartMenu from './menu/CartMenu';
 import customTheme from 'theme/customTheme';
+
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 const Navbar = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -41,12 +40,9 @@ const Navbar = (props) => {
     },
   }));
   const classes = useStyles();
-  const [showDrawer, setDrawerMenu] = useState(false);
-  const openDrawer = () => {
-    setDrawerMenu(!showDrawer);
-  };
+
   return (
-    <>
+    <Router>
       <AppBar position='fixed'>
         <Toolbar>
           <Box
@@ -132,14 +128,19 @@ const Navbar = (props) => {
                   <FavoriteBorderOutlinedIcon />
                 </IconButton>
               </Hidden>
-              <IconButton color='inherit' aria-label='menu'>
+              <IconButton
+                color='inherit'
+                aria-label='cart'
+                component={Link}
+                to='/payment'
+              >
                 <ShoppingCartOutlinedIcon />
               </IconButton>
             </Grid>
           </Box>
         </Toolbar>
       </AppBar>
-    </>
+    </Router>
   );
 };
 

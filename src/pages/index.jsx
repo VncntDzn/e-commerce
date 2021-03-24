@@ -6,7 +6,9 @@ import Promotions from './promotions/Promotions';
 import MenWomen from './promotions/MenWomen';
 import Community from './Community';
 import Footer from './Footer';
+import Payment from './payment/Payment';
 
+import Home from './Home';
 export {
   CarouselProvider,
   Recommendations,
@@ -16,4 +18,6 @@ export {
   MenWomen,
   Community,
   Footer,
+  Payment,
+  Home,
 };

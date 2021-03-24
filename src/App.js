@@ -3,7 +3,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from 'theme/customTheme';
 import { Box } from '@material-ui/core';
-import { CarouselProvider, Recommendations, Categories, ShippingBanner, Promotions, Community, Footer } from 'pages'
+import { CarouselProvider, Recommendations, Categories, ShippingBanner, Promotions, MenWomen, Community, Footer } from 'pages'
 
 import { makeStyles } from '@material-ui/core/styles';
 const App = () => {
@@ -27,7 +27,7 @@ const App = () => {
         <Categories />
         <Promotions />
         <ShippingBanner />
-
+        <MenWomen />
         <Community />
         <Footer />
         {/* TODO: USE MATH RANDOM FOR THE COUNT OF REVIEWS */}

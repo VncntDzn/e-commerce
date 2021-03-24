@@ -3,6 +3,7 @@ import Recommendations from './recommendations/Recommendations';
 import Categories from './categories/Categories';
 import ShippingBanner from './shipping/ShippingBanner';
 import Promotions from './promotions/Promotions';
+import MenWomen from './promotions/MenWomen';
 import Community from './Community';
 import Footer from './Footer';
 
@@ -12,6 +13,7 @@ export {
   Categories,
   ShippingBanner,
   Promotions,
+  MenWomen,
   Community,
   Footer,
 };

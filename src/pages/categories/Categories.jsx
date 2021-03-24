@@ -3,45 +3,65 @@ import PropTypes from 'prop-types';
 import {
   Grid,
   Box,
-  Avatar,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
   Hidden,
   Card,
-  CardActions,
   CardContent,
   Typography,
-  Paper,
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 import customTheme from 'theme/customTheme';
-import macbook from './assets/macbook.png';
+import Macbook from './assets/macbook.png';
+import TV from './assets/tv.png';
+import Clothes from './assets/clothes.png';
+import Makeup from './assets/makeup.png';
+
 const Categories = (props) => {
   const useStyles = makeStyles((theme) => ({
     container: {
-      border: '3px solid blue',
-      marginTop: '2rem',
+      backgroundColor: customTheme.palette.tertiary.light,
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+      paddingBottom: '1rem ',
+    },
+    containerCards: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      [theme.breakpoints.up('sm')]: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+      },
     },
     fluid_header: {
       fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
       fontWeight: 500,
     },
     fluid_paragraph: {
-      fontSize: 'clamp(1rem, 4vw, 1.3rem)',
+      fontSize: 'clamp(1rem, 4vw, 1.5rem)',
     },
 
     card: {
-      borderRadius: '20px',
-
-      width: 'fit-content',
+      height: '18rem',
+      width: '18rem',
       padding: '5px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+
+      [theme.breakpoints.up('lg')]: {
+        height: '22rem',
+        width: '22rem',
+      },
     },
     image: {
       objectFit: 'contain',
-      [theme.breakpoints.down('sm')]: {
+      height: '15rem',
+      width: '15rem',
+      [theme.breakpoints.up('sm')]: {
         height: '15rem',
         width: '15rem',
       },
@@ -58,8 +78,43 @@ const Categories = (props) => {
           All Departments ⟶
         </Typography>
       </Box>
-      <Box m={3}>
-        <img className={classes.image} alt='Macbook' src={macbook} />
+      <Box m={3} className={classes.containerCards}>
+        <Card onClick={() => console.log(1)}>
+          <CardContent className={classes.card}>
+            <img className={classes.image} alt='Macbook' src={Macbook} />
+            <Typography className={classes.fluid_paragraph} variant='caption'>
+              Computers & Accessories
+            </Typography>
+          </CardContent>
+        </Card>
+        <Hidden xsDown>
+          <Card onClick={() => console.log(1)}>
+            <CardContent className={classes.card}>
+              <img className={classes.image} alt='Macbook' src={TV} />
+              <Typography className={classes.fluid_paragraph} variant='caption'>
+                Home Accessories
+              </Typography>
+            </CardContent>
+          </Card>
+        </Hidden>
+        <Hidden mdDown>
+          <Card onClick={() => console.log(1)}>
+            <CardContent className={classes.card}>
+              <img className={classes.image} alt='Macbook' src={Clothes} />
+              <Typography className={classes.fluid_paragraph} variant='caption'>
+                Computers & Accessories
+              </Typography>
+            </CardContent>
+          </Card>
+          <Card onClick={() => console.log(1)}>
+            <CardContent className={classes.card}>
+              <img className={classes.image} alt='Macbook' src={Makeup} />
+              <Typography className={classes.fluid_paragraph} variant='caption'>
+                Makeup Accessories
+              </Typography>
+            </CardContent>
+          </Card>
+        </Hidden>
       </Box>
     </Grid>
   );

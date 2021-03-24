@@ -1,25 +1,90 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Box, Grid, Hidden } from '@material-ui/core';
+import { Typography, Box, Grid, Hidden, Button } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 import customTheme from 'theme/customTheme';
-
+import Discount from './assets/discount.png';
 const Promotions = (props) => {
   const useStyles = makeStyles((theme) => ({
     container: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+    ecommBasics: {
       backgroundColor: customTheme.palette.secondary.light,
+      margin: '1rem ',
+    },
+    ecommDeals: {
+      backgroundColor: customTheme.palette.secondary.light,
+      margin: '1rem',
+    },
+    fluid_header: {
+      fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
+      fontWeight: 500,
+    },
+    fluid_paragraph: {
+      fontSize: '1rem',
+    },
+    image: {
+      objectFit: 'contain',
+
+      height: '10rem',
+      width: '10rem',
     },
   }));
   const classes = useStyles();
   return (
-    <Grid container className={classes.container}>
-      <Grid item>
-        <Typography>E-comm Basics</Typography>
-        <Typography>E-comm Basics</Typography>
+    <Grid container className={classes.container} spacing={2}>
+      <Grid item container className={classes.ecommBasics} sm={6} md={6} lg={5}>
+        <Box
+          mx={3}
+          display='flex'
+          flexDirection='column'
+          justifyContent='center'
+        >
+          <Typography className={classes.fluid_header}>
+            E-comm Basics
+          </Typography>
+          <Typography className={classes.fluid_paragraph}>
+            Shop Today's Deals, Lightning Deals, and limited-time discounts
+          </Typography>
+          <Box>
+            <Button variant='outlined' style={{ marginTop: '1rem' }}>
+              See More ⟶
+            </Button>
+          </Box>
+        </Box>
+        <Hidden lgDown>
+          <Box>
+            <img className={classes.image} alt='Discount' src={Discount} />
+          </Box>
+        </Hidden>
       </Grid>
-      <Grid item>
-        <Typography>Deals & Promotions</Typography>
+      <Grid item container className={classes.ecommDeals} md={6} sm={6} lg={5}>
+        <Box
+          mx={3}
+          display='flex'
+          flexDirection='column'
+          justifyContent='center'
+        >
+          <Typography className={classes.fluid_header}>
+            Deals & Promotions
+          </Typography>
+          <Typography className={classes.fluid_paragraph}>
+            Shop Today's Deals, Lightning Deals, and limited-time discounts
+          </Typography>
+          <Box>
+            <Button variant='outlined' style={{ marginTop: '1rem' }}>
+              See More ⟶
+            </Button>
+          </Box>
+        </Box>
+        <Hidden lgDown>
+          <Box>
+            <img className={classes.image} alt='Discount' src={Discount} />
+          </Box>
+        </Hidden>
       </Grid>
     </Grid>
   );

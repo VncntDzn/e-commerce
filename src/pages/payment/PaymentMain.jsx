@@ -7,6 +7,13 @@ import ShippingMethod from './ShippingMethod';
 import PaymentMethod from './PaymentMethod';
 import ItemsList from './ItemsList';
 
+/* 
+  This is the main file for the payment functional component.
+  ItemsList is the file that lists the selected item of the user.
+  ShippingMethod is the file that lets user decide for type of shipment .
+  PaymentMethod is the file  that lets user decide for payment mode.
+*/
+
 const PaymentMain = (props) => {
   const useStyles = makeStyles((theme) => ({
     fluid_header: {

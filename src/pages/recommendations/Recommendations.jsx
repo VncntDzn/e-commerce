@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Grid,
   Box,
@@ -9,7 +8,6 @@ import {
   ListItemText,
   ListItemAvatar,
   Hidden,
-  Typography,
 } from '@material-ui/core';
 import Tom from './assets/tom.jpg';
 import { makeStyles } from '@material-ui/core/styles';

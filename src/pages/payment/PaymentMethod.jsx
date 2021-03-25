@@ -7,7 +7,6 @@ import {
   Radio,
   FormControlLabel,
   FormControl,
-  Hidden,
   Button,
   Grid,
 } from '@material-ui/core';
@@ -20,6 +19,7 @@ const PaymentMethod = (props) => {
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
+    console.log(checked);
   };
   const useStyles = makeStyles((theme) => ({
     fluid_paragraph: {

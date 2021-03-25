@@ -6,7 +6,7 @@ import Promotions from './promotions/Promotions';
 import MenWomen from './promotions/MenWomen';
 import Community from './Community';
 import Footer from './Footer';
-import Payment from './payment/Payment';
+import PaymentMain from './payment/PaymentMain';
 
 import Home from './Home';
 export {
@@ -18,6 +18,6 @@ export {
   MenWomen,
   Community,
   Footer,
-  Payment,
+  PaymentMain,
   Home,
 };

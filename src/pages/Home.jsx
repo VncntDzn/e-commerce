@@ -1,8 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
-import { makeStyles } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
 import {
   CarouselProvider,
   Recommendations,
@@ -17,22 +13,10 @@ import {
 import { MainLayout } from 'layouts';
 
 const Home = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    boxContainer: {
-      margin: '0 1rem',
-      marginTop: '5rem',
-      [theme.breakpoints.up('lg')]: {
-        margin: '0 6rem',
-        marginTop: '5rem',
-      },
-    },
-  }));
-
-  const classes = useStyles();
   return (
     <MainLayout
       children={
-        <Box className={classes.boxContainer}>
+        <>
           <CarouselProvider />
           <Recommendations />
           <Categories />
@@ -41,7 +25,7 @@ const Home = (props) => {
           <MenWomen />
           <Community />
           <Footer />
-        </Box>
+        </>
       }
     />
   );

@@ -21,7 +21,7 @@ import '@szhsin/react-menu/dist/index.css';
 import CartMenu from './menu/CartMenu';
 import customTheme from 'theme/customTheme';
 
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 const Navbar = (props) => {
   const useStyles = makeStyles((theme) => ({

@@ -1,12 +1,14 @@
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { Payment } from 'pages';
-import { Home } from 'pages'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Home, PaymentMain } from 'pages'
 
 const CustomRoutes = () => {
     return (
         <Router>
             <Switch>
-                <Route path="/">
+                <Route exact path="/payment">
+                    <PaymentMain />
+                </Route>
+                <Route path="/" exact>
                     <Home />
                 </Route>
             </Switch>

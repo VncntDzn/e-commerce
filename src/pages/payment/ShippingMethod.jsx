@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Typography,
@@ -9,6 +7,7 @@ import {
   Radio,
   FormControlLabel,
 } from '@material-ui/core';
+
 const ShippingMethod = (props) => {
   const useStyles = makeStyles((theme) => ({
     fluid_paragraph: {

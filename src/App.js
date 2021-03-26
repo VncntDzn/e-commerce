@@ -5,6 +5,7 @@ import theme from 'theme/customTheme';
 import CustomRoutes from 'routes/CustomRoutes';
 import { Provider } from 'react-redux';
 import { StrictMode } from 'react'
+
 const App = () => {
   return (
     <StrictMode>

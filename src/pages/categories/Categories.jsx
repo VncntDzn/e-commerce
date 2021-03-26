@@ -51,10 +51,13 @@ const Categories = (props) => {
       alignItems: 'center',
       justifyContent: 'center',
       cursor: 'pointer',
-
+      [theme.breakpoints.up('md')]: {
+        height: '15rem',
+        width: '15rem',
+      },
       [theme.breakpoints.up('lg')]: {
-        height: '22rem',
-        width: '22rem',
+        height: '20rem',
+        width: '20rem',
       },
     },
     image: {
@@ -64,6 +67,10 @@ const Categories = (props) => {
       [theme.breakpoints.up('sm')]: {
         height: '15rem',
         width: '15rem',
+      },
+      [theme.breakpoints.up('md')]: {
+        height: '13rem',
+        width: '13rem',
       },
     },
   }));

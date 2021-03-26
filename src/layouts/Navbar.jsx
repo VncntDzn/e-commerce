@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -52,7 +51,16 @@ const Navbar = (props) => {
             justifyContent='center'
             alignItems='center'
           >
-            <Grid container item direction='row' xs={6}>
+            <Grid
+              container
+              item
+              direction='row'
+              justify='flex-start'
+              alignContent='flex-start'
+              xs={6}
+              lg={7}
+              md={7}
+            >
               <Typography variant='h6'>E-comm</Typography>
               <Hidden mdDown>
                 <Grid
@@ -92,18 +100,14 @@ const Navbar = (props) => {
                   <Button className={classes.button}>
                     <Typography variant='subtitle1'>Gift Cards</Typography>
                   </Button>
-                  <Button className={classes.button}>
-                    <Typography variant='subtitle1'>
-                      Registry & Gifting
-                    </Typography>
-                  </Button>
                 </Grid>
               </Hidden>
             </Grid>
+
             <Grid
               container
               xs={6}
-              lg={6}
+              lg={5}
               md={5}
               item
               direction='row'

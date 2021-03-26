@@ -81,7 +81,7 @@ const ApplianceSlide = () => {
         </Box>
       </Grid>
 
-      <Grid item lg={3} md={6} className={classes.containerProduct}>
+      <Grid item lg={6} md={6} className={classes.containerProduct}>
         <Box
           m={3}
           display='flex'

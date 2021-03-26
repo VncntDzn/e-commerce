@@ -81,7 +81,7 @@ const TechSlide = () => {
         </Box>
       </Grid>
 
-      <Grid item lg={3} md={6}>
+      <Grid item lg={6} md={6}>
         <Box
           m={3}
           display='flex'

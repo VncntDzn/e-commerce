@@ -26,7 +26,7 @@ const routes = [
         name: 'Payment',
         component: PaymentMain,
         path: '/payment',
-        auth: true
+        auth: false
     },
     {
         name: 'Protected',

@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   textField: {
-    width: 'fit-content',
+    width: '95%',
   },
 }));
 

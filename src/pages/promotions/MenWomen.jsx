@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, Box, Grid, Hidden, Button } from '@material-ui/core';
 
+import { FluidTypography } from 'components';
 import { makeStyles } from '@material-ui/core/styles';
 import customTheme from 'theme/customTheme';
 import GirlFashion from './assets/girl_fashion.png';
@@ -42,13 +43,20 @@ const MenWomen = (props) => {
           flexDirection='column'
           justifyContent='center'
         >
-          <Typography className={classes.fluid_header}>
-            Comfy styles for her
-          </Typography>
-          <Typography className={classes.fluid_paragraph}>
-            Shop E-comm Fashion including clothing, shoes, jewelry, watches,
-            bags and more.
-          </Typography>
+          <FluidTypography
+            text='Comfy styles for her'
+            minSize='1.3rem'
+            size='5vw'
+            maxSize='2rem'
+            color='black'
+            fontWeight='500'
+            variant='h1'
+          />
+          <FluidTypography
+            text='Shop E-comm Fashion including clothing, shoes, jewelry, watches,
+            bags and more.'
+            size='1.1rem'
+          />
           <Box>
             <Button variant='outlined' style={{ marginTop: '1rem' }}>
               See More ⟶

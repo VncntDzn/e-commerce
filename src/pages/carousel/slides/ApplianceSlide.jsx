@@ -13,6 +13,7 @@ import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 import customTheme from 'theme/customTheme';
 import Refrigerator from '../assets/refrigerator.jpg';
+import { FluidTypography } from 'components';
 
 const ApplianceSlide = () => {
   const useStyles = makeStyles((theme) => ({
@@ -22,7 +23,6 @@ const ApplianceSlide = () => {
       flexDirection: 'column',
       justifyContent: 'space-evenly',
       width: '100vw',
-
       [theme.breakpoints.up('md')]: {
         flexDirection: 'row',
         placeContent: 'center',
@@ -54,13 +54,6 @@ const ApplianceSlide = () => {
         width: '20vw',
       },
     },
-    fluid_header: {
-      fontSize: 'clamp(1.5rem, 5vw, 3rem)',
-      fontWeight: 500,
-    },
-    fluid_paragraph: {
-      fontSize: 'clamp(1rem, 4vw, 1.3rem)',
-    },
   }));
 
   const classes = useStyles();
@@ -68,13 +61,23 @@ const ApplianceSlide = () => {
     <Grid className={classes.container} container direction='row'>
       <Grid className={classes.containerSlogan} item md={6} lg={5}>
         <Box mx={3} py={2}>
-          <Typography className={classes.fluid_header} variant='h1'>
-            SHOP APPLIANCES & ACCESSORIES
-          </Typography>
-          <Typography className={classes.fluid_paragraph}>
-            Shop laptops, desktops, monitors, tablets, PC Gaming, hard drives
-            and storage accessories and more.
-          </Typography>
+          <FluidTypography
+            minSize='1.5rem'
+            size='5vw'
+            maxSize='3rem'
+            fontWeight='500'
+            text='SHOP APPLIANCES & ACCESSORIES'
+            variant='h1'
+            color='#000000'
+          />
+          <FluidTypography
+            minSize='1rem'
+            size='4vw'
+            maxSize='1.4rem'
+            text='Shop laptops, desktops, monitors, tablets, PC Gaming, hard drives
+            and storage accessories and more.'
+            color='#000000'
+          />
           <Box mt={1}>
             <Button variant='outlined'>View More</Button>
           </Box>

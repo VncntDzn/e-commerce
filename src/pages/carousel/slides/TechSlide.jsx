@@ -10,6 +10,7 @@ import {
   Hidden,
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
+import { FluidTypography } from 'components';
 import { makeStyles } from '@material-ui/core/styles';
 import customTheme from 'theme/customTheme';
 import Headset from '../assets/headset.png';
@@ -54,13 +55,6 @@ const TechSlide = () => {
         width: '20vw',
       },
     },
-    fluid_header: {
-      fontSize: 'clamp(1.5rem, 5vw, 3rem)',
-      fontWeight: 500,
-    },
-    fluid_paragraph: {
-      fontSize: 'clamp(1rem, 4vw, 1.3rem)',
-    },
   }));
 
   const classes = useStyles();
@@ -68,13 +62,23 @@ const TechSlide = () => {
     <Grid className={classes.container} container direction='row'>
       <Grid className={classes.containerSlogan} item md={6} lg={5}>
         <Box mx={3} py={2}>
-          <Typography className={classes.fluid_header} variant='h1'>
-            SHOP COMPUTERS & ACCESSORIES
-          </Typography>
-          <Typography className={classes.fluid_paragraph}>
-            Shop laptops, desktops, monitors, tablets, PC Gaming, hard drives
-            and storage accessories and more.
-          </Typography>
+          <FluidTypography
+            minSize='1.5rem'
+            size='5vw'
+            maxSize='3rem'
+            fontWeight='500'
+            text='SHOP COMPUTERS & ACCESSORIES'
+            variant='h1'
+            color='#000000'
+          />
+          <FluidTypography
+            minSize='1rem'
+            size='4vw'
+            maxSize='1.4rem'
+            text='Shop laptops, desktops, monitors, tablets, PC Gaming, hard drives
+            and storage accessories and more.'
+            color='#000000'
+          />
           <Box mt={1}>
             <Button variant='outlined'>View More</Button>
           </Box>

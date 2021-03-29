@@ -1,6 +1,5 @@
-import React from 'react';
-import { Button, Typography, Box, Grid, Hidden } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button, Box, Grid, Hidden, makeStyles } from '@material-ui/core';
+import { FluidTypography } from 'components';
 import customTheme from 'theme/customTheme';
 import puppy from './assets/puppy.png';
 
@@ -13,14 +12,6 @@ const ShippingBanner = (props) => {
       display: 'flex',
       flexDirection: 'column',
       placeContent: 'center',
-    },
-    fluid_header: {
-      fontSize: 'clamp(1.5rem, 5vw, 3rem)',
-      fontWeight: 600,
-    },
-    fluid_paragraph: {
-      fontSize: 'clamp(1rem, 4vw, 1.3rem)',
-      color: `${customTheme.palette.tertiary.dark}`,
     },
   }));
 
@@ -37,16 +28,26 @@ const ShippingBanner = (props) => {
         className={classes.container}
       >
         <Grid item className={classes.containerSlogan} md={6} lg={5}>
-          <Typography className={classes.fluid_paragraph}>
-            Discover E-comm
-          </Typography>
-          <Typography className={classes.fluid_header}>
-            E-COMM DELIVERS TO YOU
-          </Typography>
-          <Typography className={classes.fluid_paragraph} variant='h6'>
-            Worldwide shipping. We ship to over 100 countries and regions, right
-            to your doorstep.
-          </Typography>
+          <FluidTypography
+            text='Discover E-comm'
+            minSize='1rem'
+            size='4vw'
+            maxSize='1.4rem'
+          />
+          <FluidTypography
+            text='E-COMM DELIVERS TO YOU'
+            minSize='1.5rem'
+            size='5vw'
+            maxSize='3rem'
+            color='black'
+            fontWeight='500'
+            variant='h1'
+          />
+          <FluidTypography
+            text=' Worldwide shipping. We ship to over 100 countries and regions, right
+            to your doorstep.'
+            variant='h6'
+          />
           <Box width={'100%'} mt={2}>
             <Button variant='outlined'>View More</Button>
           </Box>

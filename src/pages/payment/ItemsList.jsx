@@ -10,6 +10,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 
+import { FluidTypography } from 'components';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import Macbook from '../categories/assets/macbook.png';
@@ -93,13 +94,14 @@ const ItemsList = (props) => {
               <Typography className={classes.fluid_paragraph} variant='caption'>
                 In stock
               </Typography>
-              <Typography
+              <FluidTypography
                 variant='h3'
-                className={classes.fluid_product}
-                style={{ fontWeight: 'bold' }}
-              >
-                Macbook laptop
-              </Typography>
+                text='Macbook laptop'
+                minSize='1rem'
+                size='4vw'
+                maxSize='1.4rem'
+                fontWeight='500'
+              />
               <Typography className={classes.fluid_paragraph} variant='caption'>
                 Color: Black
               </Typography>

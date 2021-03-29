@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useField } from 'formik';
 import { TextField, Box } from '@material-ui/core';
 
-const Field = ({ ...props }) => {
+const Field = ({ withIcon, ...props }) => {
   const [field, meta] = useField(props);
-  return (
+  return withIcon ? (
     <Box py={1}>
       <TextField fullWidth {...field} {...props} />
       {meta.touched && meta.error ? (
@@ -14,6 +14,8 @@ const Field = ({ ...props }) => {
         </div>
       ) : null}
     </Box>
+  ) : (
+    <div></div>
   );
 };
 

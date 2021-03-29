@@ -1,7 +1,7 @@
 import { Card, CardContent, Button, Box } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { signinSchema } from 'helpers';
-import { Field } from 'components';
+import { Field, FieldIcon } from 'components';
 import { MainLayout } from 'layouts';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -42,7 +42,11 @@ const Signin = (props) => {
             >
               <Form>
                 <Field name='email' type='email' placeholder='Email' />
-                <Field name='password' placeholder='Password' type='password' />
+                <FieldIcon
+                  name='password'
+                  placeholder='Password'
+                  type='password'
+                />
                 <Box mt={3}>
                   <Button
                     color='secondary'

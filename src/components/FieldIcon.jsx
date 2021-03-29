@@ -13,6 +13,11 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { useField } from 'formik';
 
+/**
+ * FieldIcon - a wrapper for material ui TextField with icon.
+ * Also it uses formik and yup for validations of the field.
+ */
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',

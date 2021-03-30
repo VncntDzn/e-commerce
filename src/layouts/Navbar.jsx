@@ -20,7 +20,7 @@ import '@szhsin/react-menu/dist/index.css';
 import CartMenu from './menu/CartMenu';
 import customTheme from 'theme/customTheme';
 
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link, useHistory } from 'react-router-dom';
 
 const Navbar = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -39,6 +39,7 @@ const Navbar = (props) => {
     },
   }));
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <Router>
@@ -124,7 +125,11 @@ const Navbar = (props) => {
                     <TextField placeholder='Search' />
                   </Grid>
                 </Hidden>
-                <IconButton color='inherit' aria-label='menu'>
+                <IconButton
+                  color='inherit'
+                  aria-label='auth'
+                  onClick={() => history.push('/auth/signin')}
+                >
                   <AccountCircleOutlinedIcon />
                 </IconButton>
 
@@ -136,7 +141,7 @@ const Navbar = (props) => {
                 color='inherit'
                 aria-label='cart'
                 component={Link}
-                to='/payment'
+                onClick={() => history.push('/payment')}
               >
                 <ShoppingCartOutlinedIcon />
               </IconButton>

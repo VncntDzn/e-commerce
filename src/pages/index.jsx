@@ -9,6 +9,7 @@ import Footer from './Footer';
 import PaymentMain from './payment/PaymentMain';
 
 import Home from './Home';
+import NotFound from './NotFound';
 export {
   CarouselProvider,
   Recommendations,
@@ -20,4 +21,5 @@ export {
   Footer,
   PaymentMain,
   Home,
+  NotFound,
 };

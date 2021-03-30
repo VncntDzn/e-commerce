@@ -17,7 +17,7 @@ const Home = (props) => {
     <MainLayout
       children={
         <>
-          <CarouselProvider />
+          {/*  <CarouselProvider /> */}
           <Recommendations />
           <Categories />
           <Promotions />

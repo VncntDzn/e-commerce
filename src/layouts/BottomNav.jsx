@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   BottomNavigation,
@@ -10,8 +10,10 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import theme from 'theme/customTheme';
+import { useHistory } from 'react-router-dom';
 
 const BottomNav = (props) => {
+  const history = useHistory();
   const useStyles = makeStyles({
     root: {
       width: '100vw',
@@ -24,9 +26,11 @@ const BottomNav = (props) => {
     },
   });
   const classes = useStyles();
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState('/');
 
   const handleChange = (event, newValue) => {
+    /* TODO: FIX THE BUG */
+    history.push(newValue);
     setValue(newValue);
   };
 
@@ -34,27 +38,27 @@ const BottomNav = (props) => {
     <Hidden only={['lg', 'xl']}>
       <BottomNavigation
         value={value}
-        onChange={handleChange}
+        onChange={(data, value) => console.log(value)}
         className={classes.root}
       >
         <BottomNavigationAction
           label='Dashboard'
-          value='dashboard'
+          value='/'
           icon={<DashboardOutlinedIcon />}
         />
         <BottomNavigationAction
           label='Account'
-          value='account'
+          value='/auth/signin'
           icon={<AccountCircleOutlinedIcon />}
         />
         <BottomNavigationAction
           label='Favorite'
-          value='favorite'
+          value='/favorite'
           icon={<FavoriteBorderOutlinedIcon />}
         />
         <BottomNavigationAction
           label='Search'
-          value='search'
+          value='/search'
           icon={<SearchOutlinedIcon />}
         />
       </BottomNavigation>

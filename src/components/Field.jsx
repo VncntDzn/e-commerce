@@ -11,7 +11,7 @@ import { TextField, Box } from '@material-ui/core';
 const Field = ({ withIcon, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <Box mx={1}>
+    <Box mx={1} py={1}>
       <TextField fullWidth {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className='error' style={{ color: 'red' }}>

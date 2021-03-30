@@ -2,6 +2,7 @@
 import { Home, PaymentMain } from 'pages';
 import Protected from 'pages/Protected';
 import { Signin, Signup } from 'pages/auth/';
+import { NotFound } from 'pages'
 
 const routes = [
     {
@@ -26,7 +27,7 @@ const routes = [
         name: 'Payment',
         component: PaymentMain,
         path: '/payment',
-        auth: false
+        auth: true
     },
     {
         name: 'Protected',
@@ -34,6 +35,14 @@ const routes = [
         path: '/protected',
         auth: true
     },
+    {
+        name: 'Not Found',
+        component: NotFound,
+        path: '*',
+        auth: false
+    },
+
 ]
+
 
 export default routes;

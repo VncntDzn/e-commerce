@@ -4,6 +4,7 @@ import { signinSchema } from 'helpers';
 import { Field, FieldIcon } from 'components';
 import { MainLayout } from 'layouts';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 const Signin = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -24,7 +25,7 @@ const Signin = (props) => {
   }));
 
   const classes = useStyles();
-
+  const history = useHistory();
   return (
     <MainLayout>
       <Box className={classes.container}>
@@ -60,6 +61,12 @@ const Signin = (props) => {
               </Form>
             </Formik>
           </CardContent>
+          <Button onClick={() => history.push('/auth/signup')}>
+            Create Account?
+          </Button>
+          <Button onClick={() => history.push('/forgot-password')}>
+            Forgot Password?
+          </Button>
         </Card>
       </Box>
     </MainLayout>

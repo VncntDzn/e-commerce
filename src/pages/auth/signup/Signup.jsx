@@ -1,9 +1,8 @@
-import { Card, CardContent, Button, Box } from '@material-ui/core';
+import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { signupSchema } from 'helpers';
-import { Field, FieldIcon } from 'components';
+import { Field, FieldIcon, Spinner } from 'components';
 import { MainLayout } from 'layouts';
-import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
 const Signup = (props) => {
@@ -29,6 +28,7 @@ const Signup = (props) => {
   return (
     <MainLayout>
       <Box className={classes.container}>
+        <Spinner />
         <Card raised className={classes.cardContainer}>
           <CardContent>
             <Formik
@@ -63,7 +63,10 @@ const Signup = (props) => {
               </Form>
             </Formik>
           </CardContent>
-          <Button onClick={() => history.push('/auth/signin')}>
+          <Button
+            to='/auth/signin'
+            onClick={() => history.push('/auth/signin')}
+          >
             Already have an account?
           </Button>
         </Card>

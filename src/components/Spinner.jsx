@@ -4,7 +4,12 @@ import { makeStyles } from '@material-ui/core';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
-const Spinner = (props) => {
+/**
+ * Spinner - A wrapper for loader.
+ * @param {boolean} visible - whether it will show or not the custom spinner.
+ */
+
+const Spinner = ({ visible }) => {
   const useStyles = makeStyles((theme) => ({
     container: {
       position: 'absolute',
@@ -20,17 +25,21 @@ const Spinner = (props) => {
 
   const classes = useStyles();
   return (
-    <Loader
-      className={classes.container}
-      type='Puff'
-      color='#00BFFF'
-      height={100}
-      width={100}
-      timeout={3000} //3 secs
-    />
+    visible && (
+      <Loader
+        className={classes.container}
+        type='Puff'
+        color='#00BFFF'
+        height={100}
+        width={100}
+        visible={visible}
+      />
+    )
   );
 };
 
-Spinner.propTypes = {};
+Spinner.propTypes = {
+  visible: PropTypes.bool.isRequired,
+};
 
 export default Spinner;

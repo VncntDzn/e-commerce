@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { signupSchema } from 'helpers';
@@ -6,6 +7,7 @@ import { MainLayout } from 'layouts';
 import { useHistory } from 'react-router-dom';
 
 const Signup = (props) => {
+  const [visible, setDisplay] = useState(false);
   const useStyles = makeStyles((theme) => ({
     container: {
       display: 'flex',
@@ -25,11 +27,13 @@ const Signup = (props) => {
 
   const classes = useStyles();
   const history = useHistory();
+
   return (
     <MainLayout>
       <Box className={classes.container}>
-        <Spinner />
+        <Spinner visible={visible} />
         <Card raised className={classes.cardContainer}>
+          <Button onClick={() => setDisplay(!visible)}>Click</Button>
           <CardContent>
             <Formik
               initialValues={{

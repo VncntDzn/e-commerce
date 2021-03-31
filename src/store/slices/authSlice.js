@@ -41,7 +41,7 @@ const authSlice = createSlice({
         },
         [registerUser.rejected]: (state, action) => {
             state.status = 'failed'
-
+            alert("FAIELD")
         },
     }
 });

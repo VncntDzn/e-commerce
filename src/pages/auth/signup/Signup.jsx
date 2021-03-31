@@ -2,16 +2,22 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { signupSchema } from 'helpers';
-import { Field, FieldIcon, Spinner } from 'components';
+import { Field, FieldIcon, Spinner, CustomDialog } from 'components';
 import { MainLayout } from 'layouts';
 import { useHistory } from 'react-router-dom';
 import customTheme from 'theme/customTheme';
 import { useSelector, useDispatch } from 'react-redux';
 import { registerUser } from 'store/slices/authSlice';
 
+import SignupSuccessAnimated from 'lottie/SignupSuccessAnimated';
+import FailedAnimation from 'lottie/FailedAnimation';
+
 const Signup = (props) => {
   const dispatch = useDispatch();
   const [visible, setVisibility] = useState(false);
+  const [dialog, setDialog] = useState(false);
+  const [lotti, setLotti] = useState(null);
+  const [text, setText] = useState(null);
   const status = useSelector((state) => state.status);
   const useStyles = makeStyles((theme) => ({
     container: {
@@ -49,8 +55,24 @@ const Signup = (props) => {
       setVisibility(true);
     } else if (status === 'success') {
       setVisibility(false);
+      setDialog(true);
+      setLotti(SignupSuccessAnimated);
+      setText('Redirecting to signin page...');
+      setTimeout(() => {
+        setDialog(false);
+        history.push('/auth/signin');
+      }, 3000);
+    } else if (status === 'failed') {
+      setVisibility(false);
+      setDialog(true);
+      setLotti(FailedAnimation);
+      setText('Please try again...');
+      setTimeout(() => {
+        setDialog(false);
+      }, 3000);
     }
-  }, [status]);
+  }, [status, history]);
+
   return (
     <MainLayout>
       <Box className={classes.container}>
@@ -93,6 +115,7 @@ const Signup = (props) => {
             </Button>
           </CardContent>
         </Card>
+        <CustomDialog dialog={dialog} lotti={lotti} text={text} />
       </Box>
     </MainLayout>
   );

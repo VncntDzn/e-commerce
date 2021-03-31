@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
 import routes from 'routes/routes';
 import store from 'store';
 import PrivateRoute from 'routes/PrivateRoutes';
-
+import { SignupSuccess } from 'components'
 const App = () => {
 
   return (

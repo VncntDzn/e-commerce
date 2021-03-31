@@ -43,11 +43,7 @@ const Signin = (props) => {
             >
               <Form>
                 <Field name='email' type='email' placeholder='Email' />
-                <FieldIcon
-                  name='password'
-                  placeholder='Password'
-                  type='password'
-                />
+                <FieldIcon name='password' placeholder='Password' />
                 <Box mt={3}>
                   <Button
                     color='secondary'

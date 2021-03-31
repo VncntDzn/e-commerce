@@ -20,6 +20,7 @@ const Spinner = ({ visible }) => {
       alignSelf: 'center',
       justifyContent: 'center',
       alignItems: 'center',
+      zIndex: 1,
     },
   }));
 

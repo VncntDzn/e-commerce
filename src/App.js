@@ -13,32 +13,33 @@ const App = () => {
 
   return (
     <StrictMode>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <Switch>
+              {routes.map((route, i) => (
+                route.auth ? (
+                  <PrivateRoute
+                    key={i}
+                    exact
+                    path={route.path}
+                    component={route.component}
+                  />
+                ) : (
+                  <Route
+                    key={i}
+                    exact
+                    path={route.path}
+                    component={route.component}
+                  />
+                )
+              ))}
+            </Switch>
+          </Router>
 
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <Switch>
-            {routes.map((route, i) => (
-              route.auth ? (
-                <PrivateRoute
-                  key={i}
-                  exact
-                  path={route.path}
-                  component={route.component}
-                />
-              ) : (
-                <Route
-                  key={i}
-                  exact
-                  path={route.path}
-                  component={route.component}
-                />
-              )
-            ))}
-          </Switch>
-        </Router>
-
-      </ThemeProvider>
+        </ThemeProvider>
+      </Provider>
     </StrictMode>
   );
 }

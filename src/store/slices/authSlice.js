@@ -5,18 +5,18 @@ const registerUser = createAsyncThunk(
     'registerUser', ({ email, password }) =>
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-            console.log(email, password)
+
             // Signed in 
             var user = userCredential.user;
-            // ...
-
+            return "Success!"
         })
         .catch((error) => {
-
             var errorCode = error.code;
             var errorMessage = error.message;
-            // ..
+            return errorMessage
         })
+
+
 );
 const initialState = {
     posts: [],
@@ -27,9 +27,7 @@ const initialState = {
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {
-
-    },
+    reducers: {},
     extraReducers: {
         [registerUser.pending]: (state, action) => {
             state.status = 'pending'
@@ -37,11 +35,11 @@ const authSlice = createSlice({
         },
         [registerUser.fulfilled]: (state, action) => {
             state.status = 'success';
-
+            state.error = action.payload;
         },
         [registerUser.rejected]: (state, action) => {
             state.status = 'failed'
-            alert("FAIELD")
+            alert("FAILED AUTH SLICE")
         },
     }
 });

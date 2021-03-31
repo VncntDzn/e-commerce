@@ -19,6 +19,7 @@ const Signup = (props) => {
   const [lotti, setLotti] = useState(null);
   const [text, setText] = useState(null);
   const status = useSelector((state) => state.status);
+  const error = useSelector((state) => state.error);
   const useStyles = makeStyles((theme) => ({
     container: {
       display: 'flex',
@@ -54,14 +55,26 @@ const Signup = (props) => {
     if (status === 'pending') {
       setVisibility(true);
     } else if (status === 'success') {
-      setVisibility(false);
-      setDialog(true);
-      setLotti(SignupSuccessAnimated);
-      setText('Redirecting to signin page...');
-      setTimeout(() => {
-        setDialog(false);
-        history.push('/auth/signin');
-      }, 3000);
+      if (error !== 'Success!') {
+        setVisibility(false);
+        setDialog(true);
+        setLotti(FailedAnimation);
+        setText(error);
+
+        setTimeout(() => {
+          setDialog(false);
+        }, 3000);
+      } else {
+        setVisibility(false);
+        setDialog(true);
+        setLotti(SignupSuccessAnimated);
+        setText('Redirecting to signin page...');
+
+        setTimeout(() => {
+          setDialog(false);
+          history.push('/auth/signin');
+        }, 3000);
+      }
     } else if (status === 'failed') {
       setVisibility(false);
       setDialog(true);

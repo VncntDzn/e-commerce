@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
 import Lottie from 'react-lottie';
 import { Dialog, DialogContent, DialogContentText } from '@material-ui/core';
 

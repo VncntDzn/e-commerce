@@ -84,7 +84,7 @@ const Signup = (props) => {
         setDialog(false);
       }, 3000);
     }
-  }, [status, history]);
+  }, [status, history, error]);
 
   return (
     <MainLayout>

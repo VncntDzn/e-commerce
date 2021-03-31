@@ -15,11 +15,14 @@ import FailedAnimation from 'lottie/FailedAnimation';
 const Signup = (props) => {
   const dispatch = useDispatch();
   const [visible, setVisibility] = useState(false);
-  const [dialog, setDialog] = useState(false);
-  const [lotti, setLotti] = useState(null);
-  const [text, setText] = useState(null);
   const status = useSelector((state) => state.status);
   const error = useSelector((state) => state.error);
+
+  const [dialog, setDialog] = useState({
+    display: false,
+    text: '',
+    lottie: '',
+  });
   const useStyles = makeStyles((theme) => ({
     container: {
       display: 'flex',
@@ -51,37 +54,46 @@ const Signup = (props) => {
   };
 
   useEffect(() => {
-    // check the status state and display the spinner
+    // check the status state and display the spinner and dialog
     if (status === 'pending') {
       setVisibility(true);
     } else if (status === 'success') {
+      setVisibility(false);
       if (error !== 'Success!') {
-        setVisibility(false);
-        setDialog(true);
-        setLotti(FailedAnimation);
-        setText(error);
-
+        setDialog({
+          display: true,
+          text: error,
+          lottie: FailedAnimation,
+        });
         setTimeout(() => {
-          setDialog(false);
+          setDialog({
+            display: false,
+          });
         }, 3000);
       } else {
-        setVisibility(false);
-        setDialog(true);
-        setLotti(SignupSuccessAnimated);
-        setText('Redirecting to signin page...');
-
+        setDialog({
+          display: true,
+          text: 'Redirecting to signin page...',
+          lottie: SignupSuccessAnimated,
+        });
         setTimeout(() => {
-          setDialog(false);
+          setDialog({
+            display: false,
+          });
           history.push('/auth/signin');
         }, 3000);
       }
     } else if (status === 'failed') {
       setVisibility(false);
-      setDialog(true);
-      setLotti(FailedAnimation);
-      setText('Please try again...');
+      setDialog({
+        display: true,
+        text: 'Please try again...',
+        lottie: FailedAnimation,
+      });
       setTimeout(() => {
-        setDialog(false);
+        setDialog({
+          display: false,
+        });
       }, 3000);
     }
   }, [status, history, error]);
@@ -128,7 +140,11 @@ const Signup = (props) => {
             </Button>
           </CardContent>
         </Card>
-        <CustomDialog dialog={dialog} lotti={lotti} text={text} />
+        <CustomDialog
+          dialog={dialog.display}
+          lotti={dialog.lottie}
+          text={dialog.text}
+        />
       </Box>
     </MainLayout>
   );

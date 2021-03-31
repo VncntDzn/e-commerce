@@ -6,6 +6,7 @@ import { MainLayout } from 'layouts';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
+import customTheme from 'theme/customTheme';
 const Signin = (props) => {
   const useStyles = makeStyles((theme) => ({
     container: {
@@ -20,6 +21,11 @@ const Signin = (props) => {
       height: 'fit-content',
       [theme.breakpoints.up('sm')]: {
         width: '30rem',
+      },
+    },
+    buttonStyle: {
+      '&:hover': {
+        color: customTheme.palette.secondary.main,
       },
     },
   }));
@@ -57,12 +63,20 @@ const Signin = (props) => {
               </Form>
             </Formik>
           </CardContent>
-          <Button onClick={() => history.push('/auth/signup')}>
-            Create Account?
-          </Button>
-          <Button onClick={() => history.push('/forgot-password')}>
-            Forgot Password?
-          </Button>
+          <Box mx={1} display='flex' justifyContent='space-between'>
+            <Button
+              className={classes.buttonStyle}
+              onClick={() => history.push('/auth/signup')}
+            >
+              Create Account?
+            </Button>
+            <Button
+              className={classes.buttonStyle}
+              onClick={() => history.push('/forgot-password')}
+            >
+              Forgot Password?
+            </Button>
+          </Box>
         </Card>
       </Box>
     </MainLayout>

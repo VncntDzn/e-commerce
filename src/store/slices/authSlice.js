@@ -33,13 +33,16 @@ const loginUser = createAsyncThunk('loginUser', async ({ email, password }) => {
 });
 
 const resetPassword = createAsyncThunk('resetPassword', ({ email }) => {
-    var auth = firebase.auth();
 
-    auth.sendPasswordResetEmail(email).then(function () {
-        // Email sent.
-    }).catch(function (error) {
-        // An error happened.
-    });
+
+    return firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+            return "Success!"
+        }).catch(function (error) {
+            // An error happened.
+            return error.message
+        });
+
 });
 
 const initialState = {
@@ -48,7 +51,8 @@ const initialState = {
     loading: false,
     error: null,
     observer: null,
-    user: []
+    user: [],
+    forgotPassword: null,
 };
 const authSlice = createSlice({
     name: 'auth',
@@ -90,7 +94,7 @@ const authSlice = createSlice({
         },
         [resetPassword.fulfilled]: (state, action) => {
             state.status = 'success';
-
+            state.forgotPassword = action.payload;
         },
         [resetPassword.rejected]: (state, action) => {
             state.status = 'failed'

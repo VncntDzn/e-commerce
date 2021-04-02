@@ -1,40 +1,103 @@
-import { Card, CardContent, Button, Box } from '@material-ui/core';
+import { useState, useEffect } from 'react';
+import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { signinSchema } from 'helpers';
-import { Field, FieldIcon } from 'components';
+import { Field, FieldIcon, Spinner, CustomDialog } from 'components';
 import { MainLayout } from 'layouts';
-import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser } from 'store/slices/authSlice';
 import customTheme from 'theme/customTheme';
-const Signin = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignSelf: 'center',
-      alignItems: 'center',
-      height: '75vh',
-    },
-    cardContainer: {
-      width: '80vw',
-      height: 'fit-content',
-      [theme.breakpoints.up('sm')]: {
-        width: '30rem',
-      },
-    },
-    buttonStyle: {
-      '&:hover': {
-        color: customTheme.palette.secondary.main,
-      },
-    },
-  }));
+import SignupSuccessAnimated from 'lottie/SignupSuccessAnimated';
+import FailedAnimation from 'lottie/FailedAnimation';
 
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+    height: '75vh',
+  },
+  cardContainer: {
+    width: '80vw',
+    height: 'fit-content',
+    [theme.breakpoints.up('sm')]: {
+      width: '30rem',
+    },
+  },
+  buttonStyle: {
+    '&:hover': {
+      color: customTheme.palette.secondary.main,
+    },
+  },
+}));
+const Signin = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const status = useSelector((state) => state.status);
+  const user = useSelector((state) => state.user);
+  const [visible, setVisibility] = useState(false);
+  const [dialog, setDialog] = useState({
+    display: false,
+    text: '',
+    lottie: '',
+  });
+
+  const handleSubmission = (values) => {
+    const { email, password } = values;
+    dispatch(loginUser({ email, password }));
+  };
+  useEffect(() => {
+    // check the status state and display the spinner and dialog
+    if (status === 'pending') {
+      setVisibility(true);
+    } else if (status === 'success') {
+      setVisibility(false);
+      if (
+        user === 'The password is invalid or the user does not have a password.'
+      ) {
+        setDialog({
+          display: true,
+          text: user,
+          lottie: FailedAnimation,
+        });
+        setTimeout(() => {
+          setDialog({
+            display: false,
+          });
+        }, 3000);
+      } else {
+        setDialog({
+          display: true,
+          text: 'Redirecting homepage...',
+          lottie: SignupSuccessAnimated,
+        });
+        setTimeout(() => {
+          setDialog({
+            display: false,
+          });
+        }, 3000);
+      }
+    } else if (status === 'failed') {
+      setVisibility(false);
+      setDialog({
+        display: true,
+        text: 'Please try again...',
+        lottie: FailedAnimation,
+      });
+      setTimeout(() => {
+        setDialog({
+          display: false,
+        });
+      }, 3000);
+    }
+  }, [status, history, user]);
   return (
     <MainLayout>
       <Box className={classes.container}>
+        <Spinner visible={visible} />
         <Card raised className={classes.cardContainer}>
           <CardContent>
             <Formik
@@ -43,9 +106,7 @@ const Signin = (props) => {
                 password: '',
               }}
               validationSchema={signinSchema}
-              onSubmit={() => {
-                alert('nice');
-              }}
+              onSubmit={(values) => handleSubmission(values)}
             >
               <Form>
                 <Field name='email' type='email' placeholder='Email' />
@@ -72,12 +133,17 @@ const Signin = (props) => {
             </Button>
             <Button
               className={classes.buttonStyle}
-              onClick={() => history.push('/forgot-password')}
+              onClick={() => history.push('/auth/forgot-password')}
             >
               Forgot Password?
             </Button>
           </Box>
         </Card>
+        <CustomDialog
+          dialog={dialog.display}
+          lotti={dialog.lottie}
+          text={dialog.text}
+        />
       </Box>
     </MainLayout>
   );

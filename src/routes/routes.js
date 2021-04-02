@@ -1,7 +1,7 @@
 
 import { Home, PaymentMain } from 'pages';
 import Protected from 'pages/Protected';
-import { Signin, Signup } from 'pages/auth/';
+import { Signin, Signup, ForgotPassword } from 'pages/auth/';
 import { NotFound } from 'pages'
 
 const routes = [
@@ -21,6 +21,12 @@ const routes = [
         name: 'Signup',
         component: Signup,
         path: '/auth/signup',
+        auth: false
+    },
+    {
+        name: 'Forgot Password',
+        component: ForgotPassword,
+        path: '/auth/forgot-password',
         auth: false
     },
     {

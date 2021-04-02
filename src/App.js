@@ -9,8 +9,24 @@ import routes from 'routes/routes';
 import store from 'store';
 import PrivateRoute from 'routes/PrivateRoutes';
 import { SignupSuccess } from 'components'
-const App = () => {
+import firebase from 'firebase/firebaseConfig'
+import { useEffect } from 'react'
 
+const App = () => {
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        var uid = user;
+        console.log(uid)
+        // ...
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+  }, [])
   return (
     <StrictMode>
       <Provider store={store}>

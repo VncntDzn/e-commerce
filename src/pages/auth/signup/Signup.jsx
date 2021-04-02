@@ -8,9 +8,30 @@ import { useHistory } from 'react-router-dom';
 import customTheme from 'theme/customTheme';
 import { useSelector, useDispatch } from 'react-redux';
 import { registerUser } from 'store/slices/authSlice';
-
 import SignupSuccessAnimated from 'lottie/SignupSuccessAnimated';
 import FailedAnimation from 'lottie/FailedAnimation';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+    height: '75vh',
+  },
+  cardContainer: {
+    width: '80vw',
+    height: 'fit-content',
+    [theme.breakpoints.up('sm')]: {
+      width: '30rem',
+    },
+  },
+  buttonStyle: {
+    '&:hover': {
+      color: customTheme.palette.secondary.main,
+    },
+  },
+}));
 
 const Signup = (props) => {
   const dispatch = useDispatch();
@@ -23,34 +44,13 @@ const Signup = (props) => {
     text: '',
     lottie: '',
   });
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignSelf: 'center',
-      alignItems: 'center',
-      height: '75vh',
-    },
-    cardContainer: {
-      width: '80vw',
-      height: 'fit-content',
-      [theme.breakpoints.up('sm')]: {
-        width: '30rem',
-      },
-    },
-    buttonStyle: {
-      '&:hover': {
-        color: customTheme.palette.secondary.main,
-      },
-    },
-  }));
 
   const classes = useStyles();
   const history = useHistory();
 
   const handleSubmission = (values) => {
     const { email, password, firstName, lastName } = values;
-    dispatch(registerUser({ email, password }));
+    dispatch(registerUser({ email, password, firstName, lastName }));
   };
 
   useEffect(() => {

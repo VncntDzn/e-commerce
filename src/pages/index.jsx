@@ -7,9 +7,10 @@ import MenWomen from './promotions/MenWomen';
 import Community from './community/Community';
 import Footer from './Footer';
 import PaymentMain from './payment/PaymentMain';
-
+import ForgotPassword from './auth/forgotPassword/ForgotPassword';
 import Home from './Home';
 import NotFound from './NotFound';
+
 export {
   CarouselProvider,
   Recommendations,
@@ -22,4 +23,5 @@ export {
   PaymentMain,
   Home,
   NotFound,
+  ForgotPassword,
 };

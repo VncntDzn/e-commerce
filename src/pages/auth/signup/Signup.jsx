@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
-import { signupSchema } from 'helpers';
+import { signupSchema, useDialog } from 'helpers';
 import { Field, FieldIcon, Spinner, CustomDialog } from 'components';
 import { MainLayout } from 'layouts';
 import { useHistory } from 'react-router-dom';
@@ -47,10 +47,11 @@ const Signup = (props) => {
 
   const classes = useStyles();
   const history = useHistory();
-
+  const shit = useDialog(' dispxxlay', 'texxxt', 'lottxxie', 3000);
   const handleSubmission = (values) => {
     const { email, password, firstName, lastName } = values;
-    dispatch(registerUser({ email, password, firstName, lastName }));
+    console.log(`shit ${shit.display}`);
+    /* dispatch(registerUser({ email, password, firstName, lastName })); */
   };
 
   useEffect(() => {
@@ -60,16 +61,6 @@ const Signup = (props) => {
     } else if (status === 'success') {
       setVisibility(false);
       if (error !== 'Success!') {
-        setDialog({
-          display: true,
-          text: error,
-          lottie: FailedAnimation,
-        });
-        setTimeout(() => {
-          setDialog({
-            display: false,
-          });
-        }, 3000);
       } else {
         setDialog({
           display: true,

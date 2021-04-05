@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
-import { signinSchema } from 'helpers';
+import { signinSchema, useDialog } from 'helpers';
 import { Field, FieldIcon, Spinner, CustomDialog } from 'components';
 import { MainLayout } from 'layouts';
 import { useHistory } from 'react-router-dom';
@@ -58,6 +58,7 @@ const Signin = (props) => {
       if (
         user === 'The password is invalid or the user does not have a password.'
       ) {
+        // useDialog({display:true, text: 'sample text',})
         setDialog({
           display: true,
           text: user,

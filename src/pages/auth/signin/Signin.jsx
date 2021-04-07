@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { signinSchema, useDialog } from 'helpers';
@@ -32,73 +31,28 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const Signin = (props) => {
+const Signin = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
   const status = useSelector((state) => state.status);
-  const user = useSelector((state) => state.user);
-  const [visible, setVisibility] = useState(false);
-  const [dialog, setDialog] = useState({
-    display: false,
-    text: '',
-    lottie: '',
-  });
+  const error = useSelector((state) => state.error);
 
+  const { visibility, data } = useDialog({
+    status,
+    error,
+    animationSuccess: SignupSuccessAnimated,
+    animationFailed: FailedAnimation,
+    successText: 'Success! Redirecting you to homepage.',
+  });
   const handleSubmission = (values) => {
     const { email, password } = values;
     dispatch(loginUser({ email, password }));
   };
-  useEffect(() => {
-    // check the status state and display the spinner and dialog
-    if (status === 'pending') {
-      setVisibility(true);
-    } else if (status === 'success') {
-      setVisibility(false);
-      if (
-        user === 'The password is invalid or the user does not have a password.'
-      ) {
-        // useDialog({display:true, text: 'sample text',})
-        setDialog({
-          display: true,
-          text: user,
-          lottie: FailedAnimation,
-        });
-        setTimeout(() => {
-          setDialog({
-            display: false,
-          });
-        }, 3000);
-      } else {
-        setDialog({
-          display: true,
-          text: 'Redirecting homepage...',
-          lottie: SignupSuccessAnimated,
-        });
-        setTimeout(() => {
-          setDialog({
-            display: false,
-          });
-        }, 3000);
-      }
-    } else if (status === 'failed') {
-      setVisibility(false);
-      setDialog({
-        display: true,
-        text: 'Please try again...',
-        lottie: FailedAnimation,
-      });
-      setTimeout(() => {
-        setDialog({
-          display: false,
-        });
-      }, 3000);
-    }
-  }, [status, history, user]);
+
   return (
     <MainLayout>
       <Box className={classes.container}>
-        <Spinner visible={visible} />
         <Card raised className={classes.cardContainer}>
           <CardContent>
             <Formik
@@ -140,16 +94,15 @@ const Signin = (props) => {
             </Button>
           </Box>
         </Card>
+        <Spinner visible={visibility} />
         <CustomDialog
-          dialog={dialog.display}
-          lotti={dialog.lottie}
-          text={dialog.text}
+          dialog={data.show}
+          lottie={data.lottie}
+          text={data.text}
         />
       </Box>
     </MainLayout>
   );
 };
-
-Signin.propTypes = {};
 
 export default Signin;

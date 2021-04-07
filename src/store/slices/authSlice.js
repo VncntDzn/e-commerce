@@ -1,48 +1,31 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import firebase from 'firebase/firebaseConfig';
 
-const registerUser = createAsyncThunk('registerUser', ({ email, password }) => {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            // Signed in 
-            var user = userCredential.user;
-            return "Success!"
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            return errorMessage
-        })
+const registerUser = createAsyncThunk('registerUser', async ({ email, password }) => {
+    try {
+        const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        return response.user
+    } catch (e) {
+        return e.message
+    }
 });
 const loginUser = createAsyncThunk('loginUser', async ({ email, password }) => {
-    const response = await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
-        return firebase.auth().signInWithEmailAndPassword(email, password).then((data) => {
-            return data.user
-        }).catch(e => {
-            return e.message
-        })
-
-    }).catch((error) => {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-
-        return error.message
-    });
-    return response
+    try {
+        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+        const response = await firebase.auth().signInWithEmailAndPassword(email, password);
+        return response.user
+    } catch (e) {
+        return e.message
+    }
 });
 
-const resetPassword = createAsyncThunk('resetPassword', ({ email }) => {
-
-
-    return firebase.auth().sendPasswordResetEmail(email)
-        .then(() => {
-            return "Success!"
-        }).catch(function (error) {
-            // An error happened.
-            return error.message
-        });
-
+const resetPassword = createAsyncThunk('resetPassword', async ({ email }) => {
+    try {
+        await firebase.auth().sendPasswordResetEmail(email);
+        return "Success!"
+    } catch (e) {
+        return e.message
+    }
 });
 
 const initialState = {
@@ -66,11 +49,17 @@ const authSlice = createSlice({
         },
         [registerUser.fulfilled]: (state, action) => {
             state.status = 'success';
-            state.error = action.payload;
+            state.user = action.payload;
+            let EMAIL_MESSAGE = 'The email address is already in use by another account.'
+
+            if (action.payload === EMAIL_MESSAGE) {
+                state.error = action.payload;
+            } else {
+                state.error = null;
+            }
         },
         [registerUser.rejected]: (state, action) => {
             state.status = 'failed'
-            alert("FAILED AUTH SLICE")
         },
         // LOGIN
         [loginUser.pending]: (state, action) => {
@@ -79,14 +68,17 @@ const authSlice = createSlice({
         },
         [loginUser.fulfilled]: (state, action) => {
             state.status = 'success';
+            state.user = action.payload;
+            let PASSWORD_MESSAGE = 'The password is invalid or the user does not have a password.';
 
-            state.user = action.payload
-            console.log(state.user)
-
+            if (action.payload === PASSWORD_MESSAGE) {
+                state.error = action.payload;
+            } else {
+                state.error = null;
+            }
         },
         [loginUser.rejected]: (state, action) => {
             state.status = 'failed'
-            alert("FAILED AUTH SLICE")
         },
         // FORGOT PASSWORD
         [resetPassword.pending]: (state, action) => {
@@ -95,6 +87,13 @@ const authSlice = createSlice({
         [resetPassword.fulfilled]: (state, action) => {
             state.status = 'success';
             state.forgotPassword = action.payload;
+            let FORGOT_PASSWORD = 'There is no user record corresponding to this identifier. The user may have been deleted.';
+
+            if (action.payload === FORGOT_PASSWORD) {
+                state.error = action.payload;
+            } else {
+                state.error = null;
+            }
         },
         [resetPassword.rejected]: (state, action) => {
             state.status = 'failed'

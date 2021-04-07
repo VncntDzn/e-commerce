@@ -1,26 +1,46 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**  A custom hook that displays a dialog, animated svg and message.
- * @param {Boolean} [display = false] - whether to display the dialog or not.
- * @param {string} [text] - a message to display for the dialog.
- * @param {JSON} [lottie] - the json file that contains the animation.
- * @param {number} [time = 3000] - count when to hide the dialog.
+ * @param {string} [error] - whether the status has error or not.
+ * @param {string} [status] - status of the process passed from the parent component.
+ * @param {JSON} [animationSuccess] - the json file that contains the success animation.
+ * @param {JSON} [animationFailed] - the json file that contains the failed animation.
+ * @param {string} [successText] - the text will be displayed if no error has occur.
  */
 
-const useDialog = ({ display = false, text, lottie, time = 3000 }) => {
-  const [dialog, setDialog] = useState({ display, text, lottie, time });
+const useDialog = (...props) => {
+  const {
+    status,
+    error,
+    animationSuccess,
+    animationFailed,
+    successText,
+  } = props[0];
+  const [visibility, setVisibility] = useState(false);
+  const [data, setData] = useState({ show: false, text: '', lottie: '' });
 
-  setDialog({
-    display: true,
-    text: 'Redirecting to signin page...',
-    lottie: lottie,
-  });
-  setTimeout(() => {
-    setDialog({
-      display: false,
-    });
-  }, 3000);
+  useEffect(() => {
+    if (status === 'pending') {
+      setVisibility(true);
+    } else if (status === 'success') {
+      setVisibility(false);
+      if (error) {
+        setData({ show: true, text: error, lottie: animationFailed });
+      } else {
+        setData({
+          show: true,
+          text: successText,
+          lottie: animationSuccess,
+        });
+      }
+      setTimeout(() => {
+        setData({ show: false });
+      }, 4000);
+    } else {
+      setVisibility(false);
+    }
+  }, [status, error, animationSuccess, animationFailed, successText]);
 
-  return dialog;
+  return { visibility, data };
 };
 export default useDialog;

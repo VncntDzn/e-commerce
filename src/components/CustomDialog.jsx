@@ -1,11 +1,16 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  Typography,
+} from '@material-ui/core';
 import Lottie from 'react-lottie';
-import { Dialog, DialogContent, DialogContentText } from '@material-ui/core';
 
-const CustomDialog = ({ dialog, lotti, text }) => {
+const CustomDialog = ({ dialog, lottie, text }) => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    animationData: lotti,
+    animationData: lottie,
     rendererSettings: {
       preserveAspectRatio: 'xMidYMid slice',
     },
@@ -20,7 +25,7 @@ const CustomDialog = ({ dialog, lotti, text }) => {
       <DialogContent>
         <Lottie options={defaultOptions} height={150} width={150} />
         <DialogContentText id='alert-dialog-description'>
-          {text}
+          <Typography align='center'>{text}</Typography>
           {dialog}
         </DialogContentText>
       </DialogContent>

@@ -1,7 +1,4 @@
-
-import { Home, PaymentMain, UserProfile } from 'pages';
-import { Signin, Signup, ForgotPassword } from 'pages/auth/';
-import { NotFound } from 'pages'
+import { Home, PaymentMain, UserProfile, Signin, Signup, ForgotPassword, NotFound } from 'pages';
 
 const routes = [
     {
@@ -46,7 +43,6 @@ const routes = [
         path: '*',
         auth: false
     },
-
 ]
 
 

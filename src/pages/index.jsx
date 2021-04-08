@@ -11,6 +11,8 @@ import ForgotPassword from './auth/forgotPassword/ForgotPassword';
 import Home from './Home';
 import NotFound from './NotFound';
 import UserProfile from './user/UserProfile';
+import Signin from './auth/signin/Signin';
+import Signup from './auth/signup/Signup';
 
 export {
   CarouselProvider,
@@ -24,6 +26,8 @@ export {
   PaymentMain,
   Home,
   NotFound,
-  ForgotPassword,
   UserProfile,
+  Signin,
+  Signup,
+  ForgotPassword,
 };

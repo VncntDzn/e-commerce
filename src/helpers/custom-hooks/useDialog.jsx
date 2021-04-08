@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 /**  A custom hook that displays a dialog, animated svg and message.
  * @param {string} [error] - whether the status has error or not.
@@ -33,12 +33,13 @@ const useDialog = (...props) => {
           lottie: animationSuccess,
         });
       }
-      setTimeout(() => {
-        setData({ show: false });
-      }, 4000);
     } else {
       setVisibility(false);
     }
+
+    setTimeout(() => {
+      setData({ show: false });
+    }, 4000);
   }, [status, error, animationSuccess, animationFailed, successText]);
 
   return { visibility, data };

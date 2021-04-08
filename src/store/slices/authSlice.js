@@ -15,6 +15,7 @@ const loginUser = createAsyncThunk('loginUser', async ({ email, password }) => {
         const response = await firebase.auth().signInWithEmailAndPassword(email, password);
         return response.user
     } catch (e) {
+
         return e.message
     }
 });
@@ -24,7 +25,7 @@ const resetPassword = createAsyncThunk('resetPassword', async ({ email }) => {
         await firebase.auth().sendPasswordResetEmail(email);
         return "Success!"
     } catch (e) {
-        return e.message
+        return e
     }
 });
 
@@ -40,7 +41,6 @@ const initialState = {
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
     extraReducers: {
         // REGISTER
         [registerUser.pending]: (state, action) => {
@@ -50,12 +50,11 @@ const authSlice = createSlice({
         [registerUser.fulfilled]: (state, action) => {
             state.status = 'success';
             state.user = action.payload;
-            let EMAIL_MESSAGE = 'The email address is already in use by another account.'
 
-            if (action.payload === EMAIL_MESSAGE) {
-                state.error = action.payload;
-            } else {
+            if (action.payload instanceof Object) {
                 state.error = null;
+            } else {
+                state.error = action.payload;
             }
         },
         [registerUser.rejected]: (state, action) => {
@@ -69,12 +68,11 @@ const authSlice = createSlice({
         [loginUser.fulfilled]: (state, action) => {
             state.status = 'success';
             state.user = action.payload;
-            let PASSWORD_MESSAGE = 'The password is invalid or the user does not have a password.';
 
-            if (action.payload === PASSWORD_MESSAGE) {
-                state.error = action.payload;
-            } else {
+            if (action.payload instanceof Object) {
                 state.error = null;
+            } else {
+                state.error = action.payload;
             }
         },
         [loginUser.rejected]: (state, action) => {
@@ -87,12 +85,11 @@ const authSlice = createSlice({
         [resetPassword.fulfilled]: (state, action) => {
             state.status = 'success';
             state.forgotPassword = action.payload;
-            let FORGOT_PASSWORD = 'There is no user record corresponding to this identifier. The user may have been deleted.';
 
-            if (action.payload === FORGOT_PASSWORD) {
-                state.error = action.payload;
-            } else {
+            if (action.payload instanceof Object) {
                 state.error = null;
+            } else {
+                state.error = action.payload;
             }
         },
         [resetPassword.rejected]: (state, action) => {

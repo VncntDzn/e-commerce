@@ -1,5 +1,5 @@
 
-import { Home, PaymentMain } from 'pages';
+import { Home, PaymentMain, UserProfile } from 'pages';
 import Protected from 'pages/Protected';
 import { Signin, Signup, ForgotPassword } from 'pages/auth/';
 import { NotFound } from 'pages'
@@ -40,6 +40,12 @@ const routes = [
         component: Protected,
         path: '/protected',
         auth: true
+    },
+    {
+        name: 'User Profile',
+        component: UserProfile,
+        path: '/profile',
+        auth: false
     },
     {
         name: 'Not Found',

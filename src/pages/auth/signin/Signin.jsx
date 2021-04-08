@@ -10,6 +10,8 @@ import customTheme from 'theme/customTheme';
 import SignupSuccessAnimated from 'lottie/SignupSuccessAnimated';
 import FailedAnimation from 'lottie/FailedAnimation';
 
+require('dotenv').config();
+
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -44,6 +46,7 @@ const Signin = () => {
     animationSuccess: SignupSuccessAnimated,
     animationFailed: FailedAnimation,
     successText: 'Success! Redirecting you to homepage.',
+    location: '/',
   });
   const handleSubmission = (values) => {
     const { email, password } = values;

@@ -10,6 +10,7 @@ import PaymentMain from './payment/PaymentMain';
 import ForgotPassword from './auth/forgotPassword/ForgotPassword';
 import Home from './Home';
 import NotFound from './NotFound';
+import UserProfile from './user/UserProfile';
 
 export {
   CarouselProvider,
@@ -24,4 +25,5 @@ export {
   Home,
   NotFound,
   ForgotPassword,
+  UserProfile,
 };

@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
@@ -9,18 +8,18 @@ import {
   TextField,
   Button,
   Box,
+  makeStyles,
 } from '@material-ui/core';
+import { BrowserRouter as Router, Link, useHistory } from 'react-router-dom';
+import { Menu, MenuItem } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import CartMenu from './menu/CartMenu';
+import customTheme from 'theme/customTheme';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
-import { Menu, MenuItem } from '@szhsin/react-menu';
-import '@szhsin/react-menu/dist/index.css';
-import CartMenu from './menu/CartMenu';
-import customTheme from 'theme/customTheme';
-
-import { BrowserRouter as Router, Link, useHistory } from 'react-router-dom';
 
 const Navbar = (props) => {
   const useStyles = makeStyles((theme) => ({
@@ -140,7 +139,6 @@ const Navbar = (props) => {
               <IconButton
                 color='inherit'
                 aria-label='cart'
-                component={Link}
                 onClick={() => history.push('/payment')}
               >
                 <ShoppingCartOutlinedIcon />

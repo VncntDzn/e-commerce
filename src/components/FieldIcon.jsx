@@ -1,17 +1,16 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import {
   FormControl,
   InputLabel,
   Input,
   InputAdornment,
   IconButton,
+  makeStyles,
 } from '@material-ui/core';
+import { useField } from 'formik';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { useField } from 'formik';
 
 /**
  * FieldIcon - a wrapper for material ui TextField with icon.
@@ -87,7 +86,5 @@ const FieldIcon = (props) => {
     </FormControl>
   );
 };
-
-FieldIcon.propTypes = {};
 
 export default FieldIcon;

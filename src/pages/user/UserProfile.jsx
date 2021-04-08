@@ -1,16 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Card,
-  CardContent,
-  Button,
-  Box,
-  makeStyles,
-  Grid,
-} from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import UserDetails from './UserDetails';
 import { MainLayout } from 'layouts';
-const UserProfile = (props) => {
+
+const UserProfile = () => {
   return (
     <MainLayout>
       <Grid>
@@ -20,7 +12,5 @@ const UserProfile = (props) => {
     </MainLayout>
   );
 };
-
-UserProfile.propTypes = {};
 
 export default UserProfile;

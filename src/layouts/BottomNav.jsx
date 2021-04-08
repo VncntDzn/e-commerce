@@ -1,25 +1,23 @@
-import { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { useState } from 'react';
 import {
   BottomNavigation,
   BottomNavigationAction,
   Hidden,
+  makeStyles,
 } from '@material-ui/core';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import theme from 'theme/customTheme';
-import { useHistory } from 'react-router-dom';
+import customTheme from 'theme/customTheme';
 
 const BottomNav = (props) => {
-  const history = useHistory();
   const useStyles = makeStyles({
     root: {
       width: '100vw',
       position: 'fixed',
       bottom: 0,
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: customTheme.palette.secondary.main,
     },
     '&:selected': {
       color: 'blue',
@@ -29,8 +27,8 @@ const BottomNav = (props) => {
   const [value, setValue] = useState('/');
 
   const handleChange = (event, newValue) => {
-    /* TODO: FIX THE BUG */
-    history.push(newValue);
+    /*   TODO: FIX THE BUG */
+
     setValue(newValue);
   };
 
@@ -38,7 +36,7 @@ const BottomNav = (props) => {
     <Hidden only={['lg', 'xl']}>
       <BottomNavigation
         value={value}
-        onChange={(data, value) => console.log(value)}
+        onChange={(data, value) => handleChange}
         className={classes.root}
       >
         <BottomNavigationAction

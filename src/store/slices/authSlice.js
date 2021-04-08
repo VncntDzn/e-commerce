@@ -100,7 +100,7 @@ const authSlice = createSlice({
 
 });
 
-const { actions, reducer } = authSlice;
+const { reducer } = authSlice;
 export default reducer;
 //export default authSlice;
 export { registerUser, loginUser, resetPassword };

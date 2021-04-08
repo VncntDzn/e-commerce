@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  CarouselProvider,
   Recommendations,
   Categories,
   ShippingBanner,
@@ -9,7 +7,6 @@ import {
   Community,
   Footer,
 } from 'pages';
-
 import { MainLayout } from 'layouts';
 
 const Home = (props) => {

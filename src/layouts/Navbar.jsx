@@ -10,7 +10,7 @@ import {
   Box,
   makeStyles,
 } from '@material-ui/core';
-import { BrowserRouter as Router, Link, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, useHistory } from 'react-router-dom';
 import { Menu, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import CartMenu from './menu/CartMenu';
@@ -21,22 +21,22 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 
+const useStyles = makeStyles((theme) => ({
+  boxContainer: {
+    [theme.breakpoints.up('lg')]: {
+      margin: '0 6rem',
+    },
+  },
+  button: {
+    '&:active': {
+      borderBottom: '3px solid red',
+    },
+    '&:focus': {
+      borderBottom: `3px solid ${customTheme.palette.secondary.main}`,
+    },
+  },
+}));
 const Navbar = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    boxContainer: {
-      [theme.breakpoints.up('lg')]: {
-        margin: '0 6rem',
-      },
-    },
-    button: {
-      '&:active': {
-        borderBottom: '3px solid red',
-      },
-      '&:focus': {
-        borderBottom: `3px solid ${customTheme.palette.secondary.main}`,
-      },
-    },
-  }));
   const classes = useStyles();
   const history = useHistory();
 

@@ -45,7 +45,7 @@ const routes = [
         name: 'User Profile',
         component: UserProfile,
         path: '/profile',
-        auth: false
+        auth: true
     },
     {
         name: 'Not Found',

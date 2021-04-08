@@ -1,7 +1,4 @@
-import React from 'react';
-import { Typography, Grid } from '@material-ui/core';
-
-import { makeStyles } from '@material-ui/core/styles';
+import { Typography, Grid, makeStyles } from '@material-ui/core';
 import customTheme from 'theme/customTheme';
 
 const Community = (props) => {

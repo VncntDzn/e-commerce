@@ -1,16 +1,12 @@
-
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from 'theme/customTheme';
+import { StrictMode, useEffect } from 'react'
+import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { Provider } from 'react-redux';
-import { StrictMode } from 'react'
 import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
 import routes from 'routes/routes';
 import store from 'store';
 import PrivateRoute from 'routes/PrivateRoutes';
-import { SignupSuccess } from 'components'
 import firebase from 'firebase/firebaseConfig'
-import { useEffect } from 'react'
+import theme from 'theme/customTheme';
 
 const App = () => {
   useEffect(() => {

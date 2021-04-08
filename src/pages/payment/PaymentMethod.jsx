@@ -1,5 +1,4 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { useState } from 'react';
 import {
   Typography,
   Box,
@@ -9,25 +8,25 @@ import {
   FormControl,
   Button,
   Grid,
+  makeStyles,
 } from '@material-ui/core';
-
 import CreditCardOutlinedIcon from '@material-ui/icons/CreditCardOutlined';
 import LocalAtmOutlinedIcon from '@material-ui/icons/LocalAtmOutlined';
 
+const useStyles = makeStyles((theme) => ({
+  fluid_paragraph: {
+    fontSize: 'clamp(0.9rem, 3vw, 1.3rem)',
+    fontWeight: 500,
+    color: 'grey',
+  },
+}));
 const PaymentMethod = (props) => {
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = useState(true);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
     console.log(checked);
   };
-  const useStyles = makeStyles((theme) => ({
-    fluid_paragraph: {
-      fontSize: 'clamp(0.9rem, 3vw, 1.3rem)',
-      fontWeight: 500,
-      color: 'grey',
-    },
-  }));
 
   const classes = useStyles();
   return (

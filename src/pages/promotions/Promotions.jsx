@@ -1,37 +1,42 @@
-import React from 'react';
-import { Typography, Box, Grid, Hidden, Button } from '@material-ui/core';
-
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  Typography,
+  Box,
+  Grid,
+  Hidden,
+  Button,
+  makeStyles,
+} from '@material-ui/core';
 import customTheme from 'theme/customTheme';
 import Discount from './assets/discount.png';
-const Promotions = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      display: 'flex',
-      justifyContent: 'space-between',
-    },
-    ecommBasics: {
-      backgroundColor: customTheme.palette.secondary.light,
-      margin: '1rem ',
-    },
-    ecommDeals: {
-      backgroundColor: customTheme.palette.secondary.light,
-      margin: '1rem',
-    },
-    fluid_header: {
-      fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
-      fontWeight: 500,
-    },
-    fluid_paragraph: {
-      fontSize: '1rem',
-    },
-    image: {
-      objectFit: 'contain',
 
-      height: '10rem',
-      width: '10rem',
-    },
-  }));
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  ecommBasics: {
+    backgroundColor: customTheme.palette.secondary.light,
+    margin: '1rem ',
+  },
+  ecommDeals: {
+    backgroundColor: customTheme.palette.secondary.light,
+    margin: '1rem',
+  },
+  fluid_header: {
+    fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
+    fontWeight: 500,
+  },
+  fluid_paragraph: {
+    fontSize: '1rem',
+  },
+  image: {
+    objectFit: 'contain',
+
+    height: '10rem',
+    width: '10rem',
+  },
+}));
+const Promotions = (props) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.container} spacing={2}>

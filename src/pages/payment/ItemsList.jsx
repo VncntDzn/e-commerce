@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import {
   Typography,
   Box,
@@ -8,16 +8,16 @@ import {
   Checkbox,
   Hidden,
   IconButton,
+  makeStyles,
 } from '@material-ui/core';
-
 import { FluidTypography } from 'components';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import Macbook from '../categories/assets/macbook.png';
 import customTheme from 'theme/customTheme';
-import { makeStyles } from '@material-ui/core/styles';
+
 const ItemsList = (props) => {
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = useState(true);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);

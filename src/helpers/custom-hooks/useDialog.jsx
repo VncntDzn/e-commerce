@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 /**  A custom hook that displays a dialog, animated svg and message.
  * @param {string} [error] - whether the status has error or not.
@@ -44,4 +44,5 @@ const useDialog = (...props) => {
 
   return { visibility, data };
 };
+
 export default useDialog;

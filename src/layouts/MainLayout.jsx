@@ -1,21 +1,18 @@
-import React from 'react';
 import { Navbar, BottomNav } from 'layouts';
+import { Box, makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
-
-const MainLayout = ({ children }) => {
-  const useStyles = makeStyles((theme) => ({
-    boxContainer: {
-      margin: '0 1rem',
+const useStyles = makeStyles((theme) => ({
+  boxContainer: {
+    margin: '0 1rem',
+    marginTop: '5rem',
+    [theme.breakpoints.up('lg')]: {
+      margin: '0 6rem',
       marginTop: '5rem',
-      [theme.breakpoints.up('lg')]: {
-        margin: '0 6rem',
-        marginTop: '5rem',
-      },
     },
-  }));
-
+  },
+}));
+const MainLayout = ({ children }) => {
   const classes = useStyles();
   return (
     <>
@@ -26,6 +23,8 @@ const MainLayout = ({ children }) => {
   );
 };
 
-MainLayout.propTypes = {};
+MainLayout.propTypes = {
+  children: PropTypes.node,
+};
 
 export default MainLayout;

@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { useField } from 'formik';
 import { TextField, Box } from '@material-ui/core';
 
@@ -21,7 +19,5 @@ const Field = ({ withIcon, ...props }) => {
     </Box>
   );
 };
-
-Field.propTypes = {};
 
 export default Field;

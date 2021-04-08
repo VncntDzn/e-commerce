@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Grid,
   Box,
@@ -6,73 +5,72 @@ import {
   Card,
   CardContent,
   Typography,
+  makeStyles,
 } from '@material-ui/core';
-
-import { makeStyles } from '@material-ui/core/styles';
 import customTheme from 'theme/customTheme';
 import Macbook from './assets/macbook.png';
 import TV from './assets/tv.png';
 import Clothes from './assets/clothes.png';
 import Makeup from './assets/makeup.png';
 
-const Categories = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      backgroundColor: customTheme.palette.tertiary.light,
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-      paddingBottom: '1rem ',
+const useStyles = makeStyles((theme) => ({
+  container: {
+    backgroundColor: customTheme.palette.tertiary.light,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    paddingBottom: '1rem ',
+  },
+  containerCards: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
     },
-    containerCards: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      [theme.breakpoints.up('sm')]: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-      },
-    },
-    fluid_header: {
-      fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
-      fontWeight: 500,
-    },
-    fluid_paragraph: {
-      fontSize: 'clamp(1rem, 4vw, 1.5rem)',
-    },
+  },
+  fluid_header: {
+    fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
+    fontWeight: 500,
+  },
+  fluid_paragraph: {
+    fontSize: 'clamp(1rem, 4vw, 1.5rem)',
+  },
 
-    card: {
-      height: '18rem',
-      width: '18rem',
-      padding: '5px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      cursor: 'pointer',
-      [theme.breakpoints.up('md')]: {
-        height: '15rem',
-        width: '15rem',
-      },
-      [theme.breakpoints.up('lg')]: {
-        height: '20rem',
-        width: '20rem',
-      },
-    },
-    image: {
-      objectFit: 'contain',
+  card: {
+    height: '18rem',
+    width: '18rem',
+    padding: '5px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    [theme.breakpoints.up('md')]: {
       height: '15rem',
       width: '15rem',
-      [theme.breakpoints.up('sm')]: {
-        height: '15rem',
-        width: '15rem',
-      },
-      [theme.breakpoints.up('md')]: {
-        height: '13rem',
-        width: '13rem',
-      },
     },
-  }));
+    [theme.breakpoints.up('lg')]: {
+      height: '20rem',
+      width: '20rem',
+    },
+  },
+  image: {
+    objectFit: 'contain',
+    height: '15rem',
+    width: '15rem',
+    [theme.breakpoints.up('sm')]: {
+      height: '15rem',
+      width: '15rem',
+    },
+    [theme.breakpoints.up('md')]: {
+      height: '13rem',
+      width: '13rem',
+    },
+  },
+}));
+const Categories = (props) => {
   const classes = useStyles();
   return (
     <Grid className={classes.container}>

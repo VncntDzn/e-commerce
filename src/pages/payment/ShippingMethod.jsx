@@ -1,22 +1,20 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Typography,
   Box,
   RadioGroup,
   Radio,
   FormControlLabel,
+  makeStyles,
 } from '@material-ui/core';
 
+const useStyles = makeStyles((theme) => ({
+  fluid_paragraph: {
+    fontSize: 'clamp(0.9rem, 3vw, 1.3rem)',
+    fontWeight: 500,
+    color: 'grey',
+  },
+}));
 const ShippingMethod = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    fluid_paragraph: {
-      fontSize: 'clamp(0.9rem, 3vw, 1.3rem)',
-      fontWeight: 500,
-      color: 'grey',
-    },
-  }));
-
   const classes = useStyles();
   return (
     <>

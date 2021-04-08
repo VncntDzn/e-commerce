@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Card,
   CardContent,
@@ -8,54 +7,53 @@ import {
   Box,
   Grid,
   Hidden,
+  makeStyles,
 } from '@material-ui/core';
+import { FluidTypography } from 'components';
 import Rating from '@material-ui/lab/Rating';
-import { makeStyles } from '@material-ui/core/styles';
 import customTheme from 'theme/customTheme';
 import Refrigerator from '../assets/refrigerator.jpg';
-import { FluidTypography } from 'components';
 
-const ApplianceSlide = () => {
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      backgroundColor: customTheme.palette.tertiary.light,
-      display: 'flex',
-      flexDirection: 'column',
+const useStyles = makeStyles((theme) => ({
+  container: {
+    backgroundColor: customTheme.palette.tertiary.light,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    width: '100vw',
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row',
+      placeContent: 'center',
       justifyContent: 'space-evenly',
-      width: '100vw',
-      [theme.breakpoints.up('md')]: {
-        flexDirection: 'row',
-        placeContent: 'center',
-        justifyContent: 'space-evenly',
-      },
     },
-    containerSlogan: {
-      display: 'flex',
-      flexDirection: 'column',
+  },
+  containerSlogan: {
+    display: 'flex',
+    flexDirection: 'column',
 
-      [theme.breakpoints.up('lg')]: {
-        placeContent: 'center',
-      },
-    },
-
-    card: {
-      borderRadius: '20px',
-      width: 'fit-content',
-      padding: '2px',
-      display: 'flex',
-      flexDirection: 'column',
+    [theme.breakpoints.up('lg')]: {
       placeContent: 'center',
     },
-    image: {
-      objectFit: 'contain',
-      alignSelf: 'center',
-      [theme.breakpoints.up('sm')]: {
-        height: '20vh',
-        width: '20vw',
-      },
-    },
-  }));
+  },
 
+  card: {
+    borderRadius: '20px',
+    width: 'fit-content',
+    padding: '2px',
+    display: 'flex',
+    flexDirection: 'column',
+    placeContent: 'center',
+  },
+  image: {
+    objectFit: 'contain',
+    alignSelf: 'center',
+    [theme.breakpoints.up('sm')]: {
+      height: '20vh',
+      width: '20vw',
+    },
+  },
+}));
+const ApplianceSlide = () => {
   const classes = useStyles();
   return (
     <Grid className={classes.container} container direction='row'>

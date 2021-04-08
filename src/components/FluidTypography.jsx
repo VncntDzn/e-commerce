@@ -1,8 +1,10 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import customTheme from 'theme/customTheme';
+import PropTypes from 'prop-types';
 
 /** FluidTypography - a wrapper for Typography of material ui.
  *  Override some of the styles of the based typography.
+ * @param {text} - the text that will be displayed.
  * @param {variant} - property of typography.
  * @param {minSize} - minimum size to achieve fluid typography.
  * @param {size} - preferred size to achieve fluid typography.
@@ -30,12 +32,19 @@ const FluidTypography = ({ text, ...props }) => {
   }));
   const classes = useStyles();
   return (
-    <>
-      <Typography className={classes.fluid_header} variant={variant}>
-        {text}
-      </Typography>
-    </>
+    <Typography className={classes.fluid_header} variant={variant}>
+      {text}
+    </Typography>
   );
 };
 
+FluidTypography.propTypes = {
+  text: PropTypes.any.isRequired,
+  variant: PropTypes.string.isRequired,
+  minSize: PropTypes.number,
+  size: PropTypes.number.isRequired,
+  maxSize: PropTypes.number,
+  color: PropTypes.string,
+  fontWeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+};
 export default FluidTypography;

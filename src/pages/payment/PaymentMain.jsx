@@ -1,7 +1,5 @@
-import React from 'react';
 import { MainLayout } from 'layouts';
-import { Typography, Box, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Typography, Box, Grid, makeStyles } from '@material-ui/core';
 import ShippingMethod from './ShippingMethod';
 import PaymentMethod from './PaymentMethod';
 import ItemsList from './ItemsList';
@@ -12,14 +10,13 @@ import ItemsList from './ItemsList';
   ShippingMethod is the file that lets user decide for type of shipment .
   PaymentMethod is the file  that lets user decide for payment mode.
 */
-
+const useStyles = makeStyles((theme) => ({
+  fluid_header: {
+    fontSize: 'clamp(1.2rem, 5vw, 1.5rem)',
+    fontWeight: 500,
+  },
+}));
 const PaymentMain = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    fluid_header: {
-      fontSize: 'clamp(1.2rem, 5vw, 1.5rem)',
-      fontWeight: 500,
-    },
-  }));
   const classes = useStyles();
   return (
     <MainLayout

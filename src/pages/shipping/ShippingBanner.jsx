@@ -3,18 +3,18 @@ import { FluidTypography } from 'components';
 import customTheme from 'theme/customTheme';
 import puppy from './assets/puppy.png';
 
-const ShippingBanner = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      backgroundColor: customTheme.palette.tertiary.light,
-    },
-    containerSlogan: {
-      display: 'flex',
-      flexDirection: 'column',
-      placeContent: 'center',
-    },
-  }));
+const useStyles = makeStyles((theme) => ({
+  container: {
+    backgroundColor: customTheme.palette.tertiary.light,
+  },
+  containerSlogan: {
+    display: 'flex',
+    flexDirection: 'column',
+    placeContent: 'center',
+  },
+}));
 
+const ShippingBanner = (props) => {
   const classes = useStyles();
   return (
     <Grid container direction='row'>

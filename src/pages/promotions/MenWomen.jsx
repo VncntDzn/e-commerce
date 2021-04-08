@@ -1,38 +1,43 @@
-import React from 'react';
-import { Typography, Box, Grid, Hidden, Button } from '@material-ui/core';
-
+import {
+  Typography,
+  Box,
+  Grid,
+  Hidden,
+  Button,
+  makeStyles,
+} from '@material-ui/core';
 import { FluidTypography } from 'components';
-import { makeStyles } from '@material-ui/core/styles';
 import customTheme from 'theme/customTheme';
 import GirlFashion from './assets/girl_fashion.png';
 import ManFashion from './assets/man_fashion.png';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  ecommBasics: {
+    backgroundColor: customTheme.palette.secondary.light,
+    margin: '1rem ',
+  },
+  ecommDeals: {
+    backgroundColor: customTheme.palette.secondary.light,
+    margin: '1rem',
+  },
+  fluid_header: {
+    fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
+    fontWeight: 500,
+  },
+  fluid_paragraph: {
+    fontSize: '1rem',
+  },
+  image: {
+    objectFit: 'contain',
+    height: '20rem',
+    width: '20rem',
+  },
+}));
 const MenWomen = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    container: {
-      display: 'flex',
-      justifyContent: 'space-between',
-    },
-    ecommBasics: {
-      backgroundColor: customTheme.palette.secondary.light,
-      margin: '1rem ',
-    },
-    ecommDeals: {
-      backgroundColor: customTheme.palette.secondary.light,
-      margin: '1rem',
-    },
-    fluid_header: {
-      fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
-      fontWeight: 500,
-    },
-    fluid_paragraph: {
-      fontSize: '1rem',
-    },
-    image: {
-      objectFit: 'contain',
-      height: '20rem',
-      width: '20rem',
-    },
-  }));
   const classes = useStyles();
   return (
     <Grid container className={classes.container} spacing={2}>

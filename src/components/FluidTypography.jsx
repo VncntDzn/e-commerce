@@ -40,10 +40,10 @@ const FluidTypography = ({ text, ...props }) => {
 
 FluidTypography.propTypes = {
   text: PropTypes.any.isRequired,
-  variant: PropTypes.string.isRequired,
-  minSize: PropTypes.number,
-  size: PropTypes.number.isRequired,
-  maxSize: PropTypes.number,
+  variant: PropTypes.string,
+  minSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  maxSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   color: PropTypes.string,
   fontWeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };

@@ -11,7 +11,7 @@ const registerUser = createAsyncThunk('registerUser', async ({ email, password }
 });
 const loginUser = createAsyncThunk('loginUser', async ({ email, password }) => {
     try {
-        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
         const response = await firebase.auth().signInWithEmailAndPassword(email, password);
         return response.user
     } catch (e) {
@@ -37,10 +37,17 @@ const initialState = {
     observer: null,
     user: [],
     forgotPassword: null,
+    uid: null
 };
 const authSlice = createSlice({
     name: 'auth',
     initialState,
+    reducers: {
+        getCurrentUser: (state, action) => {
+            console.log(action.payload.uid)
+            state.uid = action.payload.uid
+        }
+    },
     extraReducers: {
         // REGISTER
         [registerUser.pending]: (state, action) => {
@@ -100,7 +107,8 @@ const authSlice = createSlice({
 
 });
 
-const { reducer } = authSlice;
+const { actions, reducer } = authSlice;
 export default reducer;
+export const { getCurrentUser } = actions;
 //export default authSlice;
 export { registerUser, loginUser, resetPassword };

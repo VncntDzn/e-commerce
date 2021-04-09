@@ -3,10 +3,17 @@ import { Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from 'store/slices/authSlice';
+import PropTypes from 'prop-types';
 import firebase from 'firebase/firebaseConfig';
 import RedirectRoute from './RedirectRoute';
 
-const PrivateRoute = ({ component: Component, auth, ...rest }) => {
+/** A custom wrapper for Route.
+ * @param {Component} component - the component that will be rendered.\
+ * @param {object} rest - the props passed from the root file.
+ * @param {object} props - the props of Route component.
+ */
+
+const PrivateRoutes = ({ component: Component, ...rest }) => {
   const dispatch = useDispatch();
   const uid = useSelector((state) => state.uid);
 
@@ -34,4 +41,8 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+PrivateRoutes.propTypes = {
+  component: PropTypes.elementType.isRequired,
+  rest: PropTypes.object,
+};
+export default PrivateRoutes;

@@ -1,5 +1,5 @@
 import { MainLayout } from 'layouts';
-import { makeStyles, Grid, Button, Box, Typography } from '@material-ui/core';
+import { makeStyles, Button, Box, Typography } from '@material-ui/core';
 import { FluidTypography } from 'components';
 import { useHistory } from 'react-router-dom';
 import ForbiddenAnimation from 'lottie/ForbiddenAnimation';

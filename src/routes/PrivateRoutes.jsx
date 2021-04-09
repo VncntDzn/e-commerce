@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from 'store/slices/authSlice';
 import firebase from 'firebase/firebaseConfig';
+import RedirectRoute from './RedirectRoute';
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   const dispatch = useDispatch();
@@ -14,9 +15,8 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
-        var uid = user;
-        console.log(uid);
-        dispatch(getCurrentUser(uid));
+
+        dispatch(getCurrentUser(user));
       } else {
         // User is signed out
         // ...
@@ -29,9 +29,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
 
     <Route
       {...rest}
-      render={(props) =>
-        uid ? <Component {...props} /> : <div>You are not authenticated</div>
-      }
+      render={(props) => (uid ? <Component {...props} /> : <RedirectRoute />)}
     />
   );
 };

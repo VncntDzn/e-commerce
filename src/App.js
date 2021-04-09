@@ -1,4 +1,3 @@
-
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
@@ -10,7 +9,6 @@ import theme from 'theme/customTheme';
 const App = () => {
 
   return (
-
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />

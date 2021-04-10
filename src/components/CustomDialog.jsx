@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 
 const CustomDialog = ({ dialog, lottie, text }) => {
   const defaultOptions = {
-    loop: true,
+    loop: false,
     autoplay: true,
     animationData: lottie,
     rendererSettings: {

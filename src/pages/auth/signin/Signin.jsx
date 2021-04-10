@@ -9,7 +9,6 @@ import { loginUser } from 'store/slices/authSlice';
 import customTheme from 'theme/customTheme';
 import SignupSuccessAnimated from 'lottie/SignupSuccessAnimated';
 import FailedAnimation from 'lottie/FailedAnimation';
-require('dotenv').config();
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -45,7 +44,7 @@ const Signin = () => {
     animationSuccess: SignupSuccessAnimated,
     animationFailed: FailedAnimation,
     successText: 'Success! Redirecting you to homepage.',
-    location: '/',
+    location: '/profile',
   });
   const handleSubmission = (values) => {
     const { email, password } = values;

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -9,11 +10,10 @@ import {
   Button,
   Box,
   makeStyles,
+  Menu,
+  MenuItem,
 } from '@material-ui/core';
 import { BrowserRouter as Router, useHistory } from 'react-router-dom';
-import { Menu, MenuItem } from '@szhsin/react-menu';
-import '@szhsin/react-menu/dist/index.css';
-import CartMenu from './menu/CartMenu';
 import customTheme from 'theme/customTheme';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -39,7 +39,15 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const [anchorEl, setAnchorEl] = useState(null);
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <Router>
       <AppBar position='fixed'>
@@ -61,7 +69,13 @@ const Navbar = (props) => {
               lg={7}
               md={7}
             >
-              <Typography variant='h6'>E-comm</Typography>
+              <Typography
+                variant='h6'
+                onClick={() => history.push('/')}
+                style={{ cursor: 'pointer' }}
+              >
+                E-comm
+              </Typography>
               <Hidden mdDown>
                 <Grid
                   container
@@ -74,24 +88,15 @@ const Navbar = (props) => {
                   style={{ marginLeft: '2rem' }}
                 >
                   <Button className={classes.button}>
-                    <Menu
-                      className={classes.button}
-                      menuButton={
-                        <div style={{ display: 'flex', cursor: 'pointer' }}>
-                          <DashboardOutlinedIcon />
-                          <Typography
-                            variant='subtitle1'
-                            className={classes.button}
-                          >
-                            All
-                          </Typography>
-                        </div>
-                      }
-                    >
-                      <MenuItem>
-                        <CartMenu />
-                      </MenuItem>
-                    </Menu>
+                    <div style={{ display: 'flex', cursor: 'pointer' }}>
+                      <DashboardOutlinedIcon />
+                      <Typography
+                        variant='subtitle1'
+                        className={classes.button}
+                      >
+                        All
+                      </Typography>
+                    </div>
                   </Button>
 
                   <Button href='#' className={classes.button}>
@@ -124,14 +129,14 @@ const Navbar = (props) => {
                     <TextField placeholder='Search' />
                   </Grid>
                 </Hidden>
+
                 <IconButton
                   color='inherit'
                   aria-label='auth'
-                  onClick={() => history.push('/auth/signin')}
+                  onClick={handleClick}
                 >
                   <AccountCircleOutlinedIcon />
                 </IconButton>
-
                 <IconButton color='inherit' aria-label='menu'>
                   <FavoriteBorderOutlinedIcon />
                 </IconButton>
@@ -147,6 +152,19 @@ const Navbar = (props) => {
           </Box>
         </Toolbar>
       </AppBar>
+
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={() => history.push('/auth/signin')}>
+          Sign in
+        </MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
     </Router>
   );
 };

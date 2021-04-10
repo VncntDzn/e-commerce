@@ -1,6 +1,6 @@
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, } from 'react-router-dom';
 import { PrivateRoutes, PublicRoutes, routes } from 'routes';
 import store from 'store';
 import theme from 'theme/customTheme';

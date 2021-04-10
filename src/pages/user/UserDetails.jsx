@@ -1,32 +1,44 @@
-import React from 'react';
+import { useState } from 'react';
 import {
   Button,
   makeStyles,
   Grid,
   Avatar,
   Typography,
-  Box,
-  Divider,
+  Tabs,
+  Tab,
 } from '@material-ui/core';
-import customTheme from 'theme/customTheme';
+import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
+import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
+import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
+import { TabPanel } from 'components';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    /*  border: '3px solid red', */
-    margin: 0,
-    padding: 0,
-  },
-  buttonStyle: {
-    '&:hover': {
-      color: customTheme.palette.secondary.main,
+  details: {
+    width: '95vw',
+    [theme.breakpoints.up('sm')]: {
+      width: '100vw',
     },
   },
 }));
 const UserDetails = () => {
   const classes = useStyles();
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
-    <Grid container className={classes.container}>
-      <Grid container item xs={3} display='flex' alignItems='center'>
+    <Grid container item lg={4} xl={4}>
+      <Grid
+        container
+        item
+        xs={3}
+        display='flex'
+        alignItems='center'
+        justify='center'
+      >
         <Avatar>V</Avatar>
       </Grid>
       <Grid
@@ -43,42 +55,30 @@ const UserDetails = () => {
           EDIT PROFILE
         </Button>
       </Grid>
-      <Grid>
-        <Box my={1}>
-          <Divider
-            variant='fullWidth'
-            style={{
-              width: '100vw',
-              margin: '0.8rem 0',
-              marginLeft: '-1rem',
-            }}
-          />
-          <Box display='flex' justifyContent='space-around'>
-            <Box display='flex' flexDirection='column' alignItems='center'>
-              <Avatar>V</Avatar>
-              <Typography>23 posts</Typography>
-            </Box>
-            <Box display='flex' flexDirection='column' alignItems='center'>
-              <Avatar>V</Avatar>
-              <Typography>142 followers</Typography>
-            </Box>
-            <Box display='flex' flexDirection='column' alignItems='center'>
-              <Avatar>V</Avatar>
-              <Typography>55 following</Typography>
-            </Box>
-          </Box>
-          <Divider
-            variant='fullWidth'
-            light
-            style={{
-              width: '100vw',
-              borderWidth: '2px',
-              margin: '0.8rem 0',
-              marginLeft: '-1rem',
-            }}
-          />
-        </Box>
-      </Grid>
+      <hr style={{ width: '88vw' }} />
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        indicatorColor='secondary'
+        textColor='secondary'
+        variant='fullWidth'
+        aria-label='full width tabs'
+        centered
+      >
+        <Tab icon={<PostAddRoundedIcon />} label='55 posts' wrapped />
+        <Tab icon={<PeopleAltRoundedIcon />} label='142 followers' />
+        <Tab icon={<SupervisorAccountRoundedIcon />} label='552 following' />
+      </Tabs>
+      <TabPanel value={value} index={0}>
+        Item One
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
+      <hr style={{ width: '88vw' }} />
     </Grid>
   );
 };

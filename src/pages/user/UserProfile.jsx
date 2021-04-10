@@ -1,13 +1,21 @@
-import { Grid } from '@material-ui/core';
-import UserDetails from './UserDetails';
+import { Grid, makeStyles } from '@material-ui/core';
 import { MainLayout } from 'layouts';
+import UserActivities from './UserActivities';
+import UserDetails from './UserDetails';
 
+const useStyles = makeStyles((theme) => ({
+  container: {
+    /*  border: '3px solid red', */
+  },
+}));
 const UserProfile = () => {
+  const classes = useStyles();
+
   return (
     <MainLayout>
-      <Grid>
+      <Grid className={classes.container} container>
         <UserDetails />
-        <h1>POSTS AND ACTIVITIES HERE</h1>
+        {/*  <UserActivities /> */}
       </Grid>
     </MainLayout>
   );

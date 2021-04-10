@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 /**  A custom hook that displays a dialog, animated svg and message.
  * @param {string} [error] - whether the status has error or not.
@@ -6,7 +7,9 @@ import { useEffect, useState } from 'react';
  * @param {JSON} [animationSuccess] - the json file that contains the success animation.
  * @param {JSON} [animationFailed] - the json file that contains the failed animation.
  * @param {string} [successText] - the text will be displayed if no error has occur.
- */
+ * @param {string} [location] - the path that will be redirected.
+ 
+*/
 
 const useDialog = (...props) => {
   const {
@@ -15,9 +18,11 @@ const useDialog = (...props) => {
     animationSuccess,
     animationFailed,
     successText,
+    location,
   } = props[0];
   const [visibility, setVisibility] = useState(false);
   const [data, setData] = useState({ show: false, text: '', lottie: '' });
+  const history = useHistory();
 
   useEffect(() => {
     if (status === 'pending') {
@@ -36,11 +41,20 @@ const useDialog = (...props) => {
     } else {
       setVisibility(false);
     }
-
     setTimeout(() => {
       setData({ show: false });
+      history.push(location);
+      console.log(1);
     }, 4000);
-  }, [status, error, animationSuccess, animationFailed, successText]);
+  }, [
+    status,
+    error,
+    animationSuccess,
+    animationFailed,
+    successText,
+    history,
+    location,
+  ]);
 
   return { visibility, data };
 };

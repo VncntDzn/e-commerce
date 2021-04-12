@@ -1,19 +1,11 @@
 import { useState } from 'react';
-import {
-  Button,
-  makeStyles,
-  Grid,
-  Avatar,
-  Typography,
-  Box,
-  Divider,
-  Paper,
-  Tabs,
-  Tab,
-} from '@material-ui/core';
-
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
+import { makeStyles, Tabs, Tab, Box } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { TabPanel } from 'components';
+import { CreatePostPanel } from './tab-panels';
+import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
+import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
+import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
 
 const useStyles = makeStyles({
   root: {
@@ -24,29 +16,36 @@ const useStyles = makeStyles({
 });
 const UserActivities = (props) => {
   const classes = useStyles();
+  const user = useSelector((state) => state.auth.user);
   const [value, setValue] = useState(0);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   return (
-    <Grid container item lg={8} xl={8}>
-      <Paper square className={classes.root}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          variant='fullWidth'
-          indicatorColor='secondary'
-          textColor='secondary'
-          aria-label='icon label tabs example'
-        >
-          <Tab icon={<FavoriteIcon />} label='FAVORITES' />
-          <Tab icon={<PersonPinIcon />} label='NEARBY' />
-        </Tabs>
-        <Box value={value} index={0}>
-          Item One
-        </Box>
-      </Paper>
-    </Grid>
+    <Box className={classes.tabsContainer}>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        indicatorColor='secondary'
+        textColor='secondary'
+        variant='fullWidth'
+        aria-label='full width tabs'
+      >
+        <Tab icon={<PostAddRoundedIcon />} label='55 posts' wrapped />
+        <Tab icon={<PeopleAltRoundedIcon />} label='142 followers' />
+        <Tab icon={<SupervisorAccountRoundedIcon />} label='552 following' />
+      </Tabs>
+      <TabPanel value={value} index={0}>
+        <CreatePostPanel user={user} />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
+    </Box>
   );
 };
 

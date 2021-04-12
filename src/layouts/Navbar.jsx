@@ -42,7 +42,7 @@ const Navbar = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const uid = useSelector((state) => state.uid);
+  const uid = useSelector((state) => state.auth.uid);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {

@@ -1,21 +1,25 @@
-import { Grid, makeStyles, Box } from '@material-ui/core';
+import { makeStyles, Container } from '@material-ui/core';
 import { MainLayout } from 'layouts';
 import UserActivities from './UserActivities';
 import UserDetails from './UserDetails';
 
 const useStyles = makeStyles((theme) => ({
-  container: {},
+  container: {
+    [theme.breakpoints.up('lg')]: {
+      width: '40vw',
+    },
+  },
 }));
 const UserProfile = () => {
   const classes = useStyles();
 
   return (
     <MainLayout>
-      <Grid className={classes.container} container>
-        <Box display='flex' justifyContent='center'>
-          <UserDetails />
-        </Box>
-      </Grid>
+      <Container className={classes.container}>
+        <UserDetails />
+        <hr style={{ width: '100%' }} />
+        <UserActivities />
+      </Container>
     </MainLayout>
   );
 };

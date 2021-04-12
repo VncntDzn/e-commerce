@@ -56,7 +56,8 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         getCurrentUser: (state, action) => {
-            state.uid = action.payload.uid
+            state.uid = action.payload.uid;
+            console.log(state.uid)
         }
     },
     extraReducers: {
@@ -85,7 +86,7 @@ const authSlice = createSlice({
         [loginUser.fulfilled]: (state, action) => {
             state.status = 'success';
             state.user = action.payload;
-
+            console.log(state.user)
             if (action.payload instanceof Object) {
                 state.error = null;
             } else {

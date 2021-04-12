@@ -1,5 +1,4 @@
 
-import storage from 'redux-persist/lib/storage';
 import { combineReducers } from "redux";
 import {
     persistReducer,
@@ -11,6 +10,7 @@ import {
     REGISTER,
 } from 'redux-persist'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage';
 import authSlice from './slices/authSlice';
 
 const customizedMiddleware = getDefaultMiddleware({
@@ -24,7 +24,7 @@ const reducers = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['authSlice'],
+    whitelist: ['auth'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -33,8 +33,6 @@ const useDialog = (...props) => {
         setData({ show: true, text: error, lottie: animationFailed });
         setTimeout(() => {
           setData({ show: false });
-          history.push(location);
-          console.log(1);
         }, 4000);
       } else {
         setData({
@@ -45,21 +43,12 @@ const useDialog = (...props) => {
 
         setTimeout(() => {
           setData({ show: false });
-          history.push(location);
         }, 4000);
       }
     } else {
       setVisibility(false);
     }
-  }, [
-    status,
-    error,
-    animationSuccess,
-    animationFailed,
-    successText,
-    history,
-    location,
-  ]);
+  }, [status, error, animationSuccess, animationFailed, successText]);
 
   return { visibility, data };
 };

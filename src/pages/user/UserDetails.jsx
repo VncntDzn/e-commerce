@@ -29,7 +29,6 @@ const UserDetails = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(user);
   };
 
   return (

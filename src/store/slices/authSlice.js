@@ -25,7 +25,6 @@ const loginUser = createAsyncThunk('loginUser', async ({ email, password }) => {
 const logoutUser = createAsyncThunk('logoutUser', async () => {
     try {
         firebase.auth().signOut();
-        console.log(1)
         return true
     } catch (e) {
         return e.message
@@ -86,7 +85,6 @@ const authSlice = createSlice({
         [loginUser.fulfilled]: (state, action) => {
             state.status = 'success';
             state.user = action.payload;
-            console.log(state.user)
             if (action.payload instanceof Object) {
                 state.error = null;
             } else {

@@ -169,13 +169,17 @@ const Navbar = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>My account</MenuItem>
         {!uid ? (
           <MenuItem onClick={() => history.push('/auth/signin')}>
             Signin
           </MenuItem>
         ) : (
-          <MenuItem onClick={logout}>Signout</MenuItem>
+          <Box>
+            <MenuItem onClick={() => history.push('/profile')}>
+              My account
+            </MenuItem>
+            <MenuItem onClick={logout}>Signout</MenuItem>
+          </Box>
         )}
       </Menu>
     </Router>

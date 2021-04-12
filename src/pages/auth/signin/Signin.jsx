@@ -5,7 +5,8 @@ import { Field, FieldIcon, Spinner, CustomDialog } from 'components';
 import { MainLayout } from 'layouts';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser } from 'store/slices/authSlice';
+import { loginUser, dd } from 'store/slices/authSlice';
+import store from 'store';
 import customTheme from 'theme/customTheme';
 import SignupSuccessAnimated from 'lottie/SignupSuccessAnimated';
 import FailedAnimation from 'lottie/FailedAnimation';
@@ -35,9 +36,9 @@ const Signin = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.status);
-  const error = useSelector((state) => state.error);
-
+  const status = useSelector((state) => state.auth.status);
+  const error = useSelector((state) => state.auth.error);
+  const count = useSelector((state) => state.auth.user);
   const { visibility, data } = useDialog({
     status,
     error,
@@ -49,6 +50,7 @@ const Signin = () => {
   const handleSubmission = (values) => {
     const { email, password } = values;
     dispatch(loginUser({ email, password }));
+    console.log(count);
   };
 
   return (

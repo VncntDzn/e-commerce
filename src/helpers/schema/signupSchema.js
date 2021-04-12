@@ -9,12 +9,9 @@ const signupSchema = Yup.object().shape({
     email: Yup.string()
         .email('Invalid email')
         .required('Email is required'),
-    firstName: Yup.string()
-        .min(4, 'First name must be at least 4 characters')
-        .required('First name is required'),
-    lastName: Yup.string()
-        .min(4, 'Last name  must be at least 4 characters')
-        .required('Last name is required'),
+    displayName: Yup.string()
+        .min(4, 'Full name must be at least 4 characters')
+        .required('Full name is required'),
     password: Yup.string()
         .min(8, 'Must be at least 8 characters')
         .required('Password  is required'),

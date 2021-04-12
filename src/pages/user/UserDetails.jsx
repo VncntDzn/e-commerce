@@ -9,7 +9,9 @@ import {
   Tab,
   Box,
 } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import { TabPanel } from 'components';
+import { CreatePostPanel } from './tab-panels';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
 import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
@@ -22,10 +24,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 const UserDetails = () => {
   const classes = useStyles();
+  const user = useSelector((state) => state.auth.user);
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    console.log(user);
   };
 
   return (
@@ -56,7 +60,7 @@ const UserDetails = () => {
         justify='center'
         direction='column'
       >
-        <Typography>Vincent Dizon</Typography>
+        <Typography>{user.displayName}</Typography>
         <Box>
           <Button className={classes.buttonStyle} variant='outlined'>
             EDIT PROFILE
@@ -72,14 +76,13 @@ const UserDetails = () => {
           textColor='secondary'
           variant='fullWidth'
           aria-label='full width tabs'
-          centered
         >
           <Tab icon={<PostAddRoundedIcon />} label='55 posts' wrapped />
           <Tab icon={<PeopleAltRoundedIcon />} label='142 followers' />
           <Tab icon={<SupervisorAccountRoundedIcon />} label='552 following' />
         </Tabs>
         <TabPanel value={value} index={0}>
-          Item One
+          <CreatePostPanel />
         </TabPanel>
         <TabPanel value={value} index={1}>
           Item Two

@@ -14,7 +14,7 @@ import RedirectRoute from './RedirectRoute';
 
 const PrivateRoutes = ({ component: Component, ...rest }) => {
   const dispatch = useDispatch();
-  const uid = useSelector((state) => state.uid);
+  const uid = useSelector((state) => state.auth.uid);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {

@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = (props) => {
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.status);
-  const error = useSelector((state) => state.error);
+  const status = useSelector((state) => state.auth.status);
+  const error = useSelector((state) => state.auth.error);
   const classes = useStyles();
   const history = useHistory();
 
@@ -47,8 +47,8 @@ const Signup = (props) => {
     successText: 'You are now registered with e-comm!',
   });
   const handleSubmission = (values) => {
-    const { email, password, firstName, lastName } = values;
-    dispatch(registerUser({ email, password, firstName, lastName }));
+    const { email, password, displayName } = values;
+    dispatch(registerUser({ email, password, displayName }));
   };
 
   return (
@@ -68,8 +68,7 @@ const Signup = (props) => {
             >
               <Form>
                 <Field name='email' type='email' placeholder='Email' />
-                <Field name='firstName' placeholder='First Name' />
-                <Field name='lastName' placeholder='Last Name' />
+                <Field name='displayName' placeholder='Full Name' />
                 <FieldIcon name='password' placeholder='Password' />
                 <Box mt={3}>
                   <Button

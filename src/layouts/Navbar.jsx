@@ -55,7 +55,7 @@ const Navbar = (props) => {
 
   const logout = () => {
     dispatch(logoutUser());
-    history.push('/auth/signin');
+    history.push('/');
   };
   return (
     <Router>

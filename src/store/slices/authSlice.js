@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import firebase from 'firebase/firebaseConfig';
 
-const registerUser = createAsyncThunk('registerUser', async ({ email, password }) => {
+const registerUser = createAsyncThunk('registerUser', async ({ email, password, displayName }) => {
     try {
         const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        response.user.updateProfile({ displayName })
+
         return response.user
     } catch (e) {
         return e.message
@@ -54,7 +56,6 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         getCurrentUser: (state, action) => {
-            console.log(action.payload.uid)
             state.uid = action.payload.uid
         }
     },
@@ -136,7 +137,7 @@ const authSlice = createSlice({
 });
 
 const { actions, reducer } = authSlice;
-export default reducer;
 export const { getCurrentUser } = actions;
+export default reducer;
 //export default authSlice;
 export { registerUser, loginUser, logoutUser, resetPassword };

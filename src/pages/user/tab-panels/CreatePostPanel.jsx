@@ -46,6 +46,7 @@ const CreatePostPanel = ({ user }) => {
         onClose={handleCreatePost}
         aria-labelledby='simple-dialog-title'
         open={open}
+        fullWidth
       >
         <Box display='flex' justifyContent='center'>
           <DialogTitle id='simple-dialog-title'>Create Post</DialogTitle>

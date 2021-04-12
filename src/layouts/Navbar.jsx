@@ -56,6 +56,7 @@ const Navbar = (props) => {
   const logout = () => {
     dispatch(logoutUser());
     history.push('/');
+    console.log(uid);
   };
   return (
     <Router>
@@ -169,12 +170,13 @@ const Navbar = (props) => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        {!uid && (
+        {!uid ? (
           <MenuItem onClick={() => history.push('/auth/signin')}>
             Signin
           </MenuItem>
+        ) : (
+          <MenuItem onClick={logout}>Signout</MenuItem>
         )}
-        <MenuItem onClick={logout}>Signout</MenuItem>
       </Menu>
     </Router>
   );

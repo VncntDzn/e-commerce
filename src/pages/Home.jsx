@@ -1,4 +1,5 @@
 import {
+  CarouselProvider,
   Recommendations,
   Categories,
   ShippingBanner,
@@ -14,7 +15,7 @@ const Home = (props) => {
     <MainLayout
       children={
         <>
-          {/*  <CarouselProvider /> */}
+          <CarouselProvider />
           <Recommendations />
           <Categories />
           <Promotions />

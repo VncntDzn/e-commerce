@@ -20,6 +20,15 @@ const loginUser = createAsyncThunk('loginUser', async ({ email, password }) => {
     }
 });
 
+const logoutUser = createAsyncThunk('logoutUser', async () => {
+    try {
+        firebase.auth().signOut();
+
+        return true
+    } catch (e) {
+        return e.message
+    }
+})
 const resetPassword = createAsyncThunk('resetPassword', async ({ email }) => {
     try {
         await firebase.auth().sendPasswordResetEmail(email);
@@ -28,6 +37,7 @@ const resetPassword = createAsyncThunk('resetPassword', async ({ email }) => {
         return e
     }
 });
+
 
 const initialState = {
     posts: [],
@@ -70,13 +80,31 @@ const authSlice = createSlice({
         // LOGIN
         [loginUser.pending]: (state, action) => {
             state.status = 'pending'
-
         },
         [loginUser.fulfilled]: (state, action) => {
             state.status = 'success';
             state.user = action.payload;
 
             if (action.payload instanceof Object) {
+                state.error = null;
+            } else {
+                state.error = action.payload;
+            }
+        },
+
+        // LOG OUT
+        [logoutUser.rejected]: (state, action) => {
+            state.status = 'failed'
+        },
+
+        [logoutUser.pending]: (state, action) => {
+            state.status = 'pending'
+        },
+        [logoutUser.fulfilled]: (state, action) => {
+            state.status = 'success';
+            state.user = action.payload;
+
+            if (action.payload) {
                 state.error = null;
             } else {
                 state.error = action.payload;
@@ -111,4 +139,4 @@ const { actions, reducer } = authSlice;
 export default reducer;
 export const { getCurrentUser } = actions;
 //export default authSlice;
-export { registerUser, loginUser, resetPassword };
+export { registerUser, loginUser, logoutUser, resetPassword };

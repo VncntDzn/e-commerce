@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getCurrentUser } from 'store/slices/authSlice';
 import PropTypes from 'prop-types';
 import firebase from 'firebase/firebaseConfig';

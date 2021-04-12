@@ -1,12 +1,10 @@
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, Box } from '@material-ui/core';
 import { MainLayout } from 'layouts';
 import UserActivities from './UserActivities';
 import UserDetails from './UserDetails';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    /*  border: '3px solid red', */
-  },
+  container: {},
 }));
 const UserProfile = () => {
   const classes = useStyles();
@@ -14,8 +12,9 @@ const UserProfile = () => {
   return (
     <MainLayout>
       <Grid className={classes.container} container>
-        <UserDetails />
-        {/*  <UserActivities /> */}
+        <Box display='flex' justifyContent='center'>
+          <UserDetails />
+        </Box>
       </Grid>
     </MainLayout>
   );

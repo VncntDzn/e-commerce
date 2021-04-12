@@ -31,21 +31,26 @@ const useDialog = (...props) => {
       setVisibility(false);
       if (error) {
         setData({ show: true, text: error, lottie: animationFailed });
+        setTimeout(() => {
+          setData({ show: false });
+          history.push(location);
+          console.log(1);
+        }, 4000);
       } else {
         setData({
           show: true,
           text: successText,
           lottie: animationSuccess,
         });
+
+        setTimeout(() => {
+          setData({ show: false });
+          history.push(location);
+        }, 4000);
       }
     } else {
       setVisibility(false);
     }
-    setTimeout(() => {
-      setData({ show: false });
-      history.push(location);
-      console.log(1);
-    }, 4000);
   }, [
     status,
     error,

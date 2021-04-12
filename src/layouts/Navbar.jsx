@@ -14,6 +14,8 @@ import {
   MenuItem,
 } from '@material-ui/core';
 import { BrowserRouter as Router, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from 'store/slices/authSlice';
 import customTheme from 'theme/customTheme';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -39,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const uid = useSelector((state) => state.uid);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -47,6 +51,11 @@ const Navbar = (props) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const logout = () => {
+    dispatch(logoutUser());
+    history.push('/auth/signin');
   };
   return (
     <Router>
@@ -130,17 +139,17 @@ const Navbar = (props) => {
                   </Grid>
                 </Hidden>
 
-                <IconButton
-                  color='inherit'
-                  aria-label='auth'
-                  onClick={handleClick}
-                >
-                  <AccountCircleOutlinedIcon />
-                </IconButton>
                 <IconButton color='inherit' aria-label='menu'>
                   <FavoriteBorderOutlinedIcon />
                 </IconButton>
               </Hidden>
+              <IconButton
+                color='inherit'
+                aria-label='auth'
+                onClick={handleClick}
+              >
+                <AccountCircleOutlinedIcon />
+              </IconButton>
               <IconButton
                 color='inherit'
                 aria-label='cart'
@@ -160,10 +169,12 @@ const Navbar = (props) => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={() => history.push('/auth/signin')}>
-          Sign in
-        </MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        {!uid && (
+          <MenuItem onClick={() => history.push('/auth/signin')}>
+            Signin
+          </MenuItem>
+        )}
+        <MenuItem onClick={logout}>Signout</MenuItem>
       </Menu>
     </Router>
   );

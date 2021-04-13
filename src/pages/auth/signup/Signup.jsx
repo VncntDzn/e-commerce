@@ -60,8 +60,7 @@ const Signup = (props) => {
               initialValues={{
                 email: '',
                 password: '',
-                firstName: '',
-                lastName: '',
+                displayName: '',
               }}
               validationSchema={signupSchema}
               onSubmit={(values, actions) => handleSubmission(values)}

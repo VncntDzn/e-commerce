@@ -5,7 +5,7 @@ const registerUser = createAsyncThunk('registerUser', async ({ email, password, 
     try {
         const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
         response.user.updateProfile({ displayName })
-
+        console.log(response)
         return response.user
     } catch (e) {
         return e.message

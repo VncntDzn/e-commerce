@@ -23,7 +23,7 @@ const CreatePostPanel = ({ user }) => {
   };
   return (
     <Grid>
-      <Card raised>
+      <Card style={{ margin: `1rem 0` }}>
         <CardContent>
           <TextField
             label={`What do you want to sell, ${user.displayName}?`}
@@ -35,13 +35,11 @@ const CreatePostPanel = ({ user }) => {
           />
         </CardContent>
       </Card>
-      <Box my={1}>
-        <Card>
-          <CardContent>
-            <Typography>Content Here</Typography>
-          </CardContent>
-        </Card>
-      </Box>
+      <Card>
+        <CardContent>
+          <Typography>Content Here</Typography>
+        </CardContent>
+      </Card>
       <Dialog
         onClose={handleCreatePost}
         aria-labelledby='simple-dialog-title'

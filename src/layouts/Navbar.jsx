@@ -170,9 +170,14 @@ const Navbar = (props) => {
         onClose={handleClose}
       >
         {!uid ? (
-          <MenuItem onClick={() => history.push('/auth/signin')}>
-            Signin
-          </MenuItem>
+          <Box>
+            <MenuItem onClick={() => history.push('/auth/signin')}>
+              Signin
+            </MenuItem>
+            <MenuItem onClick={() => history.push('/auth/signup')}>
+              Signup
+            </MenuItem>
+          </Box>
         ) : (
           <Box>
             <MenuItem onClick={() => history.push('/profile')}>

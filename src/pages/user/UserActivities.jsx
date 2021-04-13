@@ -32,7 +32,7 @@ const UserActivities = (props) => {
         variant='fullWidth'
         aria-label='full width tabs'
       >
-        <Tab icon={<PostAddRoundedIcon />} label='55 posts' wrapped />
+        <Tab icon={<PostAddRoundedIcon />} label='55 posts' />
         <Tab icon={<PeopleAltRoundedIcon />} label='142 followers' />
         <Tab icon={<SupervisorAccountRoundedIcon />} label='552 following' />
       </Tabs>

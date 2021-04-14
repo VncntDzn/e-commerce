@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Button,
   Grid,
-  Typography,
   Box,
   Card,
   CardContent,
@@ -11,15 +10,31 @@ import {
   DialogContent,
   DialogActions,
   TextField,
-  IconButton,
+  makeStyles,
 } from '@material-ui/core';
-import PhotoIcon from '@material-ui/icons/Photo';
+import { Formik, Form } from 'formik';
+import { Field } from 'components';
 
+import ImageUploader from 'react-images-upload';
+
+const useStyles = makeStyles((theme) => ({
+  priceStockContainer: {
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
+}));
 const CreatePostPanel = ({ user }) => {
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [picture, setPictures] = useState([]);
   const handleCreatePost = () => {
     setOpen(!open);
     console.log(user);
+  };
+
+  const handleUpload = (picture) => {
+    setPictures(picture.concat(picture));
+    console.log(picture);
   };
   return (
     <Grid>
@@ -35,11 +50,7 @@ const CreatePostPanel = ({ user }) => {
           />
         </CardContent>
       </Card>
-      <Card>
-        <CardContent>
-          <Typography>Content Here</Typography>
-        </CardContent>
-      </Card>
+
       <Dialog
         onClose={handleCreatePost}
         aria-labelledby='simple-dialog-title'
@@ -50,17 +61,71 @@ const CreatePostPanel = ({ user }) => {
           <DialogTitle id='simple-dialog-title'>Create Post</DialogTitle>
         </Box>
         <DialogContent>
-          <TextField
-            label={`Sell here ${user.displayName}`}
-            color='secondary'
-            fullWidth
-            autoFocus
-            variant='filled'
-            multiline
-          />
-          <IconButton>
-            <PhotoIcon />
-          </IconButton>
+          <Formik
+            initialValues={{
+              productName: '',
+              price: '',
+              displayName: '',
+            }}
+            onSubmit={(values, actions) => {
+              alert(values);
+            }}
+          >
+            <Form>
+              <Field
+                label='Product name'
+                name='productName'
+                color='secondary'
+                variant='outlined'
+                multiline
+              />
+
+              <Field
+                label='Categories'
+                name='categories'
+                color='secondary'
+                variant='outlined'
+                multiline
+                select
+              />
+              <Box className={classes.priceStockContainer}>
+                <Field
+                  label='Price'
+                  name='price'
+                  color='secondary'
+                  variant='outlined'
+                />
+
+                <Field
+                  label='Stock/s'
+                  name='stock'
+                  color='secondary'
+                  variant='outlined'
+                />
+              </Box>
+              <ImageUploader
+                withIcon={true}
+                withPreview
+                buttonText='Choose images'
+                onChange={handleUpload}
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={5242880}
+              />
+              <TextField type='date' fullWidth />
+              <Box mt={3}>
+                <Button
+                  color='secondary'
+                  variant='contained'
+                  fullWidth
+                  type='submit'
+                  style={{ color: 'white' }}
+                >
+                  Submit
+                </Button>
+              </Box>
+            </Form>
+          </Formik>
+
           <DialogActions>
             <Button variant='outlined' onClick={handleCreatePost}>
               Cancel

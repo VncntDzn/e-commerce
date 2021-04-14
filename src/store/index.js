@@ -1,4 +1,3 @@
-
 import { combineReducers } from "redux";
 import {
     persistReducer,
@@ -12,19 +11,21 @@ import {
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import authSlice from './slices/authSlice';
+import userSlice from './slices/userSlice';
 
 const customizedMiddleware = getDefaultMiddleware({
     serializableCheck: false,
     ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 })
 const reducers = combineReducers({
-    auth: authSlice
+    auth: authSlice,
+    user: userSlice
 });
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth'],
+    whitelist: ['auth', 'user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

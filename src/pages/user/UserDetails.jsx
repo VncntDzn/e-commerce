@@ -9,9 +9,9 @@ import {
   Dialog,
   DialogActions,
   TextField,
-  Card,
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateProfile } from 'store/slices/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   tabsContainer: {
@@ -19,13 +19,23 @@ const useStyles = makeStyles((theme) => ({
       width: '35vw',
     },
   },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
 }));
 const UserDetails = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.auth.user);
   const [open, setOpen] = useState(false);
+  const [details, setDetails] = useState({ displayName: '', photoURL: '' });
   const handleClose = () => {
     setOpen(!open);
+  };
+  const updateProfileDetails = () => {
+    dispatch(updateProfile(details));
   };
 
   return (
@@ -39,7 +49,7 @@ const UserDetails = () => {
         alignItems='center'
         justify='center'
       >
-        <Avatar>V</Avatar>
+        <Avatar className={classes.large} src={user.photoURL} />
       </Grid>
       <Grid
         container
@@ -75,6 +85,9 @@ const UserDetails = () => {
             variant='outlined'
             color='secondary'
             label='New Full Name'
+            onChange={(e) =>
+              setDetails({ ...details, displayName: e.target.value })
+            }
           />
           <TextField
             style={{ margin: 5 }}
@@ -83,10 +96,17 @@ const UserDetails = () => {
             color='secondary'
             type='file'
             inputProps={{ accept: 'image/*' }}
+            onChange={(e) =>
+              setDetails({ ...details, photoURL: e.target.files[0].name })
+            }
           />
         </Box>
         <DialogActions>
-          <Button color='secondary' variant='outlined'>
+          <Button
+            color='secondary'
+            variant='outlined'
+            onClick={updateProfileDetails}
+          >
             Update
           </Button>
           <Button variant='outlined' onClick={handleClose}>

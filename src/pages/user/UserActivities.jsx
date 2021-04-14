@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { makeStyles, Tabs, Tab, Box } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { TabPanel } from 'components';
-import { CreatePostPanel } from './tab-panels';
+import { CreatePostPanel, Posts } from './tab-panels';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
 import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
@@ -38,6 +38,7 @@ const UserActivities = (props) => {
       </Tabs>
       <TabPanel value={value} index={0}>
         <CreatePostPanel user={user} />
+        <Posts />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

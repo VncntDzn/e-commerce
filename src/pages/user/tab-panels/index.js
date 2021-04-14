@@ -1,3 +1,3 @@
 import CreatePostPanel from './CreatePostPanel';
-
-export { CreatePostPanel }
+import Posts from './Posts';
+export { CreatePostPanel, Posts }

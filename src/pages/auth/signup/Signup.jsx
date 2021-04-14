@@ -48,7 +48,8 @@ const Signup = (props) => {
   });
   const handleSubmission = (values) => {
     const { email, password, displayName } = values;
-    dispatch(registerUser({ email, password, displayName }));
+    let photoURL = '../../user/assets/keanu.jpg';
+    dispatch(registerUser({ email, password, displayName, photoURL }));
   };
 
   return (

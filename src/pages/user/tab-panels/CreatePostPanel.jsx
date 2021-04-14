@@ -16,26 +16,52 @@ import { Formik, Form } from 'formik';
 import { Field } from 'components';
 import { productSchema } from 'helpers';
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
 import ImageUploader from 'react-images-upload';
 
+const animatedComponents = makeAnimated();
 const useStyles = makeStyles((theme) => ({
   priceStockContainer: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+  },
+  selectContainer: {
+    width: '97%',
+    margin: '0 0.5rem',
   },
 }));
 const CreatePostPanel = ({ user }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [picture, setPictures] = useState([]);
+  const [value, setValue] = useState('');
   const handleCreatePost = () => {
     setOpen(!open);
-    console.log(user);
   };
 
   const handleUpload = (picture) => {
     setPictures(picture.concat(picture));
     console.log(picture);
+  };
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
+
+  const handleQuill = (data) => {
+    setValue(data);
+  };
+  const handleSubmit = async (values) => {
+    try {
+      console.log(values);
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <Grid>
@@ -63,16 +89,13 @@ const CreatePostPanel = ({ user }) => {
         </Box>
         <DialogContent>
           <Formik
-            validationSchema={productSchema}
             initialValues={{
               productName: '',
               price: '',
               stock: '',
-              date: '',
             }}
-            onSubmit={(values, actions) => {
-              alert(values);
-            }}
+            validationSchema={productSchema}
+            onSubmit={(values) => handleSubmit(values)}
           >
             <Form>
               <Field
@@ -83,14 +106,6 @@ const CreatePostPanel = ({ user }) => {
                 multiline
               />
 
-              <Field
-                label='Categories'
-                name='categories'
-                color='secondary'
-                variant='outlined'
-                multiline
-                select
-              />
               <Box className={classes.priceStockContainer}>
                 <Field
                   label='Price'
@@ -106,6 +121,13 @@ const CreatePostPanel = ({ user }) => {
                   variant='outlined'
                 />
               </Box>
+              <ReactQuill
+                className={classes.selectContainer}
+                placeholder='Type definition here...'
+                theme='snow'
+                value={value}
+                onChange={handleQuill}
+              />
               <ImageUploader
                 withIcon={true}
                 withPreview
@@ -114,23 +136,25 @@ const CreatePostPanel = ({ user }) => {
                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                 maxFileSize={5242880}
               />
-              <Field
-                name='createdAt'
-                color='secondary'
-                variant='outlined'
-                type='date'
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti
+                options={options}
+                className={classes.selectContainer}
               />
+
+              <Button color='secondary'>Category not on the list?</Button>
+              <DialogActions>
+                <Button variant='outlined' onClick={handleCreatePost}>
+                  Cancel
+                </Button>
+                <Button color='secondary' variant='outlined' type='submit'>
+                  Post
+                </Button>
+              </DialogActions>
             </Form>
           </Formik>
-
-          <DialogActions>
-            <Button variant='outlined' onClick={handleCreatePost}>
-              Cancel
-            </Button>
-            <Button variant='outlined' type='submit' color='secondary'>
-              Post
-            </Button>
-          </DialogActions>
         </DialogContent>
       </Dialog>
     </Grid>

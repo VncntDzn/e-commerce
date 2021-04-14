@@ -14,10 +14,7 @@ const productSchema = Yup.object().shape({
     stock: Yup.number()
         .positive()
         .required('Price is required'),
-    categories: Yup.string()
-        .required('Product Name is required'),
-    createdAt: Yup.date()
-        .required('Price is required'),
+
 });
 
 export default productSchema;

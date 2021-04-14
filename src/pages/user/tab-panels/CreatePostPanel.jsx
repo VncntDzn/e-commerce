@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { Field } from 'components';
+import { productSchema } from 'helpers';
 
 import ImageUploader from 'react-images-upload';
 
@@ -58,14 +59,16 @@ const CreatePostPanel = ({ user }) => {
         fullWidth
       >
         <Box display='flex' justifyContent='center'>
-          <DialogTitle id='simple-dialog-title'>Create Post</DialogTitle>
+          <DialogTitle id='simple-dialog-title'>Post a Product</DialogTitle>
         </Box>
         <DialogContent>
           <Formik
+            validationSchema={productSchema}
             initialValues={{
               productName: '',
               price: '',
-              displayName: '',
+              stock: '',
+              date: '',
             }}
             onSubmit={(values, actions) => {
               alert(values);
@@ -111,18 +114,12 @@ const CreatePostPanel = ({ user }) => {
                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                 maxFileSize={5242880}
               />
-              <TextField type='date' fullWidth />
-              <Box mt={3}>
-                <Button
-                  color='secondary'
-                  variant='contained'
-                  fullWidth
-                  type='submit'
-                  style={{ color: 'white' }}
-                >
-                  Submit
-                </Button>
-              </Box>
+              <Field
+                name='createdAt'
+                color='secondary'
+                variant='outlined'
+                type='date'
+              />
             </Form>
           </Formik>
 
@@ -130,7 +127,7 @@ const CreatePostPanel = ({ user }) => {
             <Button variant='outlined' onClick={handleCreatePost}>
               Cancel
             </Button>
-            <Button variant='outlined' color='secondary'>
+            <Button variant='outlined' type='submit' color='secondary'>
               Post
             </Button>
           </DialogActions>

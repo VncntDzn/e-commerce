@@ -15,12 +15,12 @@ import {
 import { Formik, Form } from 'formik';
 import { Field } from 'components';
 import { productSchema } from 'helpers';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost, retrieveUserPosts } from 'store/slices/postsSlice';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-
 import ImageUploader from 'react-images-upload';
 
 const animatedComponents = makeAnimated();
@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const CreatePostPanel = ({ user }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [picture, setPictures] = useState([]);
   const [value, setValue] = useState('');
@@ -56,9 +57,25 @@ const CreatePostPanel = ({ user }) => {
   const handleQuill = (data) => {
     setValue(data);
   };
-  const handleSubmit = async (values) => {
+  const onFileChange = (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    /* const storageRef = app.storage().ref();
+    const fileRef = storageRef.child(file.name);
+    await fileRef.put(file);
+    setFileUrl(await fileRef.getDownloadURL()); */
+  };
+  const handleSubmit = async ({ productName, price, stock }) => {
     try {
-      console.log(values);
+      dispatch(
+        createPost({
+          productName,
+          price,
+          stock,
+          description: value,
+          author: user.email,
+        })
+      );
     } catch (e) {
       console.log(e);
     }
@@ -132,7 +149,7 @@ const CreatePostPanel = ({ user }) => {
                 withIcon={true}
                 withPreview
                 buttonText='Choose images'
-                onChange={handleUpload}
+                onChange={onFileChange}
                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                 maxFileSize={5242880}
               />

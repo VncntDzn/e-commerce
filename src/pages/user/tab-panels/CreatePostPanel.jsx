@@ -15,13 +15,14 @@ import {
 import { Formik, Form } from 'formik';
 import { Field } from 'components';
 import { productSchema } from 'helpers';
-import { useDispatch, useSelector } from 'react-redux';
-import { createPost, retrieveUserPosts } from 'store/slices/postsSlice';
+import { useDispatch } from 'react-redux';
+import { createPost } from 'store/slices/postsSlice';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import ImageUploader from 'react-images-upload';
+import { firebaseStorage } from 'firebase/firebaseConfig';
 
 const animatedComponents = makeAnimated();
 const useStyles = makeStyles((theme) => ({
@@ -38,15 +39,20 @@ const CreatePostPanel = ({ user }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [picture, setPictures] = useState([]);
   const [value, setValue] = useState('');
   const handleCreatePost = () => {
     setOpen(!open);
   };
 
-  const handleUpload = (picture) => {
-    setPictures(picture.concat(picture));
-    console.log(picture);
+  const handleUpload = async (files) => {
+    try {
+      const storageRef = firebaseStorage.ref(`posts/${user.email}`);
+      await files.forEach((file, i) => {
+        storageRef.child(file.name).put(file);
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
   const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -57,14 +63,7 @@ const CreatePostPanel = ({ user }) => {
   const handleQuill = (data) => {
     setValue(data);
   };
-  const onFileChange = (e) => {
-    const file = e.target.files[0];
-    console.log(file);
-    /* const storageRef = app.storage().ref();
-    const fileRef = storageRef.child(file.name);
-    await fileRef.put(file);
-    setFileUrl(await fileRef.getDownloadURL()); */
-  };
+
   const handleSubmit = async ({ productName, price, stock }) => {
     try {
       dispatch(
@@ -149,7 +148,7 @@ const CreatePostPanel = ({ user }) => {
                 withIcon={true}
                 withPreview
                 buttonText='Choose images'
-                onChange={onFileChange}
+                onChange={handleUpload}
                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                 maxFileSize={5242880}
               />

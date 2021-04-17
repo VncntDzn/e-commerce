@@ -13,6 +13,7 @@ import NotFound from './NotFound';
 import UserProfile from './user/UserProfile';
 import Signin from './auth/signin/Signin';
 import Signup from './auth/signup/Signup';
+import SinglePost from './posts/SinglePost';
 
 export {
   CarouselProvider,
@@ -30,4 +31,5 @@ export {
   Signin,
   Signup,
   ForgotPassword,
+  SinglePost,
 };

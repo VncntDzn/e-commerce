@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const Posts = (props) => {
+const UserPosts = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.posts);
@@ -101,6 +101,6 @@ const Posts = (props) => {
   );
 };
 
-Posts.propTypes = {};
+UserPosts.propTypes = {};
 
-export default Posts;
+export default UserPosts;

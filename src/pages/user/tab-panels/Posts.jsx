@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
     objectFit: 'contain',
     height: '100%',
     width: '100%',
-    border: '3px solid blue',
   },
   container: {
     display: 'flex',
@@ -18,17 +17,17 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
     height: 'fit-content',
-
-    border: '3px solid red',
   },
   cardContainer: {
     margin: '1rem 0',
     height: 'fit-content',
-
     display: 'flex',
     flexDirection: 'column',
     [theme.breakpoints.up('sm')]: {
       width: '30vw',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '15vw',
     },
   },
 }));

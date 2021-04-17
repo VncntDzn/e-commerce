@@ -40,19 +40,25 @@ const CreatePostPanel = ({ user }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
+  const [links, setLinks] = useState(null);
   const handleCreatePost = () => {
     setOpen(!open);
   };
 
-  const handleUpload = async (files) => {
-    try {
-      const storageRef = firebaseStorage.ref(`posts/${user.email}`);
-      await files.forEach((file, i) => {
-        storageRef.child(file.name).put(file);
-      });
-    } catch (e) {
-      console.log(e);
-    }
+  const handleUpload = (files) => {
+    const storageRef = firebaseStorage.ref(`posts/${user.email}`);
+    let data = [];
+    files.forEach(async (file) => {
+      try {
+        let fileRef = storageRef.child(file.name);
+        await fileRef.put(file);
+        data.push(await fileRef.getDownloadURL());
+      } catch (e) {
+        console.log(e);
+      }
+    });
+    setLinks(data);
+    console.log(links);
   };
   const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -66,15 +72,20 @@ const CreatePostPanel = ({ user }) => {
 
   const handleSubmit = async ({ productName, price, stock }) => {
     try {
-      dispatch(
-        createPost({
-          productName,
-          price,
-          stock,
-          description: value,
-          author: user.email,
-        })
-      );
+      if (links) {
+        dispatch(
+          createPost({
+            productName,
+            price,
+            stock,
+            description: value,
+            author: user.email,
+            links,
+          })
+        );
+      } else {
+        alert('Please add image');
+      }
     } catch (e) {
       console.log(e);
     }
@@ -145,6 +156,7 @@ const CreatePostPanel = ({ user }) => {
                 onChange={handleQuill}
               />
               <ImageUploader
+                name='image'
                 withIcon={true}
                 withPreview
                 buttonText='Choose images'

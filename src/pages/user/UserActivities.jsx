@@ -7,13 +7,11 @@ import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
 import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: '100vw',
-    border: '3px solid red',
   },
-});
+}));
 const UserActivities = (props) => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
@@ -23,7 +21,7 @@ const UserActivities = (props) => {
     setValue(newValue);
   };
   return (
-    <Box className={classes.tabsContainer}>
+    <Box className={classes.root}>
       <Tabs
         value={value}
         onChange={handleChange}

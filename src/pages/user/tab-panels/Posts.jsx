@@ -1,25 +1,104 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Card, CardContent, Button } from '@material-ui/core';
+import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { retrieveUserPosts } from 'store/slices/postsSlice';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import { FluidTypography } from 'components';
+import ReactStars from 'react-rating-stars-component';
 
+const useStyles = makeStyles((theme) => ({
+  image: {
+    objectFit: 'contain',
+    height: '100%',
+    width: '100%',
+    border: '3px solid blue',
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+    height: 'fit-content',
+
+    border: '3px solid red',
+  },
+  cardContainer: {
+    margin: '1rem 0',
+    height: 'fit-content',
+
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.up('sm')]: {
+      width: '30vw',
+    },
+  },
+}));
 const Posts = (props) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.posts);
-
   useEffect(() => {
     dispatch(retrieveUserPosts());
   }, [dispatch]);
 
   return (
-    <Card>
-      <CardContent>Content Here</CardContent>
-      <ReactQuill value={posts.description} readOnly={true} theme={'bubble'} />
-    </Card>
+    <Box className={classes.container}>
+      {posts?.length ? (
+        posts.map((post, index) => (
+          <Card raised key={index} className={classes.cardContainer}>
+            <CardContent>
+              <img
+                className={classes.image}
+                src={post.links[0]}
+                alt='product'
+              />
+
+              <FluidTypography
+                text={post.productName}
+                minSize='1rem'
+                size='0.9rem'
+                maxSize='1rem'
+                fontWeight='500'
+              />
+              <FluidTypography
+                text={`₱ ${post.price}`}
+                minSize='1rem'
+                size='0.9rem'
+                maxSize='1rem'
+                fontWeight='500'
+              />
+
+              <ReactStars
+                count={5}
+                edit={false}
+                size={24}
+                activeColor='#ffd700'
+              />
+
+              <Box display='flex' justifyContent='flex-end'>
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  style={{ color: 'white' }}
+                >
+                  Buy
+                </Button>
+                &nbsp;
+                <Button
+                  variant='contained'
+                  style={{ backgroundColor: 'red', color: 'white' }}
+                >
+                  View
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
+        ))
+      ) : (
+        <div>
+          <h1>Nothing to see here yet.</h1>
+        </div>
+      )}
+    </Box>
   );
 };
 

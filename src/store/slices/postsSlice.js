@@ -1,7 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 
-const createPost = createAsyncThunk('createPost', async ({ productName, stock, price, author, description }) => {
+const createPost = createAsyncThunk('createPost', async ({ productName, stock, price, author, description, links }) => {
+    console.log(productName,
+        price,
+        stock,
+        author,
+        description)
     try {
         firestore.collection('products').add({
             productName,
@@ -9,27 +14,31 @@ const createPost = createAsyncThunk('createPost', async ({ productName, stock, p
             stock,
             author,
             description,
+            links
         })
+
+        return "success"
     } catch (error) {
         console.log(error)
     }
 })
-
 
 const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async () => {
     try {
-        let data = {}
-        const response = await firestore.collection("products").get()
-        response.forEach(q => {
-            data = { ...q.data() }
+        let retrievedPosts = []
+        const posts = await firestore.collection("products").get()
+        posts.forEach(post => {
+            retrievedPosts.push(post.data())
+
         })
-        return data
+
+        return retrievedPosts
 
     } catch (error) {
         console.log(error)
     }
-})
-
+});
+// TODO: USER SPECIFIC POST, UPDATE POST, DELETE POST, COMMENT ON POST
 const initialState = {
     status: 'idle',
     posts: []
@@ -57,7 +66,7 @@ const postsSlice = createSlice({
         },
         [retrieveUserPosts.fulfilled]: (state, action) => {
             state.status = 'finished';
-            state.posts = action.payload;
+            state.posts = (action.payload);
 
         },
         [retrieveUserPosts.failed]: (state, action) => {

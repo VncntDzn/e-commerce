@@ -37,7 +37,7 @@ const UserActivities = (props) => {
       </Tabs>
       <TabPanel value={value} index={0}>
         <CreatePostPanel user={user} />
-        <UserPosts />
+        <UserPosts email={user.email} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

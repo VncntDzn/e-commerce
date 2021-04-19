@@ -4,11 +4,6 @@ import { MainLayout } from 'layouts';
 import { useState } from 'react';
 import { makeStyles, Tabs, Tab, Box } from '@material-ui/core';
 import { TabPanel } from 'components';
-import UserPosts from '../posts/UserPosts';
-import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
-import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
-import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -17,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
 const SinglePost = ({ match }) => {
   const { author } = match.params;
   const classes = useStyles();
-
   const [value, setValue] = useState(0);
   /*  const post = useSelector((state) =>
     state.posts.find((post) => post.id === postId)

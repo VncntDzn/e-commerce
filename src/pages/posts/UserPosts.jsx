@@ -32,19 +32,19 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const UserPosts = (props) => {
+const UserPosts = ({ email }) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts.posts);
+  const userPosts = useSelector((state) => state.posts.userPosts);
   useEffect(() => {
-    dispatch(retrieveUserPosts());
-  }, [dispatch]);
+    dispatch(retrieveUserPosts({ email }));
+  }, [email, dispatch]);
 
   return (
     <Box className={classes.container}>
-      {posts?.length ? (
-        posts.map((post, index) => (
+      {userPosts?.length ? (
+        userPosts.map((post, index) => (
           <Card raised key={index} className={classes.cardContainer}>
             <CardContent>
               <img

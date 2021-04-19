@@ -8,7 +8,8 @@ import 'react-quill/dist/quill.snow.css';
 import ReactStars from 'react-rating-stars-component';
 import PropTypes from 'prop-types';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
-import LinesEllipsis from 'react-lines-ellipsis';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+
 const useStyles = makeStyles((theme) => ({
   container: {},
 }));
@@ -17,11 +18,15 @@ const ProductInformation = ({ info }) => {
   const [readMore, setReadMore] = useState(false);
   return (
     <Grid className={classes.container}>
-      <Carousel>
-        {info.links.map((link, index) => (
-          <img key={index} src={link} alt='product' />
-        ))}
-      </Carousel>
+      <TransformWrapper>
+        <TransformComponent>
+          <Carousel emulateTouch={true}>
+            {info.links.map((link, index) => (
+              <img key={index} src={link} alt='product' />
+            ))}
+          </Carousel>
+        </TransformComponent>
+      </TransformWrapper>
       <ReactStars count={5} edit={false} size={24} activeColor='#ffd700' />
       <FluidTypography
         text={info.productName}

@@ -1,25 +1,28 @@
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { MainLayout } from 'layouts';
 import { useState } from 'react';
 import { makeStyles, Tabs, Tab, Box } from '@material-ui/core';
 import { TabPanel } from 'components';
+import ProductInformation from './tab-panels/ProductInformation';
+import PropTypes from 'prop-types';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
 }));
 const SinglePost = ({ match }) => {
-  const { author } = match.params;
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  /*  const post = useSelector((state) =>
-    state.posts.find((post) => post.id === postId)
-  ); */
+  const { nanoID } = match.params;
+  const product = useSelector((state) =>
+    state.posts.userPosts.find((post) => post.nanoID === nanoID)
+  );
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <MainLayout>
       <Box className={classes.root}>
@@ -35,21 +38,22 @@ const SinglePost = ({ match }) => {
           <Tab label='Reviews' />
           <Tab label='FAQ' />
         </Tabs>
-        {/* <TabPanel value={value} index={0}>
-          <CreatePostPanel />
-          <UserPosts />
+        <TabPanel value={value} index={0}>
+          <ProductInformation info={product} />
         </TabPanel>
         <TabPanel value={value} index={1}>
           Item Two
         </TabPanel>
         <TabPanel value={value} index={2}>
           Item Three
-        </TabPanel> */}
+        </TabPanel>
       </Box>
     </MainLayout>
   );
 };
 
-SinglePost.propTypes = {};
+SinglePost.propTypes = {
+  match: PropTypes.object.isRequired,
+};
 
 export default SinglePost;

@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
   boxContainer: {
     margin: '0 1rem',
     marginTop: '5rem',
+    marginBottom: '3rem',
     [theme.breakpoints.up('lg')]: {
       margin: '0 6rem',
       marginTop: '5rem',

@@ -55,12 +55,13 @@ const CreatePostPanel = ({ user }) => {
         let fileRef = storageRef.child(file.name);
         await fileRef.put(file);
         data.push(await fileRef.getDownloadURL());
+        console.log(await fileRef.getDownloadURL());
       } catch (e) {
         console.log(e);
       }
     });
+
     setLinks(data);
-    console.log(links);
   };
   const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -80,9 +81,9 @@ const CreatePostPanel = ({ user }) => {
             productName,
             price,
             stock,
+            links,
             description: value,
             author: user.email,
-            links,
             date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
           })
         );

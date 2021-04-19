@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 
 const createPost = createAsyncThunk('createPost', async ({ productName, stock, price, author, description, links, date }) => {
+
     try {
         firestore.collection('products').add({
             nanoID: nanoid(),
@@ -22,13 +23,13 @@ const createPost = createAsyncThunk('createPost', async ({ productName, stock, p
 
 const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async ({ author }) => {
     try {
-        let retrievedPosts = []
+        let allPosts = []
         const posts = await firestore.collection("products").get()
         posts.forEach(post => {
-            retrievedPosts.push(post.data())
+            allPosts.push(post.data())
         })
 
-        return retrievedPosts
+        return allPosts
 
     } catch (error) {
         console.log(error)
@@ -39,10 +40,13 @@ const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async ({ author })
 const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async ({ email }) => {
     try {
         let retrievedUserPosts = []
-        const posts = await firestore.collection("products").where('author', '==', email).get()
+        const posts = await firestore.collection("products")
+            .where('author', '==', email)
+            .get()
         posts.forEach(post => {
             retrievedUserPosts.push(post.data())
         })
+
 
         return retrievedUserPosts
 
@@ -52,7 +56,7 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async ({ email }
 });
 
 
-// TODO: USER SPECIFIC POST, UPDATE POST, DELETE POST, COMMENT ON POST
+// TODO:   UPDATE POST, DELETE POST, COMMENT ON POST
 const initialState = {
     status: 'idle',
     posts: [],

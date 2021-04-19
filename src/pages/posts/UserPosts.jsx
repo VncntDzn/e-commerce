@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   cardContainer: {
     margin: '1rem 0',
     height: 'fit-content',
+    width: '20rem',
     display: 'flex',
     flexDirection: 'column',
     [theme.breakpoints.up('sm')]: {

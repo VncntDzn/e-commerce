@@ -24,6 +24,8 @@ import makeAnimated from 'react-select/animated';
 import ImageUploader from 'react-images-upload';
 import { firebaseStorage } from 'firebase/firebaseConfig';
 
+import moment from 'moment';
+
 const animatedComponents = makeAnimated();
 const useStyles = makeStyles((theme) => ({
   priceStockContainer: {
@@ -81,6 +83,7 @@ const CreatePostPanel = ({ user }) => {
             description: value,
             author: user.email,
             links,
+            date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
           })
         );
       } else {

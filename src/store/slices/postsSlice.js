@@ -1,20 +1,17 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 
-const createPost = createAsyncThunk('createPost', async ({ productName, stock, price, author, description, links }) => {
-    console.log(productName,
-        price,
-        stock,
-        author,
-        description)
+const createPost = createAsyncThunk('createPost', async ({ productName, stock, price, author, description, links, date }) => {
     try {
         firestore.collection('products').add({
+            nanoID: nanoid(),
             productName,
             price,
             stock,
             author,
             description,
-            links
+            links,
+            date
         })
 
         return "success"
@@ -29,7 +26,6 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async () => {
         const posts = await firestore.collection("products").get()
         posts.forEach(post => {
             retrievedPosts.push(post.data())
-
         })
 
         return retrievedPosts
@@ -38,6 +34,8 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async () => {
         console.log(error)
     }
 });
+
+
 // TODO: USER SPECIFIC POST, UPDATE POST, DELETE POST, COMMENT ON POST
 const initialState = {
     status: 'idle',

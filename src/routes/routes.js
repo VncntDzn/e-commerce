@@ -1,4 +1,4 @@
-import { Home, PaymentMain, UserProfile, Signin, Signup, ForgotPassword, NotFound } from 'pages';
+import { Home, PaymentMain, UserProfile, Signin, Signup, ForgotPassword, SinglePost, NotFound } from 'pages';
 
 const routes = [
     {
@@ -35,6 +35,12 @@ const routes = [
         name: 'User Profile',
         component: UserProfile,
         path: '/profile',
+        auth: true
+    },
+    {
+        name: 'Single Post',
+        component: SinglePost,
+        path: '/product/single-post/:nanoID',
         auth: true
     },
     {

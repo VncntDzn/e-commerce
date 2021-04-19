@@ -3,6 +3,7 @@ import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { retrieveUserPosts } from 'store/slices/postsSlice';
 import { FluidTypography } from 'components';
+import { useHistory } from 'react-router-dom';
 import ReactStars from 'react-rating-stars-component';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const UserPosts = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.posts);
   useEffect(() => {
@@ -84,6 +86,9 @@ const UserPosts = (props) => {
                 &nbsp;
                 <Button
                   variant='contained'
+                  onClick={() => {
+                    history.push(`/product/single-post/${post.nanoID}`);
+                  }}
                   style={{ backgroundColor: 'red', color: 'white' }}
                 >
                   View

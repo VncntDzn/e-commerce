@@ -49,6 +49,9 @@ const Signin = () => {
   const handleSubmission = (values) => {
     const { email, password } = values;
     dispatch(loginUser({ email, password }));
+    setTimeout(() => {
+      history.push('/profile');
+    }, 3000);
   };
 
   return (

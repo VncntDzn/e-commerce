@@ -62,7 +62,7 @@ const UserPosts = ({ email }) => {
                 fontWeight='500'
               />
               <FluidTypography
-                text={`₱ ${post.price}`}
+                text={`₱ ${parseFloat(post.price).toFixed(2)}`}
                 minSize='1rem'
                 size='0.9rem'
                 maxSize='1rem'

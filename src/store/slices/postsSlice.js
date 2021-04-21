@@ -28,6 +28,7 @@ const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async ({ author })
         posts.forEach(post => {
             allPosts.push(post.data())
         })
+        console.log(allPosts)
 
         return allPosts
 
@@ -47,7 +48,7 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async ({ email }
             retrievedUserPosts.push(post.data())
         })
 
-
+        console.log(retrievedUserPosts)
         return retrievedUserPosts
 
     } catch (error) {

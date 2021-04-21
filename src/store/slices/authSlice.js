@@ -61,6 +61,10 @@ const authSlice = createSlice({
             state.uid = action.payload.uid;
             console.log(state.uid)
         },
+        resetState: (state, action) => {
+            state.loginStatus = null;
+            state.registerStatus = null
+        }
 
     },
     extraReducers: {
@@ -69,7 +73,6 @@ const authSlice = createSlice({
             state.registerStatus = 'pending'
         },
         [registerUser.fulfilled]: (state, action) => {
-
             if (action.payload instanceof Object) {
                 state.error = null;
                 state.user = action.payload;
@@ -141,7 +144,7 @@ const authSlice = createSlice({
 });
 
 const { actions, reducer } = authSlice;
-export const { getCurrentUser, } = actions;
+export const { getCurrentUser, resetState } = actions;
 export default reducer;
 //export default authSlice;
 export { registerUser, loginUser, logoutUser, resetPassword };

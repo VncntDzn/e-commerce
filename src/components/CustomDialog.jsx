@@ -8,7 +8,6 @@ import {
 import Lottie from 'react-lottie';
 import PropTypes from 'prop-types';
 import CancelIcon from '@material-ui/icons/Cancel';
-import { useEffect } from 'react';
 /**
  * A wrapper for Dialog of material ui with react-lottie animations added.
  * @param {boolean} [dialog] - whether to display or not the dialog.
@@ -18,7 +17,7 @@ import { useEffect } from 'react';
 
 const CustomDialog = ({ dialog, lottie, text, onClose }) => {
   const defaultOptions = {
-    loop: false,
+    loop: true,
     autoplay: true,
     animationData: lottie,
     rendererSettings: {
@@ -26,29 +25,31 @@ const CustomDialog = ({ dialog, lottie, text, onClose }) => {
     },
   };
   return (
-    <>
-      {dialog && (
-        <Dialog
-          open={dialog}
-          onClose={onClose}
-          aria-labelledby='alert-dialog-title'
-          aria-describedby='alert-dialog-description'
+    <Dialog
+      open={dialog}
+      onClose={onClose}
+      aria-labelledby='alert-dialog-title'
+      aria-describedby='alert-dialog-description'
+    >
+      <DialogContent>
+        <Box
+          m='-1rem'
+          p={0}
+          display='flex'
+          alignItems='center'
+          justifyContent='flex-end'
         >
-          <DialogContent>
-            <Box display='flex' alignItems='center' justifyContent='flex-end'>
-              <IconButton onClick={onClose}>
-                <CancelIcon />
-              </IconButton>
-            </Box>
+          <IconButton onClick={onClose}>
+            <CancelIcon />
+          </IconButton>
+        </Box>
 
-            <Lottie options={defaultOptions} height={150} width={150} />
-            <DialogContentText id='alert-dialog-description'>
-              {text}
-            </DialogContentText>
-          </DialogContent>
-        </Dialog>
-      )}
-    </>
+        <Lottie options={defaultOptions} height={150} width={150} />
+        <DialogContentText id='alert-dialog-description'>
+          {text}
+        </DialogContentText>
+      </DialogContent>
+    </Dialog>
   );
 };
 

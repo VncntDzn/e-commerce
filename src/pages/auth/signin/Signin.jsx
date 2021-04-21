@@ -44,14 +44,12 @@ const Signin = () => {
     animationSuccess: SignupSuccessAnimated,
     animationFailed: FailedAnimation,
     successText: 'Success! Redirecting you to homepage.',
+    location: '/profile',
   });
 
   const handleSubmission = (values) => {
     const { email, password } = values;
     dispatch(loginUser({ email, password }));
-    setTimeout(() => {
-      history.push('/profile');
-    }, 3000);
   };
 
   return (

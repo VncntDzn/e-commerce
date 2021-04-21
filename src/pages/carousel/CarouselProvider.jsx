@@ -7,6 +7,10 @@ const CarouselProvider = (props) => {
       <TechSlide />
       <ApplianceSlide />
     </Carousel>
+    /* <Carousel autoPlay={true} showThumbs={false} infiniteLoop={true}>
+      <TechSlide />
+      <ApplianceSlide />
+    </Carousel> */
   );
 };
 

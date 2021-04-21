@@ -18,39 +18,39 @@ const useDialog = (...props) => {
     animationSuccess,
     animationFailed,
     successText,
-    location,
   } = props[0];
   const [visibility, setVisibility] = useState(false);
   const [data, setData] = useState({ show: false, text: '', lottie: '' });
-  const history = useHistory();
 
+  const closeModal = () => {
+    setData({ show: false });
+  };
   useEffect(() => {
     if (status === 'pending') {
       setVisibility(true);
+      console.log(status);
     } else if (status === 'success') {
+      console.log(status);
       setVisibility(false);
-      if (error) {
-        setData({ show: true, text: error, lottie: animationFailed });
-        setTimeout(() => {
-          setData({ show: false });
-        }, 4000);
-      } else {
-        setData({
-          show: true,
-          text: successText,
-          lottie: animationSuccess,
-        });
-
-        setTimeout(() => {
-          setData({ show: false });
-        }, 4000);
-      }
-    } else {
+      setData({
+        show: true,
+        text: successText,
+        lottie: animationSuccess,
+      });
+    } else if (status === 'failed') {
       setVisibility(false);
+      setData({ show: true, text: error, lottie: animationFailed });
     }
-  }, [status, error, animationSuccess, animationFailed, successText]);
+  }, [
+    status,
+    error,
+    successText,
+    animationSuccess,
+    animationFailed,
+    visibility,
+  ]);
 
-  return { visibility, data };
+  return { visibility, data, closeModal };
 };
 
 export default useDialog;

@@ -14,6 +14,7 @@ import authSlice from './slices/authSlice';
 import userSlice from './slices/userSlice';
 import postsSlice from './slices/postsSlice'
 
+
 const customizedMiddleware = getDefaultMiddleware({
     serializableCheck: false,
     ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
@@ -28,12 +29,17 @@ const persistConfig = {
     key: 'root',
     storage,
     whitelist: ['auth', 'user', 'posts'],
+
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-    reducer: persistedReducer,
+    reducer: {
+        auth: authSlice,
+        user: userSlice,
+        posts: postsSlice
+    },
     middleware: customizedMiddleware,
     devTools: process.env.NODE_ENV !== 'production',
 

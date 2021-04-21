@@ -35,21 +35,20 @@ const Signin = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.auth.status);
+  const status = useSelector((state) => state.auth.loginStatus);
   const error = useSelector((state) => state.auth.error);
-  const count = useSelector((state) => state.auth.user);
-  const { visibility, data } = useDialog({
+
+  const { visibility, data, closeModal } = useDialog({
     status,
     error,
     animationSuccess: SignupSuccessAnimated,
     animationFailed: FailedAnimation,
     successText: 'Success! Redirecting you to homepage.',
-    location: '/profile',
   });
+
   const handleSubmission = (values) => {
     const { email, password } = values;
     dispatch(loginUser({ email, password }));
-    console.log(count);
   };
 
   return (
@@ -101,6 +100,7 @@ const Signin = () => {
           dialog={data.show}
           lottie={data.lottie}
           text={data.text}
+          onClose={closeModal}
         />
       </Box>
     </MainLayout>

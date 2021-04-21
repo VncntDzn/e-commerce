@@ -43,10 +43,10 @@ const defaultOptions = {
 const ForgotPassword = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.auth.status);
+  const status = useSelector((state) => state.auth.resetPassword);
   const error = useSelector((state) => state.auth.error);
 
-  const { visibility, data } = useDialog({
+  const { visibility, data, closeModal } = useDialog({
     status,
     error,
     animationSuccess: EmailSentAnimation,
@@ -95,6 +95,7 @@ const ForgotPassword = (props) => {
           dialog={data.show}
           lottie={data.lottie}
           text={data.text}
+          onClose={closeModal}
         />
       </Box>
     </MainLayout>

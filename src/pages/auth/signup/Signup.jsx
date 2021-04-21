@@ -34,18 +34,19 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = (props) => {
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.auth.status);
+  const status = useSelector((state) => state.auth.registerStatus);
   const error = useSelector((state) => state.auth.error);
   const classes = useStyles();
   const history = useHistory();
 
-  const { visibility, data } = useDialog({
+  const { visibility, data, closeModal } = useDialog({
     status,
     error,
     animationSuccess: SignupSuccessAnimated,
     animationFailed: FailedAnimation,
     successText: 'You are now registered with e-comm!',
   });
+
   const handleSubmission = (values) => {
     const { email, password, displayName } = values;
     let photoURL = '../../user/assets/keanu.jpg';
@@ -97,6 +98,7 @@ const Signup = (props) => {
           dialog={data.show}
           lottie={data.lottie}
           text={data.text}
+          onClose={closeModal}
         />
       </Box>
     </MainLayout>

@@ -48,7 +48,10 @@ const initialState = {
     observer: null,
     user: [],
     forgotPassword: null,
-    uid: null
+    uid: null,
+    loginStatus: '',
+    registerStatus: '',
+    resetPassword: ''
 };
 const authSlice = createSlice({
     name: 'auth',
@@ -57,79 +60,80 @@ const authSlice = createSlice({
         getCurrentUser: (state, action) => {
             state.uid = action.payload.uid;
             console.log(state.uid)
-        }
+        },
+
     },
     extraReducers: {
         // REGISTER
         [registerUser.pending]: (state, action) => {
-            state.status = 'pending'
-
+            state.registerStatus = 'pending'
         },
         [registerUser.fulfilled]: (state, action) => {
-            state.status = 'success';
-            state.user = action.payload;
 
             if (action.payload instanceof Object) {
                 state.error = null;
+                state.user = action.payload;
+                state.registerStatus = 'success';
+
             } else {
                 state.error = action.payload;
+                state.registerStatus = 'failed';
             }
         },
         [registerUser.rejected]: (state, action) => {
-            state.status = 'failed'
+            state.registerStatus = 'failed';
+            console.log("REJECTED")
         },
         // LOGIN
         [loginUser.pending]: (state, action) => {
-            state.status = 'pending'
+            state.loginStatus = 'pending'
         },
         [loginUser.fulfilled]: (state, action) => {
-            state.status = 'success';
-            state.user = action.payload;
             if (action.payload instanceof Object) {
                 state.error = null;
+                state.loginStatus = 'success';
+                state.user = action.payload;
             } else {
+                state.loginStatus = 'failed';
                 state.error = action.payload;
             }
         },
-
-        // LOG OUT
-        [logoutUser.rejected]: (state, action) => {
-            state.status = 'failed'
+        [loginUser.rejected]: (state, action) => {
+            state.loginStatus = 'failed'
         },
-
+        // LOG OUT
         [logoutUser.pending]: (state, action) => {
             state.status = 'pending';
             state.uid = null;
         },
         [logoutUser.fulfilled]: (state, action) => {
-            state.status = 'success';
-            state.user = action.payload;
-
             if (action.payload) {
+                state.status = 'success';
                 state.error = null;
             } else {
+                state.user = action.payload;
                 state.error = action.payload;
             }
         },
-        [loginUser.rejected]: (state, action) => {
+
+        [logoutUser.rejected]: (state, action) => {
             state.status = 'failed'
         },
         // FORGOT PASSWORD
         [resetPassword.pending]: (state, action) => {
-            state.status = 'pending'
+            state.resetPassword = 'pending'
         },
         [resetPassword.fulfilled]: (state, action) => {
-            state.status = 'success';
-            state.forgotPassword = action.payload;
-
             if (action.payload instanceof Object) {
                 state.error = null;
+                state.resetPassword = 'success';
+                state.forgotPassword = action.payload;
             } else {
                 state.error = action.payload;
             }
         },
         [resetPassword.rejected]: (state, action) => {
-            state.status = 'failed'
+            state.resetPassword = 'failed'
 
         },
     }
@@ -137,7 +141,7 @@ const authSlice = createSlice({
 });
 
 const { actions, reducer } = authSlice;
-export const { getCurrentUser } = actions;
+export const { getCurrentUser, } = actions;
 export default reducer;
 //export default authSlice;
 export { registerUser, loginUser, logoutUser, resetPassword };

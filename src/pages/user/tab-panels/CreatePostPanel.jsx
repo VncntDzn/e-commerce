@@ -14,8 +14,9 @@ import {
   DialogContent,
   DialogActions,
   TextField,
-  Container,
   makeStyles,
+  Container,
+  Avatar,
 } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { Field } from 'components';
@@ -39,6 +40,25 @@ const useStyles = makeStyles((theme) => ({
   selectContainer: {
     width: '97%',
     margin: '0 0.5rem',
+  },
+  cardContainer: {
+    display: 'flex',
+    [theme.breakpoints.up('sm')]: {
+      width: '60vw',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '35vw',
+    },
+  },
+  rootContainer: {
+    marginTop: theme.spacing(1),
+  },
+  largeAvatar: {
+    width: theme.spacing(5),
+    height: theme.spacing(5),
+    marginRight: theme.spacing(2),
+    display: 'flex',
+    alignSelf: 'center',
   },
 }));
 const CreatePostPanel = ({ user }) => {
@@ -100,9 +120,10 @@ const CreatePostPanel = ({ user }) => {
     }
   };
   return (
-    <Grid>
-      <Card className={classes.cardContainer}>
-        <CardContent>
+    <Grid className={classes.rootContainer} container item justify='center'>
+      <Card>
+        <CardContent className={classes.cardContainer}>
+          <Avatar className={classes.largeAvatar} src={user.photoURL} />
           <TextField
             label={`What do you want to sell, ${user.displayName}?`}
             onClick={() => setOpen(true)}

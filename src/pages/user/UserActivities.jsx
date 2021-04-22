@@ -36,7 +36,7 @@ const UserActivities = (props) => {
     setValue(newValue);
   };
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('lg'));
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
 
   let orientation;
   if (matches) {
@@ -49,6 +49,7 @@ const UserActivities = (props) => {
     <Box className={classes.tabsContainer}>
       <Tabs
         value={value}
+        centered
         onChange={handleChange}
         indicatorColor='secondary'
         textColor='secondary'

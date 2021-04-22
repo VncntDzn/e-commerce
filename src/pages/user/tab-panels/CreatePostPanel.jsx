@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  Container,
   makeStyles,
 } from '@material-ui/core';
 import { Formik, Form } from 'formik';
@@ -100,7 +101,7 @@ const CreatePostPanel = ({ user }) => {
   };
   return (
     <Grid>
-      <Card style={{ margin: `1rem 0` }}>
+      <Card className={classes.cardContainer}>
         <CardContent>
           <TextField
             label={`What do you want to sell, ${user.displayName}?`}

@@ -6,7 +6,7 @@ import UserDetails from './UserDetails';
 const useStyles = makeStyles((theme) => ({
   container: {
     [theme.breakpoints.up('lg')]: {
-      width: '70vw',
+      width: '80vw',
     },
   },
 }));

@@ -2,9 +2,7 @@ import { useState } from 'react';
 import {
   Button,
   makeStyles,
-  Grid,
   Avatar,
-  Typography,
   Box,
   Dialog,
   DialogActions,
@@ -12,16 +10,46 @@ import {
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateProfile } from 'store/slices/userSlice';
+import AbstractArt from './assets/abstractart.jpg';
+import { FluidTypography } from 'components';
 
 const useStyles = makeStyles((theme) => ({
-  tabsContainer: {
+  rootContainer: {
+    height: '35vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: theme.spacing(6),
+    [theme.breakpoints.up('sm')]: {
+      marginBottom: theme.spacing(-7),
+    },
+    [theme.breakpoints.up('md')]: {
+      marginBottom: theme.spacing(-12),
+    },
     [theme.breakpoints.up('lg')]: {
-      width: '35vw',
+      marginBottom: theme.spacing(10),
     },
   },
-  large: {
+  largeAvatar: {
     width: theme.spacing(7),
     height: theme.spacing(7),
+    marginTop: theme.spacing(-4),
+    [theme.breakpoints.up('lg')]: {
+      marginTop: theme.spacing(-7),
+      width: theme.spacing(12),
+      height: theme.spacing(12),
+    },
+  },
+  imageContainer: {
+    objectFit: 'cover',
+    height: '25vh',
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      height: '20vh',
+    },
+    [theme.breakpoints.up('lg')]: {
+      height: '30vh',
+    },
   },
 }));
 const UserDetails = () => {
@@ -39,38 +67,22 @@ const UserDetails = () => {
   };
 
   return (
-    <Box display='flex' flexDirection='row'>
-      <Grid
-        container
-        item
-        xs={4}
-        lg={4}
-        xl={7}
-        alignItems='center'
-        justify='center'
+    <Box className={classes.rootContainer}>
+      <img
+        className={classes.imageContainer}
+        src={AbstractArt}
+        alt='abstract'
+      />
+      <Avatar className={classes.largeAvatar} src={user.photoURL} />
+
+      <FluidTypography text={user.displayName} />
+      <Button
+        onClick={() => setOpen(!open)}
+        variant='outlined'
+        color='secondary'
       >
-        <Avatar className={classes.large} src={user.photoURL} />
-      </Grid>
-      <Grid
-        container
-        item
-        xs={8}
-        sm={6}
-        display='flex'
-        justify='flex-start'
-        direction='column'
-      >
-        <Typography>{user.displayName}</Typography>
-        <Box>
-          <Button
-            className={classes.buttonStyle}
-            onClick={() => setOpen(!open)}
-            variant='outlined'
-          >
-            EDIT PROFILE
-          </Button>
-        </Box>
-      </Grid>
+        Edit Profile
+      </Button>
 
       <Dialog
         onClose={handleClose}

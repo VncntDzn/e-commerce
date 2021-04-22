@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 
-const createPost = createAsyncThunk('createPost', async ({ productName, stock, price, author, description, links, date }) => {
-
+const createPost = createAsyncThunk('createPost', async ({ productName, stock, price, author, description, links, date, displayName }) => {
     try {
         firestore.collection('products').add({
             nanoID: nanoid(),
@@ -10,6 +9,24 @@ const createPost = createAsyncThunk('createPost', async ({ productName, stock, p
             price,
             stock,
             author,
+            description,
+            displayName,
+            links,
+            date
+        })
+        return "success"
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+const editPost = createAsyncThunk('editPost', async ({ productName, stock, price, description, links, date }) => {
+    try {
+        firestore.collection('products').add({
+            nanoID: nanoid(),
+            productName,
+            price,
+            stock,
             description,
             links,
             date
@@ -20,7 +37,6 @@ const createPost = createAsyncThunk('createPost', async ({ productName, stock, p
         console.log(error)
     }
 })
-
 const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async ({ author }) => {
     try {
         let allPosts = []
@@ -28,6 +44,7 @@ const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async ({ author })
         posts.forEach(post => {
             allPosts.push(post.data())
         })
+        console.log(allPosts)
 
         return allPosts
 
@@ -42,12 +59,11 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async ({ email }
         let retrievedUserPosts = []
         const posts = await firestore.collection("products")
             .where('author', '==', email)
+            .orderBy("date")
             .get()
         posts.forEach(post => {
             retrievedUserPosts.push(post.data())
         })
-
-
         return retrievedUserPosts
 
     } catch (error) {
@@ -58,7 +74,8 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async ({ email }
 
 // TODO:   UPDATE POST, DELETE POST, COMMENT ON POST
 const initialState = {
-    status: 'idle',
+    createPostStatus: 'idle',
+    error: null,
     posts: [],
     userPosts: []
 };
@@ -68,15 +85,15 @@ const postsSlice = createSlice({
     initialState,
     extraReducers: {
         [createPost.pending]: (state, action) => {
-            state.status = 'pending'
+            state.createPostStatus = 'pending'
         },
         [createPost.fulfilled]: (state, action) => {
-            state.status = 'finished';
-            console.log(action)
+            state.createPostStatus = 'success';
+            state.error = null
         },
         [createPost.failed]: (state, action) => {
-            state.status = 'failed';
-            console.log(action)
+            state.createPostStatus = 'failed';
+
         },
         // RETRIEVE POSTS
         [retrieveAllPosts.pending]: (state, action) => {
@@ -89,7 +106,7 @@ const postsSlice = createSlice({
         },
         [retrieveAllPosts.failed]: (state, action) => {
             state.status = 'failed';
-            console.log(action)
+
         },
 
 
@@ -110,6 +127,6 @@ const postsSlice = createSlice({
     }
 });
 
-const { actions, reducer } = postsSlice;
-export { createPost, retrieveAllPosts, retrieveUserPosts }
+const { reducer } = postsSlice;
+export { createPost, retrieveAllPosts, retrieveUserPosts, editPost }
 export default reducer;

@@ -1,13 +1,13 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, } from '@reduxjs/toolkit'
 import firebase from 'firebase/firebaseConfig';
 
 const updateProfile = createAsyncThunk('updateProfile', async (params) => {
-    const { displayName, photoURL } = params;
+    const { name, link } = params;
 
     try {
         const user = await firebase.auth().currentUser;
         user.updateProfile({
-            displayName, photoURL
+            displayName: name, photoURL: link
         });
         console.log(user)
         return "success"

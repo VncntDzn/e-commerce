@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { resetState } from 'store/slices/authSlice';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
 /**  A custom hook that displays a dialog, animated svg and message.
  * @param {string} [error] - whether the status has error or not.
  * @param {string} [status] - status of the process passed from the parent component.
@@ -18,9 +19,12 @@ const useDialog = (...props) => {
     animationSuccess,
     animationFailed,
     successText,
+    location,
   } = props[0];
   const [visibility, setVisibility] = useState(false);
   const [data, setData] = useState({ show: false, text: '', lottie: '' });
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const closeModal = () => {
     setData({ show: false });
@@ -28,19 +32,22 @@ const useDialog = (...props) => {
   useEffect(() => {
     if (status === 'pending') {
       setVisibility(true);
-      console.log(status);
     } else if (status === 'success') {
-      console.log(status);
       setVisibility(false);
       setData({
         show: true,
         text: successText,
         lottie: animationSuccess,
       });
+      setTimeout(() => {
+        return location ? history.push(location) : null;
+      }, 2000);
     } else if (status === 'failed') {
       setVisibility(false);
       setData({ show: true, text: error, lottie: animationFailed });
     }
+    // reset values of the state
+    dispatch(resetState());
   }, [
     status,
     error,
@@ -48,6 +55,9 @@ const useDialog = (...props) => {
     animationSuccess,
     animationFailed,
     visibility,
+    dispatch,
+    location,
+    history,
   ]);
 
   return { visibility, data, closeModal };

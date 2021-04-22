@@ -1,14 +1,28 @@
 import { useSelector } from 'react-redux';
 import { MainLayout } from 'layouts';
 import { useState } from 'react';
-import { makeStyles, Tabs, Tab, Box } from '@material-ui/core';
+import {
+  makeStyles,
+  Tabs,
+  Tab,
+  Breadcrumbs,
+  Hidden,
+  Grid,
+  Link,
+  Typography,
+  Card,
+} from '@material-ui/core';
 import { TabPanel } from 'components';
 import ProductInformation from './tab-panels/ProductInformation';
+import Reviews from './tab-panels/Reviews';
 import PropTypes from 'prop-types';
+
+import { Carousel } from 'react-responsive-carousel';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    marginTop: '0.5rem',
   },
 }));
 const SinglePost = ({ match }) => {
@@ -25,29 +39,61 @@ const SinglePost = ({ match }) => {
 
   return (
     <MainLayout>
-      <Box className={classes.root}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor='secondary'
-          textColor='secondary'
-          variant='fullWidth'
-          aria-label='full width tabs'
-        >
-          <Tab label='Product Information' />
-          <Tab label='Reviews' />
-          <Tab label='FAQ' />
-        </Tabs>
-        <TabPanel value={value} index={0}>
-          <ProductInformation info={product} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel>
-      </Box>
+      <Breadcrumbs aria-label='breadcrumb'>
+        <Link color='inherit' href='/'>
+          Material-UI
+        </Link>
+        <Link color='inherit' href='/getting-started/installation/'>
+          Core
+        </Link>
+        <Typography color='textPrimary'>Breadcrumb</Typography>
+      </Breadcrumbs>
+      <Grid container spacing={2} className={classes.root}>
+        <Hidden smDown>
+          <Grid container item md={6} lg={6}>
+            <TransformWrapper>
+              <TransformComponent>
+                <Carousel emulateTouch={true}>
+                  {product.links.map((link, index) => (
+                    <img key={index} src={link} alt='product' />
+                  ))}
+                </Carousel>
+              </TransformComponent>
+            </TransformWrapper>
+          </Grid>
+        </Hidden>
+        <Grid container item md={6} lg={6}>
+          <Card
+            style={{
+              height: 'fit-content',
+              width: '100%',
+              marginBottom: '1rem',
+            }}
+          >
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor='secondary'
+              textColor='secondary'
+              variant='fullWidth'
+              aria-label='full width tabs'
+            >
+              <Tab label='Product Information' />
+              <Tab label='Reviews' />
+              <Tab label='FAQ' />
+            </Tabs>
+          </Card>
+          <TabPanel value={value} index={0}>
+            <ProductInformation info={product} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Reviews />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            Item Three
+          </TabPanel>
+        </Grid>
+      </Grid>
     </MainLayout>
   );
 };

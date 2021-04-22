@@ -1,3 +1,7 @@
+/**
+ * CreatePostPanel - a component where the user can add the item.
+ */
+
 import { useState } from 'react';
 import {
   Button,
@@ -11,22 +15,26 @@ import {
   DialogActions,
   TextField,
   makeStyles,
+  Avatar,
 } from '@material-ui/core';
 import { Formik, Form } from 'formik';
-import { Field } from 'components';
+import { Field, Spinner, CustomDialog } from 'components';
 import { productSchema } from 'helpers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPost } from 'store/slices/postsSlice';
+import { useDialog } from 'helpers';
+import { firebaseStorage } from 'firebase/firebaseConfig';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import ImageUploader from 'react-images-upload';
-import { firebaseStorage } from 'firebase/firebaseConfig';
-
 import moment from 'moment';
+import SuccessAnimation from 'lottie/SuccessAnimation';
+import FailedAnimation from 'lottie/FailedAnimation';
 
 const animatedComponents = makeAnimated();
+
 const useStyles = makeStyles((theme) => ({
   priceStockContainer: {
     display: 'flex',
@@ -36,6 +44,25 @@ const useStyles = makeStyles((theme) => ({
     width: '97%',
     margin: '0 0.5rem',
   },
+  cardContainer: {
+    display: 'flex',
+    [theme.breakpoints.up('sm')]: {
+      width: '60vw',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '35vw',
+    },
+  },
+  rootContainer: {
+    marginTop: theme.spacing(1),
+  },
+  largeAvatar: {
+    width: theme.spacing(5),
+    height: theme.spacing(5),
+    marginRight: theme.spacing(2),
+    display: 'flex',
+    alignSelf: 'center',
+  },
 }));
 const CreatePostPanel = ({ user }) => {
   const classes = useStyles();
@@ -43,19 +70,31 @@ const CreatePostPanel = ({ user }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [links, setLinks] = useState(null);
+  const [disabled, setDisable] = useState(true);
+  const status = useSelector((state) => state.posts.createPostStatus);
+  const error = useSelector((state) => state.posts.error);
+
   const handleCreatePost = () => {
     setOpen(!open);
   };
 
+  const { visibility, data, closeModal } = useDialog({
+    status,
+    error,
+    animationSuccess: SuccessAnimation,
+    animationFailed: FailedAnimation,
+    successText: 'Success!',
+  });
   const handleUpload = (files) => {
     const storageRef = firebaseStorage.ref(`posts/${user.email}`);
     let data = [];
+
     files.forEach(async (file) => {
       try {
         let fileRef = storageRef.child(file.name);
         await fileRef.put(file);
         data.push(await fileRef.getDownloadURL());
-        console.log(await fileRef.getDownloadURL());
+        setDisable(false);
       } catch (e) {
         console.log(e);
       }
@@ -84,6 +123,7 @@ const CreatePostPanel = ({ user }) => {
             links,
             description: value,
             author: user.email,
+            displayName: user.displayName,
             date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
           })
         );
@@ -94,10 +134,12 @@ const CreatePostPanel = ({ user }) => {
       console.log(e);
     }
   };
+
   return (
-    <Grid>
-      <Card style={{ margin: `1rem 0` }}>
-        <CardContent>
+    <Grid className={classes.rootContainer} container item justify='center'>
+      <Card>
+        <CardContent className={classes.cardContainer}>
+          <Avatar className={classes.largeAvatar} src={user.photoURL} />
           <TextField
             label={`What do you want to sell, ${user.displayName}?`}
             onClick={() => setOpen(true)}
@@ -109,15 +151,17 @@ const CreatePostPanel = ({ user }) => {
         </CardContent>
       </Card>
 
-      <Dialog
-        onClose={handleCreatePost}
-        aria-labelledby='simple-dialog-title'
-        open={open}
-        fullWidth
-      >
+      <Dialog onClose={handleCreatePost} open={open} fullWidth>
         <Box display='flex' justifyContent='center'>
-          <DialogTitle id='simple-dialog-title'>Post a Product</DialogTitle>
+          <DialogTitle>Post a Product</DialogTitle>
         </Box>
+        <Spinner visible={visibility} />
+        <CustomDialog
+          dialog={data.show}
+          lottie={data.lottie}
+          text={data.text}
+          onClose={closeModal}
+        />
         <DialogContent>
           <Formik
             initialValues={{
@@ -181,7 +225,12 @@ const CreatePostPanel = ({ user }) => {
                 <Button variant='outlined' onClick={handleCreatePost}>
                   Cancel
                 </Button>
-                <Button color='secondary' variant='outlined' type='submit'>
+                <Button
+                  disabled={disabled}
+                  color='secondary'
+                  variant='outlined'
+                  type='submit'
+                >
                   Post
                 </Button>
               </DialogActions>

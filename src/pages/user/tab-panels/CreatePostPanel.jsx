@@ -1,3 +1,7 @@
+/**
+ * CreatePostPanel - a component where the user can add the item.
+ */
+
 import { useState } from 'react';
 import {
   Button,
@@ -23,7 +27,6 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import ImageUploader from 'react-images-upload';
 import { firebaseStorage } from 'firebase/firebaseConfig';
-
 import moment from 'moment';
 
 const animatedComponents = makeAnimated();
@@ -84,6 +87,7 @@ const CreatePostPanel = ({ user }) => {
             links,
             description: value,
             author: user.email,
+            displayName: user.displayName,
             date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
           })
         );
@@ -109,14 +113,9 @@ const CreatePostPanel = ({ user }) => {
         </CardContent>
       </Card>
 
-      <Dialog
-        onClose={handleCreatePost}
-        aria-labelledby='simple-dialog-title'
-        open={open}
-        fullWidth
-      >
+      <Dialog onClose={handleCreatePost} open={open} fullWidth>
         <Box display='flex' justifyContent='center'>
-          <DialogTitle id='simple-dialog-title'>Post a Product</DialogTitle>
+          <DialogTitle>Post a Product</DialogTitle>
         </Box>
         <DialogContent>
           <Formik

@@ -11,10 +11,10 @@ import {
   Link,
   Typography,
   Card,
-  CardContent,
 } from '@material-ui/core';
 import { TabPanel } from 'components';
 import ProductInformation from './tab-panels/ProductInformation';
+import Reviews from './tab-panels/Reviews';
 import PropTypes from 'prop-types';
 
 import { Carousel } from 'react-responsive-carousel';
@@ -62,7 +62,7 @@ const SinglePost = ({ match }) => {
             </TransformWrapper>
           </Grid>
         </Hidden>
-        <Grid container flexDirection='column' item md={6} lg={6}>
+        <Grid container item md={6} lg={6}>
           <Card
             style={{
               height: 'fit-content',
@@ -87,7 +87,7 @@ const SinglePost = ({ match }) => {
             <ProductInformation info={product} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            Item Two
+            <Reviews />
           </TabPanel>
           <TabPanel value={value} index={2}>
             Item Three

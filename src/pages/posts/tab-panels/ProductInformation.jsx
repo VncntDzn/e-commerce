@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
       width: '30rem',
     },
     [theme.breakpoints.up('lg')]: {
-      marginTop: '-30vh',
+      marginTop: '-40%',
       width: '34rem',
     },
   },

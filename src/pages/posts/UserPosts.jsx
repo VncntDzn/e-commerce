@@ -1,10 +1,19 @@
 import { useEffect } from 'react';
-import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
+import {
+  Card,
+  CardContent,
+  Button,
+  Box,
+  makeStyles,
+  IconButton,
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { retrieveUserPosts } from 'store/slices/postsSlice';
 import { FluidTypography } from 'components';
 import { useHistory } from 'react-router-dom';
 import ReactStars from 'react-rating-stars-component';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -38,6 +47,7 @@ const UserPosts = ({ email }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const userPosts = useSelector((state) => state.posts.userPosts);
+
   useEffect(() => {
     dispatch(retrieveUserPosts({ email }));
   }, [email, dispatch]);
@@ -48,6 +58,18 @@ const UserPosts = ({ email }) => {
         userPosts.map((post, index) => (
           <Card raised key={index} className={classes.cardContainer}>
             <CardContent>
+              <Box display='flex' justifyContent='space-between'>
+                <FluidTypography
+                  text={post.displayName}
+                  minSize='1rem'
+                  size='0.9rem'
+                  maxSize='1rem'
+                  fontWeight='500'
+                />
+                <IconButton style={{ padding: 0, margin: 0 }}>
+                  <MoreHorizIcon />
+                </IconButton>
+              </Box>
               <img
                 className={classes.image}
                 src={post.links[0]}

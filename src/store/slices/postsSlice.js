@@ -127,6 +127,6 @@ const postsSlice = createSlice({
     }
 });
 
-const { actions, reducer } = postsSlice;
-export { createPost, retrieveAllPosts, retrieveUserPosts }
+const { reducer } = postsSlice;
+export { createPost, retrieveAllPosts, retrieveUserPosts, editPost }
 export default reducer;

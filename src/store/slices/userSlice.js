@@ -1,13 +1,27 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit'
 import firebase from 'firebase/firebaseConfig';
+import { firestore } from 'firebase/firebaseConfig';
+/* 
+const createUserInformation = createAsyncThunk('createUserInformation', async ({ name, link }) => {
+    try {
+        firestore.collection('user-information').add({
+            nanoID: nanoid(),
+            name,
+            link
+        })
+        return "success"
+    } catch (error) {
+        console.log(error)
+    }
+}) */
 
 const updateProfile = createAsyncThunk('updateProfile', async (params) => {
-    const { displayName, photoURL } = params;
+    const { name, link } = params;
 
     try {
         const user = await firebase.auth().currentUser;
         user.updateProfile({
-            displayName, photoURL
+            displayName: name, photoURL: link
         });
         console.log(user)
         return "success"

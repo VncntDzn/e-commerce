@@ -70,8 +70,10 @@ const CreatePostPanel = ({ user }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [links, setLinks] = useState(null);
+  const [disabled, setDisable] = useState(true);
   const status = useSelector((state) => state.posts.createPostStatus);
   const error = useSelector((state) => state.posts.error);
+
   const handleCreatePost = () => {
     setOpen(!open);
   };
@@ -86,12 +88,13 @@ const CreatePostPanel = ({ user }) => {
   const handleUpload = (files) => {
     const storageRef = firebaseStorage.ref(`posts/${user.email}`);
     let data = [];
+
     files.forEach(async (file) => {
       try {
         let fileRef = storageRef.child(file.name);
         await fileRef.put(file);
         data.push(await fileRef.getDownloadURL());
-        console.log(await fileRef.getDownloadURL());
+        setDisable(false);
       } catch (e) {
         console.log(e);
       }
@@ -222,7 +225,12 @@ const CreatePostPanel = ({ user }) => {
                 <Button variant='outlined' onClick={handleCreatePost}>
                   Cancel
                 </Button>
-                <Button color='secondary' variant='outlined' type='submit'>
+                <Button
+                  disabled={disabled}
+                  color='secondary'
+                  variant='outlined'
+                  type='submit'
+                >
                   Post
                 </Button>
               </DialogActions>

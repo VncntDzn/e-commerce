@@ -14,8 +14,9 @@ import {
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateProfile } from 'store/slices/userSlice';
-import AbstractArt from './assets/abstractart.jpg';
 import { FluidTypography } from 'components';
+import { firebaseStorage } from 'firebase/firebaseConfig';
+import AbstractArt from './assets/abstractart.jpg';
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
@@ -59,15 +60,29 @@ const useStyles = makeStyles((theme) => ({
 const UserDetails = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.auth.user);
   const [open, setOpen] = useState(false);
-  const [details, setDetails] = useState({ displayName: '', photoURL: '' });
+  const [name, setName] = useState(null);
+  const [link, setLink] = useState(null);
+  const [disable, setDisable] = useState(true);
   const handleClose = () => {
     setOpen(!open);
   };
+  const handleUpload = async (files) => {
+    const storageRef = firebaseStorage.ref(`update-user/${user.email}`);
+    let picture = files.target.files[0];
+
+    try {
+      let fileRef = storageRef.child(picture.name);
+      await fileRef.put(picture);
+      setLink(await fileRef.getDownloadURL());
+      setDisable(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const updateProfileDetails = () => {
-    dispatch(updateProfile(details));
+    dispatch(updateProfile({ name, link }));
   };
 
   return (
@@ -101,9 +116,7 @@ const UserDetails = () => {
             variant='outlined'
             color='secondary'
             label='New Full Name'
-            onChange={(e) =>
-              setDetails({ ...details, displayName: e.target.value })
-            }
+            onChange={(e) => setName(e.target.value)}
           />
           <TextField
             style={{ margin: 5 }}
@@ -112,9 +125,7 @@ const UserDetails = () => {
             color='secondary'
             type='file'
             inputProps={{ accept: 'image/*' }}
-            onChange={(e) =>
-              setDetails({ ...details, photoURL: e.target.files[0].name })
-            }
+            onChange={handleUpload}
           />
         </Box>
         <DialogActions>
@@ -122,6 +133,7 @@ const UserDetails = () => {
             color='secondary'
             variant='outlined'
             onClick={updateProfileDetails}
+            disable={disable}
           >
             Update
           </Button>

@@ -59,12 +59,11 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async ({ email }
         let retrievedUserPosts = []
         const posts = await firestore.collection("products")
             .where('author', '==', email)
+            .orderBy("date")
             .get()
         posts.forEach(post => {
             retrievedUserPosts.push(post.data())
         })
-
-        console.log(retrievedUserPosts)
         return retrievedUserPosts
 
     } catch (error) {

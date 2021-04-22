@@ -14,7 +14,6 @@ const createPost = createAsyncThunk('createPost', async ({ productName, stock, p
             links,
             date
         })
-
         return "success"
     } catch (error) {
         console.log(error)
@@ -76,7 +75,8 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async ({ email }
 
 // TODO:   UPDATE POST, DELETE POST, COMMENT ON POST
 const initialState = {
-    status: 'idle',
+    createPostStatus: 'idle',
+    error: null,
     posts: [],
     userPosts: []
 };
@@ -86,15 +86,15 @@ const postsSlice = createSlice({
     initialState,
     extraReducers: {
         [createPost.pending]: (state, action) => {
-            state.status = 'pending'
+            state.createPostStatus = 'pending'
         },
         [createPost.fulfilled]: (state, action) => {
-            state.status = 'finished';
-            console.log(action)
+            state.createPostStatus = 'success';
+            state.error = null
         },
         [createPost.failed]: (state, action) => {
-            state.status = 'failed';
-            console.log(action)
+            state.createPostStatus = 'failed';
+
         },
         // RETRIEVE POSTS
         [retrieveAllPosts.pending]: (state, action) => {
@@ -107,7 +107,7 @@ const postsSlice = createSlice({
         },
         [retrieveAllPosts.failed]: (state, action) => {
             state.status = 'failed';
-            console.log(action)
+
         },
 
 

@@ -12,7 +12,6 @@ import { retrieveUserPosts } from 'store/slices/postsSlice';
 import { FluidTypography } from 'components';
 import { useHistory } from 'react-router-dom';
 import ReactStars from 'react-rating-stars-component';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles((theme) => ({

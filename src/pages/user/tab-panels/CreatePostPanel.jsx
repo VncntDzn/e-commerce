@@ -15,23 +15,26 @@ import {
   DialogActions,
   TextField,
   makeStyles,
-  Container,
   Avatar,
 } from '@material-ui/core';
 import { Formik, Form } from 'formik';
-import { Field } from 'components';
+import { Field, Spinner, CustomDialog } from 'components';
 import { productSchema } from 'helpers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPost } from 'store/slices/postsSlice';
+import { useDialog } from 'helpers';
+import { firebaseStorage } from 'firebase/firebaseConfig';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import ImageUploader from 'react-images-upload';
-import { firebaseStorage } from 'firebase/firebaseConfig';
 import moment from 'moment';
+import SuccessAnimation from 'lottie/SuccessAnimation';
+import FailedAnimation from 'lottie/FailedAnimation';
 
 const animatedComponents = makeAnimated();
+
 const useStyles = makeStyles((theme) => ({
   priceStockContainer: {
     display: 'flex',
@@ -67,10 +70,19 @@ const CreatePostPanel = ({ user }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [links, setLinks] = useState(null);
+  const status = useSelector((state) => state.posts.createPostStatus);
+  const error = useSelector((state) => state.posts.error);
   const handleCreatePost = () => {
     setOpen(!open);
   };
 
+  const { visibility, data, closeModal } = useDialog({
+    status,
+    error,
+    animationSuccess: SuccessAnimation,
+    animationFailed: FailedAnimation,
+    successText: 'Success!',
+  });
   const handleUpload = (files) => {
     const storageRef = firebaseStorage.ref(`posts/${user.email}`);
     let data = [];
@@ -119,6 +131,7 @@ const CreatePostPanel = ({ user }) => {
       console.log(e);
     }
   };
+
   return (
     <Grid className={classes.rootContainer} container item justify='center'>
       <Card>
@@ -139,6 +152,13 @@ const CreatePostPanel = ({ user }) => {
         <Box display='flex' justifyContent='center'>
           <DialogTitle>Post a Product</DialogTitle>
         </Box>
+        <Spinner visible={visibility} />
+        <CustomDialog
+          dialog={data.show}
+          lottie={data.lottie}
+          text={data.text}
+          onClose={closeModal}
+        />
         <DialogContent>
           <Formik
             initialValues={{

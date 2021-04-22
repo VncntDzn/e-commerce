@@ -1,3 +1,7 @@
+/**
+ * User Details is intended for user information.
+ * Also it is the component where you can update the user information.
+ */
 import { useState } from 'react';
 import {
   Button,

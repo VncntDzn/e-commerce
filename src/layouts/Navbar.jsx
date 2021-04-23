@@ -49,10 +49,6 @@ const Navbar = (props) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const logout = () => {
     dispatch(logoutUser());
     history.push('/');
@@ -167,7 +163,7 @@ const Navbar = (props) => {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={() => setAnchorEl(null)}
       >
         {!uid ? (
           <Box>

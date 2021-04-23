@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { TabPanel } from 'components';
-import { CreatePostPanel } from './tab-panels';
+import { ProductPanel } from 'components';
 import UserPosts from '../posts/UserPosts';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
@@ -63,8 +63,8 @@ const UserActivities = (props) => {
       </Tabs>
 
       <TabPanel value={value} index={0} style={{ width: '100%' }}>
-        <CreatePostPanel user={user} />
-        <UserPosts email={user.email} />
+        <ProductPanel user={user} action='add' />
+        <UserPosts user={user} />
       </TabPanel>
       <TabPanel value={value} index={1} style={{ width: '100%' }}>
         Item Two

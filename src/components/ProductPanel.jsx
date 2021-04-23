@@ -1,5 +1,9 @@
 /**
- * CreatePostPanel - a component where the user can add the item.
+ * CreatePostPanel - a component where the user can add or edit the item.
+ * @params {object} [user] - current user.
+ * @params {string} [action] - To transform the product panel to add or edit.
+ * @params {Boolean} [openEdit] - passed from UserPosts whether to open or not the ProductPanel.
+ * @params {function} [closeEdit] - function passed from UserPosts whether to open or not the ProductPanel.
  */
 
 import { useState } from 'react';
@@ -279,6 +283,8 @@ const ProductPanel = ({ user, action, openEdit, closeEdit }) => {
 ProductPanel.propTypes = {
   user: PropTypes.object.isRequired,
   action: PropTypes.string.isRequired,
+  openEdit: PropTypes.bool,
+  closeEdit: PropTypes.func,
 };
 
 export default ProductPanel;

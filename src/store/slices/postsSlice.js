@@ -33,7 +33,6 @@ const updatePost = createAsyncThunk('updatePost', async ({ documentID, productNa
                 date,
                 author
             })
-        console.log(author)
         return "success"
     } catch (error) {
         console.log(error)

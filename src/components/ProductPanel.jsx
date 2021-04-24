@@ -26,7 +26,7 @@ import { Field, Spinner, CustomDialog } from 'components';
 import { productSchema } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost, updatePost } from 'store/slices/postsSlice';
-import { useDialog } from 'helpers';
+import { useDialog, countriesData } from 'helpers';
 import { firebaseStorage } from 'firebase/firebaseConfig';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -73,7 +73,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
+  const [quillData, setQuillData] = useState('');
   const [links, setLinks] = useState(null);
   const [disabled, setDisable] = useState(true);
   const status = useSelector((state) => state.posts.createPostStatus);
@@ -100,6 +100,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
     animationFailed: FailedAnimation,
     successText: 'Success!',
   });
+
   const handleUpload = (files) => {
     const storageRef =
       action === 'add'
@@ -120,16 +121,6 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
 
     setLinks(data);
   };
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
-
-  const handleQuill = (data) => {
-    setValue(data);
-  };
-
   const handleSubmit = async ({ productName, price, stock }) => {
     try {
       if (links) {
@@ -140,7 +131,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               price,
               stock,
               links,
-              description: value,
+              description: quillData,
               author: user.email,
               displayName: user.displayName,
               date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
@@ -154,7 +145,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               price,
               stock,
               links,
-              description: value,
+              description: quillData,
               author: user.email,
               displayName: user.displayName,
               date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
@@ -240,8 +231,8 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
                 className={classes.selectContainer}
                 placeholder='Type definition here...'
                 theme='snow'
-                value={value}
-                onChange={handleQuill}
+                value={quillData}
+                onChange={(quillData) => setQuillData(quillData)}
               />
               <ImageUploader
                 name='image'
@@ -252,13 +243,24 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                 maxFileSize={5242880}
               />
-              <Select
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
-                options={options}
-                className={classes.selectContainer}
-              />
+
+              <Box display='flex'>
+                <Select
+                  placeholder='Select Categories'
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  options={countriesData}
+                  className={classes.selectContainer}
+                />
+                <Select
+                  placeholder='Select Location'
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  options={countriesData}
+                  className={classes.selectContainer}
+                />
+              </Box>
 
               <Button color='secondary'>Category not on the list?</Button>
               <DialogActions>

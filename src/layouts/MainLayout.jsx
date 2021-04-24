@@ -1,5 +1,6 @@
 import { Navbar, BottomNav } from 'layouts';
 import { Box, makeStyles } from '@material-ui/core';
+import { Footer } from 'pages';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +20,7 @@ const MainLayout = ({ children }) => {
     <>
       <Navbar />
       <Box className={classes.boxContainer}>{children}</Box>
+      <Footer />
       <BottomNav />
     </>
   );

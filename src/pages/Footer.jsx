@@ -1,7 +1,7 @@
 import { Typography, Grid, makeStyles } from '@material-ui/core';
 import customTheme from 'theme/customTheme';
 
-const Community = (props) => {
+const Footer = () => {
   const useStyles = makeStyles((theme) => ({
     container: {
       backgroundColor: customTheme.palette.secondary.light,
@@ -41,6 +41,4 @@ const Community = (props) => {
   );
 };
 
-Community.propTypes = {};
-
-export default Community;
+export default Footer;

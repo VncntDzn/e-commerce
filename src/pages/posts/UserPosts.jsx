@@ -13,7 +13,6 @@ import {
   Menu,
   MenuItem,
   Avatar,
-  Container,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { retrieveUserPosts } from 'store/slices/postsSlice';
@@ -97,20 +96,22 @@ const UserPosts = ({ user }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [editDialog, setEditDialog] = useState(false);
-  const userPosts = useSelector((state) => state.posts.userPosts);
   const [currentPage, setCurrentPage] = useState(0);
+  const [editDialog, setEditDialog] = useState(false);
+  const [docID, setDocID] = useState(null);
+  const userPosts = useSelector((state) => state.posts.userPosts);
   const userPostStatus = useSelector((state) => state.posts.userPostStatus);
 
-  const handleClick = (event) => {
+  const handleClick = (event, docID) => {
     setAnchorEl(event.currentTarget);
+    setDocID(docID);
   };
 
   // get the current page
   const handlePageClick = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
   };
-  const PER_PAGE = 1;
+  const PER_PAGE = 9;
   const offset = currentPage * PER_PAGE;
   let pageCount = 10;
   useEffect(() => {
@@ -126,129 +127,129 @@ const UserPosts = ({ user }) => {
     <Box>
       <Box className={classes.container}>
         {userPosts?.length ? (
-          userPosts.slice(offset, offset + PER_PAGE).map((post, index) => (
-            <Card raised key={index} className={classes.cardContainer}>
-              <CardContent>
-                <Box
-                  display='flex'
-                  justifyContent='space-between'
-                  alignItems='center'
-                  mb={1}
-                >
-                  <Box display='flex' alignItems='center'>
-                    <Avatar className={classes.largeAvatar} src={photoURL} />
-                    <FluidTypography
-                      text={post.data.displayName}
-                      minSize='1rem'
-                      size='0.9rem'
-                      maxSize='1rem'
-                      fontWeight='500'
-                      variant='subtitle1'
-                    />
-                  </Box>
-                  <IconButton
-                    onClick={handleClick}
-                    style={{ padding: 0, margin: 0 }}
+          userPosts
+            .slice(offset, offset + PER_PAGE)
+            .map(({ data, docID }, index) => (
+              <Card raised key={index} className={classes.cardContainer}>
+                <CardContent>
+                  <Box
+                    display='flex'
+                    justifyContent='space-between'
+                    alignItems='center'
+                    mb={1}
                   >
-                    <MoreHorizIcon />
-                  </IconButton>
-
-                  <Menu
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={() => setAnchorEl(null)}
-                  >
-                    <MenuItem
-                      onClick={() => {
-                        setEditDialog(true);
-
-                        console.log(post);
-                      }}
+                    <Box display='flex' alignItems='center'>
+                      <Avatar className={classes.largeAvatar} src={photoURL} />
+                      <FluidTypography
+                        text={data.displayName}
+                        minSize='1rem'
+                        size='0.9rem'
+                        maxSize='1rem'
+                        fontWeight='500'
+                        variant='subtitle1'
+                      />
+                    </Box>
+                    <IconButton
+                      onClick={(event) => handleClick(event, docID)}
+                      style={{ padding: 0, margin: 0 }}
                     >
-                      Edit
-                    </MenuItem>
-                    <MenuItem>Delete</MenuItem>
-                  </Menu>
-                </Box>
-                <img
-                  className={classes.image}
-                  src={post.data.links[0]}
-                  alt='product'
-                />
+                      <MoreHorizIcon />
+                    </IconButton>
 
-                <FluidTypography
-                  text={post.data.productName}
-                  minSize='1rem'
-                  size='0.9rem'
-                  maxSize='1rem'
-                  fontWeight='500'
-                  variant='subtitle1'
-                />
-                <FluidTypography
-                  text={`₱ ${parseFloat(post.data.price).toFixed(2)}`}
-                  minSize='1rem'
-                  size='0.9rem'
-                  maxSize='1rem'
-                  fontWeight='500'
-                  variant='subtitle1'
-                />
+                    <Menu
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={() => setAnchorEl(null)}
+                    >
+                      <MenuItem onClick={() => setEditDialog(true)}>
+                        Edit
+                      </MenuItem>
+                      <MenuItem>Delete</MenuItem>
+                    </Menu>
+                  </Box>
+                  <img
+                    className={classes.image}
+                    src={data.links[0]}
+                    alt='product'
+                  />
 
-                <ReactStars
-                  count={5}
-                  edit={false}
-                  size={24}
-                  activeColor='#ffd700'
-                />
+                  <FluidTypography
+                    text={data.productName}
+                    minSize='1rem'
+                    size='0.9rem'
+                    maxSize='1rem'
+                    fontWeight='500'
+                    variant='subtitle1'
+                  />
+                  <FluidTypography
+                    text={`₱ ${parseFloat(data.price).toFixed(2)}`}
+                    minSize='1rem'
+                    size='0.9rem'
+                    maxSize='1rem'
+                    fontWeight='500'
+                    variant='subtitle1'
+                  />
 
-                <Box display='flex' justifyContent='flex-end'>
-                  <Button
-                    variant='contained'
-                    color='secondary'
-                    style={{ color: 'white' }}
-                  >
-                    Buy
-                  </Button>
-                  &nbsp;
-                  <Button
-                    variant='contained'
-                    onClick={() => {
-                      history.push(`/product/single-post/${post.data.nanoID}`);
-                    }}
-                    style={{ backgroundColor: 'red', color: 'white' }}
-                  >
-                    View
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          ))
+                  <ReactStars
+                    count={5}
+                    edit={false}
+                    size={24}
+                    activeColor='#ffd700'
+                  />
+
+                  <Box display='flex' justifyContent='flex-end'>
+                    <Button
+                      variant='contained'
+                      color='secondary'
+                      style={{ color: 'white' }}
+                    >
+                      Buy
+                    </Button>
+                    &nbsp;
+                    <Button
+                      variant='contained'
+                      onClick={() => {
+                        history.push(`/product/single-post/${data.nanoID}`);
+                      }}
+                      style={{ backgroundColor: 'red', color: 'white' }}
+                    >
+                      View
+                    </Button>
+                  </Box>
+                </CardContent>
+              </Card>
+            ))
         ) : (
           <div>
             <h1>Nothing to see here yet.</h1>
           </div>
         )}
       </Box>
-      <Box className={classes.paginationContainer}>
-        <ReactPaginate
-          previousLabel={'<'}
-          nextLabel={'>'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={pageCount}
-          marginPagesDisplayed={1}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          pageClassName={classes.pageStyle}
-          containerClassName={classes.pagination}
-          activeClassName={classes.paginationActive}
-        />
-      </Box>
+
+      {userPosts?.length && (
+        <Box className={classes.paginationContainer}>
+          <ReactPaginate
+            previousLabel={'<'}
+            nextLabel={'>'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={pageCount}
+            marginPagesDisplayed={1}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            pageClassName={classes.pageStyle}
+            containerClassName={classes.pagination}
+            activeClassName={classes.paginationActive}
+          />
+        </Box>
+      )}
       <ProductPanel
         openEdit={editDialog}
         closeEdit={() => setEditDialog(false)}
         user={user}
         action='edit'
+        documentID={docID}
       />
     </Box>
   );

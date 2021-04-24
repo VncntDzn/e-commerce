@@ -20,17 +20,21 @@ const createPost = createAsyncThunk('createPost', async ({ productName, stock, p
     }
 })
 
-const updatePost = createAsyncThunk('updatePost', async ({ nanoID, productName, stock, price, description, links, date }) => {
+const updatePost = createAsyncThunk('updatePost', async ({ documentID, productName, stock, price, description, links, date, author }) => {
     try {
-        let arr = []
-        const posts = await firestore.collection('products').get()
-
-        /* .where('nanoID', '===', nanoID) */
-        posts.forEach(post => {
-            arr.push({ docID: post.id, data: post.data() })
-        })
-        //console.log(arr)
-        return arr
+        await firestore.collection('products')
+            .doc(documentID)
+            .set({
+                productName,
+                stock,
+                price,
+                description,
+                links,
+                date,
+                author
+            })
+        console.log(author)
+        return "success"
     } catch (error) {
         console.log(error)
     }

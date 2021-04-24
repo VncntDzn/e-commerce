@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: 'center',
   },
 }));
-const ProductPanel = ({ user, action, openEdit, closeEdit, docID }) => {
+const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -149,6 +149,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, docID }) => {
         } else if (action === 'edit') {
           dispatch(
             updatePost({
+              documentID,
               productName,
               price,
               stock,

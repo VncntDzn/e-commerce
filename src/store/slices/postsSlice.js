@@ -20,19 +20,17 @@ const createPost = createAsyncThunk('createPost', async ({ productName, stock, p
     }
 })
 
-const editPost = createAsyncThunk('editPost', async ({ productName, stock, price, description, links, date }) => {
+const updatePost = createAsyncThunk('updatePost', async ({ nanoID, productName, stock, price, description, links, date }) => {
     try {
-        firestore.collection('products').add({
-            nanoID: nanoid(),
-            productName,
-            price,
-            stock,
-            description,
-            links,
-            date
-        })
+        let arr = []
+        const posts = await firestore.collection('products').get()
 
-        return "success"
+        /* .where('nanoID', '===', nanoID) */
+        posts.forEach(post => {
+            arr.push({ docID: post.id, data: post.data() })
+        })
+        //console.log(arr)
+        return arr
     } catch (error) {
         console.log(error)
     }
@@ -44,7 +42,6 @@ const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async ({ author })
         posts.forEach(post => {
             allPosts.push(post.data())
         })
-        console.log(allPosts)
 
         return allPosts
 
@@ -59,11 +56,12 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async ({ email }
         let retrievedUserPosts = []
         const posts = await firestore.collection("products")
             .where('author', '==', email)
-            .orderBy("date")
+            .orderBy("date", "desc")
             .get()
         posts.forEach(post => {
-            retrievedUserPosts.push(post.data())
+            retrievedUserPosts.push({ docID: post.id, data: post.data() })
         })
+
         return retrievedUserPosts
 
     } catch (error) {
@@ -77,7 +75,8 @@ const initialState = {
     createPostStatus: 'idle',
     error: null,
     posts: [],
-    userPosts: []
+    userPosts: [{}],
+    userPostStatus: 'idle'
 };
 
 const postsSlice = createSlice({
@@ -95,12 +94,12 @@ const postsSlice = createSlice({
             state.createPostStatus = 'failed';
 
         },
-        // RETRIEVE POSTS
+        // RETRIEVE ALL POSTS
         [retrieveAllPosts.pending]: (state, action) => {
             state.status = 'pending'
         },
         [retrieveAllPosts.fulfilled]: (state, action) => {
-            state.status = 'finished';
+            state.status = 'success';
             state.posts = (action.payload);
 
         },
@@ -109,18 +108,28 @@ const postsSlice = createSlice({
 
         },
 
-
-
+        // RETRIEVE USER POSTS
         [retrieveUserPosts.pending]: (state, action) => {
-            state.status = 'pending'
+            state.userPostStatus = 'pending'
         },
         [retrieveUserPosts.fulfilled]: (state, action) => {
-            state.status = 'finished';
-            state.userPosts = (action.payload);
-
-
+            state.userPostStatus = 'success';
+            state.userPosts = action.payload;
         },
         [retrieveUserPosts.failed]: (state, action) => {
+            state.userPostStatus = 'failed';
+            console.log(action)
+        },
+        // RETRIEVE USER POSTS
+        [updatePost.pending]: (state, action) => {
+            state.status = 'pending'
+        },
+        [updatePost.fulfilled]: (state, action) => {
+            state.status = 'success';
+            state.sample = action.payload
+            console.log(action.payload)
+        },
+        [updatePost.failed]: (state, action) => {
             state.status = 'failed';
             console.log(action)
         },
@@ -128,5 +137,5 @@ const postsSlice = createSlice({
 });
 
 const { reducer } = postsSlice;
-export { createPost, retrieveAllPosts, retrieveUserPosts, editPost }
+export { createPost, retrieveAllPosts, retrieveUserPosts, updatePost }
 export default reducer;

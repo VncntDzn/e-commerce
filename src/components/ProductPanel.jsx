@@ -25,7 +25,7 @@ import { Formik, Form } from 'formik';
 import { Field, Spinner, CustomDialog } from 'components';
 import { productSchema } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost } from 'store/slices/postsSlice';
+import { createPost, updatePost } from 'store/slices/postsSlice';
 import { useDialog } from 'helpers';
 import { firebaseStorage } from 'firebase/firebaseConfig';
 import ReactQuill from 'react-quill';
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: 'center',
   },
 }));
-const ProductPanel = ({ user, action, openEdit, closeEdit }) => {
+const ProductPanel = ({ user, action, openEdit, closeEdit, docID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -86,7 +86,11 @@ const ProductPanel = ({ user, action, openEdit, closeEdit }) => {
     productTitle = 'Edit a Product';
   }
   const handleCreatePost = () => {
-    setOpen(!open);
+    if (action === 'add') {
+      setOpen(!open);
+    } else {
+      closeEdit();
+    }
   };
 
   const { visibility, data, closeModal } = useDialog({
@@ -144,7 +148,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit }) => {
           );
         } else if (action === 'edit') {
           dispatch(
-            createPost({
+            updatePost({
               productName,
               price,
               stock,
@@ -183,7 +187,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit }) => {
       )}
 
       <Dialog
-        onClose={action === 'action' ? handleCreatePost : closeEdit}
+        onClose={handleCreatePost}
         open={action === 'add' ? open : openEdit}
         fullWidth
       >
@@ -257,10 +261,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit }) => {
 
               <Button color='secondary'>Category not on the list?</Button>
               <DialogActions>
-                <Button
-                  variant='outlined'
-                  onClick={action === 'action' ? handleCreatePost : closeEdit}
-                >
+                <Button variant='outlined' onClick={handleCreatePost}>
                   Cancel
                 </Button>
                 <Button
@@ -284,7 +285,7 @@ ProductPanel.propTypes = {
   user: PropTypes.object.isRequired,
   action: PropTypes.string.isRequired,
   openEdit: PropTypes.bool,
-  closeEdit: PropTypes.func,
+  closeEdit: PropTypes.any,
 };
 
 export default ProductPanel;

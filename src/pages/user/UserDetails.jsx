@@ -77,6 +77,7 @@ const UserDetails = () => {
       await fileRef.put(picture);
       setLink(await fileRef.getDownloadURL());
       setDisable(false);
+      console.log(await fileRef.getDownloadURL());
     } catch (e) {
       console.log(e);
     }
@@ -133,7 +134,7 @@ const UserDetails = () => {
             color='secondary'
             variant='outlined'
             onClick={updateProfileDetails}
-            disable={disable}
+            disabled={disable}
           >
             Update
           </Button>

@@ -133,7 +133,6 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               links,
               description: quillData,
               author: user.email,
-              displayName: user.displayName,
               date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
             })
           );
@@ -147,7 +146,6 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               links,
               description: quillData,
               author: user.email,
-              displayName: user.displayName,
               date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
             })
           );

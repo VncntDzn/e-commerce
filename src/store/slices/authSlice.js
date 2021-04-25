@@ -51,7 +51,8 @@ const initialState = {
     uid: null,
     loginStatus: '',
     registerStatus: '',
-    resetPassword: ''
+    resetPassword: '',
+    displayName: ''
 };
 const authSlice = createSlice({
     name: 'auth',
@@ -59,6 +60,7 @@ const authSlice = createSlice({
     reducers: {
         getCurrentUser: (state, action) => {
             state.uid = action.payload.uid;
+            state.displayName = action.payload.displayName
             console.log(state.uid)
         },
         resetState: (state, action) => {

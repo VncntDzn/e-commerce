@@ -15,7 +15,7 @@ import {
   Avatar,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { retrieveUserPosts } from 'store/slices/postsSlice';
+import { retrieveUserPosts, deletePost } from 'store/slices/postsSlice';
 import { FluidTypography, ProductPanel } from 'components';
 import { useHistory } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
@@ -101,10 +101,14 @@ const UserPosts = ({ user }) => {
   const [docID, setDocID] = useState(null);
   const userPosts = useSelector((state) => state.posts.userPosts);
   const userPostStatus = useSelector((state) => state.posts.userPostStatus);
+  const displayName = useSelector((state) => state.auth.displayName);
 
   const handleClick = (event, docID) => {
     setAnchorEl(event.currentTarget);
     setDocID(docID);
+  };
+  const handleDeletePost = () => {
+    dispatch(deletePost({ docID }));
   };
 
   // get the current page
@@ -141,7 +145,7 @@ const UserPosts = ({ user }) => {
                     <Box display='flex' alignItems='center'>
                       <Avatar className={classes.largeAvatar} src={photoURL} />
                       <FluidTypography
-                        text={data.displayName}
+                        text={displayName}
                         minSize='1rem'
                         size='0.9rem'
                         maxSize='1rem'
@@ -165,7 +169,7 @@ const UserPosts = ({ user }) => {
                       <MenuItem onClick={() => setEditDialog(true)}>
                         Edit
                       </MenuItem>
-                      <MenuItem>Delete</MenuItem>
+                      <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
                     </Menu>
                   </Box>
                   <img
@@ -209,9 +213,9 @@ const UserPosts = ({ user }) => {
                     &nbsp;
                     <Button
                       variant='contained'
-                      onClick={() => {
-                        history.push(`/product/single-post/${data.nanoID}`);
-                      }}
+                      onClick={() =>
+                        history.push(`/product/single-post/${data.nanoID}`)
+                      }
                       style={{ backgroundColor: 'red', color: 'white' }}
                     >
                       View

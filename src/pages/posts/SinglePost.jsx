@@ -11,6 +11,8 @@ import {
   Link,
   Typography,
   Card,
+  Box,
+  Button,
 } from '@material-ui/core';
 import { TabPanel } from 'components';
 import ProductInformation from './tab-panels/ProductInformation';
@@ -29,8 +31,9 @@ const SinglePost = ({ match }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const { nanoID } = match.params;
+  // MALI
   const product = useSelector((state) =>
-    state.posts.userPosts.find((post) => post.nanoID === nanoID)
+    state.posts.userPosts.find((post) => post.data.nanoID === nanoID)
   );
 
   const handleChange = (event, newValue) => {
@@ -54,7 +57,7 @@ const SinglePost = ({ match }) => {
             <TransformWrapper>
               <TransformComponent>
                 <Carousel emulateTouch={true}>
-                  {product.links.map((link, index) => (
+                  {product.data.links.map((link, index) => (
                     <img key={index} src={link} alt='product' />
                   ))}
                 </Carousel>
@@ -84,7 +87,7 @@ const SinglePost = ({ match }) => {
             </Tabs>
           </Card>
           <TabPanel value={value} index={0}>
-            <ProductInformation info={product} />
+            <ProductInformation info={product.data} />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Reviews />

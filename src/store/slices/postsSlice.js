@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 
-const createPost = createAsyncThunk('createPost', async ({ productName, stock, price, author, description, links, date, displayName }) => {
+const createPost = createAsyncThunk('createPost', async ({ productName, stock, price, author, description, links, date }) => {
     try {
         firestore.collection('products').add({
             nanoID: nanoid(),
@@ -10,7 +10,6 @@ const createPost = createAsyncThunk('createPost', async ({ productName, stock, p
             stock,
             author,
             description,
-            displayName,
             links,
             date
         })
@@ -33,6 +32,19 @@ const updatePost = createAsyncThunk('updatePost', async ({ documentID, productNa
                 date,
                 author
             })
+        return "success"
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+
+const deletePost = createAsyncThunk('deletePost', async ({ docID }) => {
+    try {
+        await firestore.collection('products')
+            .doc(docID)
+            .delete()
         return "success"
     } catch (error) {
         console.log(error)
@@ -79,7 +91,9 @@ const initialState = {
     error: null,
     posts: [],
     userPosts: [{}],
-    userPostStatus: 'idle'
+    userPostStatus: 'idle',
+    deletePostStatus: 'idle',
+    editPostStatus: 'idle'
 };
 
 const postsSlice = createSlice({
@@ -123,22 +137,32 @@ const postsSlice = createSlice({
             state.userPostStatus = 'failed';
             console.log(action)
         },
-        // RETRIEVE USER POSTS
+        // UPDATE USER POSTS
         [updatePost.pending]: (state, action) => {
             state.status = 'pending'
         },
         [updatePost.fulfilled]: (state, action) => {
             state.status = 'success';
-            state.sample = action.payload
-            console.log(action.payload)
         },
         [updatePost.failed]: (state, action) => {
             state.status = 'failed';
+            console.log(action)
+        },
+        // DELETE POST POSTS
+        [deletePost.pending]: (state, action) => {
+            state.deletePostStatus = 'pending'
+        },
+        [deletePost.fulfilled]: (state, action) => {
+            state.deletePostStatus = 'success';
+
+        },
+        [deletePost.failed]: (state, action) => {
+            state.deletePostStatus = 'failed';
             console.log(action)
         },
     }
 });
 
 const { reducer } = postsSlice;
-export { createPost, retrieveAllPosts, retrieveUserPosts, updatePost }
+export { createPost, retrieveAllPosts, retrieveUserPosts, updatePost, deletePost }
 export default reducer;

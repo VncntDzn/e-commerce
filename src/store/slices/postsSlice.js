@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 
-const createPost = createAsyncThunk('createPost', async ({ productName, stock, price, author, description, links, date }) => {
+const createPost = createAsyncThunk('createPost', async ({ categories, location, productName, stock, price, author, description, links, date }) => {
     try {
+        console.log(categories, location)
         firestore.collection('products').add({
             nanoID: nanoid(),
             productName,
@@ -11,7 +12,9 @@ const createPost = createAsyncThunk('createPost', async ({ productName, stock, p
             author,
             description,
             links,
-            date
+            date,
+            categories,
+            location
         })
         return "success"
     } catch (error) {
@@ -19,7 +22,7 @@ const createPost = createAsyncThunk('createPost', async ({ productName, stock, p
     }
 })
 
-const updatePost = createAsyncThunk('updatePost', async ({ documentID, productName, stock, price, description, links, date, author }) => {
+const updatePost = createAsyncThunk('updatePost', async ({ categories, location, documentID, productName, stock, price, description, links, date, author }) => {
     try {
         await firestore.collection('products')
             .doc(documentID)
@@ -30,7 +33,9 @@ const updatePost = createAsyncThunk('updatePost', async ({ documentID, productNa
                 description,
                 links,
                 date,
-                author
+                author,
+                location,
+                categories
             })
         return "success"
     } catch (error) {
@@ -84,8 +89,6 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async ({ email }
     }
 });
 
-
-// TODO:   UPDATE POST, DELETE POST, COMMENT ON POST
 const initialState = {
     createPostStatus: 'idle',
     error: null,

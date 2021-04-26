@@ -179,6 +179,15 @@ const UserPosts = ({ user }) => {
                   />
 
                   <FluidTypography
+                    text={`> Ships from ${data.location}`}
+                    minSize='0.8rem'
+                    size='0.7rem'
+                    maxSize='0.8rem'
+                    fontWeight='500'
+                    color='#808080'
+                    variant='subtitle1'
+                  />
+                  <FluidTypography
                     text={data.productName}
                     minSize='1rem'
                     size='0.9rem'

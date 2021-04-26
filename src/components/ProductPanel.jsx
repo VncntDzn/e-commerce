@@ -76,6 +76,8 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   const [quillData, setQuillData] = useState('');
   const [links, setLinks] = useState(null);
   const [disabled, setDisable] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [location, setLocation] = useState(null);
   const status = useSelector((state) => state.posts.createPostStatus);
   const error = useSelector((state) => state.posts.error);
 
@@ -131,6 +133,8 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               price,
               stock,
               links,
+              location,
+              categories,
               description: quillData,
               author: user.email,
               date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
@@ -144,6 +148,8 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               price,
               stock,
               links,
+              location,
+              categories,
               description: quillData,
               author: user.email,
               date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
@@ -244,12 +250,17 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
 
               <Box display='flex'>
                 <Select
-                  placeholder='Select Categories'
+                  placeholder='Select at least 3 Categories'
                   closeMenuOnSelect={false}
                   components={animatedComponents}
                   isMulti
                   options={countriesData}
                   className={classes.selectContainer}
+                  onChange={(param) => {
+                    let categoriesArray = [];
+                    param.map(({ label }) => categoriesArray.push(label));
+                    setCategories(categoriesArray);
+                  }}
                 />
                 <Select
                   placeholder='Select Location'
@@ -257,6 +268,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
                   components={animatedComponents}
                   options={countriesData}
                   className={classes.selectContainer}
+                  onChange={({ label }) => setLocation(label)}
                 />
               </Box>
 

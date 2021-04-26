@@ -47,10 +47,10 @@ const ProductInformation = ({ info }) => {
           </TransformWrapper>
         </Hidden>
         <FluidTypography
-          text={info.location}
+          text={`> Ships from ${info.location}`}
           minSize='1rem'
-          size='1.3rem'
-          maxSize='1.5rem'
+          size='1rem'
+          maxSize='1rem'
           color='gray'
           fontWeight='500'
         />

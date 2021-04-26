@@ -29,14 +29,8 @@ const useStyles = makeStyles((theme) => ({
       width: '35vw',
     },
     [theme.breakpoints.up('lg')]: {
-      width: '15vw',
+      width: '20vw',
     },
-  },
-
-  paginationContainer: {
-    display: 'flex',
-    placeContent: 'center',
-    width: 'inherit',
   },
   pagination: {
     display: 'flex',
@@ -48,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '1rem',
     boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
     width: '100%',
-
     [theme.breakpoints.up('sm')]: {
       width: '20rem',
     },
@@ -98,32 +91,32 @@ const UserPosts = ({ user }) => {
           userPosts
             .slice(offset, offset + PER_PAGE)
             .map(({ data, docID }, index) => (
-              <Card raised key={index} className={classes.cardContainer}>
-                <CardContent>
-                  <UserPostHeader
-                    user={user}
-                    docID={docID}
-                    displayName={displayName}
-                    photoURL={photoURL}
-                  />
-                  <UserPostContent data={data} />
-                </CardContent>
-              </Card>
+              <Box p={1} px={2}>
+                <Card raised key={index} className={classes.cardContainer}>
+                  <CardContent>
+                    <UserPostHeader
+                      user={user}
+                      docID={docID}
+                      displayName={displayName}
+                      photoURL={photoURL}
+                    />
+                    <UserPostContent data={data} />
+                  </CardContent>
+                </Card>
+                <CustomPagination
+                  pageCount={pageCount}
+                  handlePageClick={handlePageClick}
+                  containerClassName={classes.pagination}
+                  pageClassName={classes.pageStyle}
+                  activeClassName={classes.paginationActive}
+                />
+              </Box>
             ))
         ) : (
           <div>
             <h1>Nothing to see here yet.</h1>
           </div>
         )}
-      </Box>
-      <Box className={classes.paginationContainer}>
-        <CustomPagination
-          pageCount={pageCount}
-          handlePageClick={handlePageClick}
-          containerClassName={classes.pagination}
-          pageClassName={classes.pageStyle}
-          activeClassName={classes.paginationActive}
-        />
       </Box>
     </Box>
   );

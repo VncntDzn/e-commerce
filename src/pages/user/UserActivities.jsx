@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const UserActivities = (props) => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
-  const userPosts = useSelector((state) => state.posts.posts);
+  const userPosts = useSelector((state) => state.posts.userPosts);
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {

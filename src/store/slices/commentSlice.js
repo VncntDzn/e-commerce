@@ -37,5 +37,5 @@ const commentSlice = createSlice({
     }
 });
 
-const { actions, reducer } = commentSlice;
+const { reducer } = commentSlice;
 export default reducer;

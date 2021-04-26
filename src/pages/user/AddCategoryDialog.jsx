@@ -1,20 +1,13 @@
 import { useState } from 'react';
 import {
-  Card,
-  CardContent,
   Button,
   Box,
-  makeStyles,
-  IconButton,
-  Menu,
-  MenuItem,
-  Avatar,
   Dialog,
   DialogTitle,
   TextField,
   DialogContent,
 } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addCategories } from 'store/slices/utilsSlice';
 import PropTypes from 'prop-types';
 

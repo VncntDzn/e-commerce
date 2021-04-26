@@ -32,6 +32,6 @@ const utilsSlice = createSlice({
     }
 });
 
-const { actions, reducer } = utilsSlice;
+const { reducer } = utilsSlice;
 export default reducer;
 export { addCategories }

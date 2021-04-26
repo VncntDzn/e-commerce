@@ -11,14 +11,11 @@ import {
   Link,
   Typography,
   Card,
-  Box,
-  Button,
 } from '@material-ui/core';
 import { TabPanel } from 'components';
 import ProductInformation from './tab-panels/ProductInformation';
 import Reviews from './tab-panels/Reviews';
 import PropTypes from 'prop-types';
-
 import { Carousel } from 'react-responsive-carousel';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
@@ -31,7 +28,6 @@ const SinglePost = ({ match }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const { nanoID } = match.params;
-  // MALI
   const product = useSelector((state) =>
     state.posts.userPosts.find((post) => post.data.nanoID === nanoID)
   );

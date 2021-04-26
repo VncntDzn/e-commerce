@@ -37,6 +37,7 @@ import moment from 'moment';
 import SuccessAnimation from 'lottie/SuccessAnimation';
 import FailedAnimation from 'lottie/FailedAnimation';
 import PropTypes from 'prop-types';
+import AddCategoryDialog from 'pages/user/AddCategoryDialog';
 
 const animatedComponents = makeAnimated();
 
@@ -78,6 +79,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   const [disabled, setDisable] = useState(true);
   const [categories, setCategories] = useState([]);
   const [location, setLocation] = useState(null);
+  const [addCategory, setAddCategoryDialog] = useState(null);
   const status = useSelector((state) => state.posts.createPostStatus);
   const error = useSelector((state) => state.posts.error);
 
@@ -272,7 +274,12 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
                 />
               </Box>
 
-              <Button color='secondary'>Category not on the list?</Button>
+              <Button
+                color='secondary'
+                onClick={() => setAddCategoryDialog(true)}
+              >
+                Category not on the list?
+              </Button>
               <DialogActions>
                 <Button variant='outlined' onClick={handleCreatePost}>
                   Cancel
@@ -290,6 +297,10 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
           </Formik>
         </DialogContent>
       </Dialog>
+      <AddCategoryDialog
+        open={addCategory}
+        onClose={() => setAddCategoryDialog(false)}
+      />
     </Grid>
   );
 };

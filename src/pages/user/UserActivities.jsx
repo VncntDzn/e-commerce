@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const UserActivities = (props) => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
+  const userPosts = useSelector((state) => state.posts.userPosts);
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -57,7 +58,10 @@ const UserActivities = (props) => {
         orientation={orientation}
         style={{ width: 'fit-content' }}
       >
-        <Tab icon={<PostAddRoundedIcon />} label='55 posts' />
+        <Tab
+          icon={<PostAddRoundedIcon />}
+          label={`${userPosts.length} post/s`}
+        />
         <Tab icon={<PeopleAltRoundedIcon />} label='142 followers' />
         <Tab icon={<SupervisorAccountRoundedIcon />} label='552 following' />
       </Tabs>

@@ -6,7 +6,6 @@ import {
   Promotions,
   MenWomen,
   Community,
-  Footer,
 } from 'pages';
 import { MainLayout } from 'layouts';
 
@@ -22,7 +21,6 @@ const Home = (props) => {
           <ShippingBanner />
           <MenWomen />
           <Community />
-          <Footer />
         </>
       }
     />

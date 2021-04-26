@@ -4,5 +4,6 @@ import FluidTypography from './FluidTypography';
 import Spinner from './Spinner';
 import CustomDialog from './CustomDialog';
 import TabPanel from './TabPanel'
+import ProductPanel from './ProductPanel'
 
-export { Field, FieldIcon, FluidTypography, Spinner, CustomDialog, TabPanel }
+export { ProductPanel, Field, FieldIcon, FluidTypography, Spinner, CustomDialog, TabPanel }

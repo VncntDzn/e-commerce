@@ -1,5 +1,9 @@
 /**
- * CreatePostPanel - a component where the user can add the item.
+ * CreatePostPanel - a component where the user can add or edit the item.
+ * @params {object} [user] - current user.
+ * @params {string} [action] - To transform the product panel to add or edit.
+ * @params {Boolean} [openEdit] - passed from UserPosts whether to open or not the ProductPanel.
+ * @params {function} [closeEdit] - function passed from UserPosts whether to open or not the ProductPanel.
  */
 
 import { useState } from 'react';
@@ -21,8 +25,8 @@ import { Formik, Form } from 'formik';
 import { Field, Spinner, CustomDialog } from 'components';
 import { productSchema } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost } from 'store/slices/postsSlice';
-import { useDialog } from 'helpers';
+import { createPost, updatePost } from 'store/slices/postsSlice';
+import { useDialog, countriesData } from 'helpers';
 import { firebaseStorage } from 'firebase/firebaseConfig';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -32,6 +36,7 @@ import ImageUploader from 'react-images-upload';
 import moment from 'moment';
 import SuccessAnimation from 'lottie/SuccessAnimation';
 import FailedAnimation from 'lottie/FailedAnimation';
+import PropTypes from 'prop-types';
 
 const animatedComponents = makeAnimated();
 
@@ -64,18 +69,30 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: 'center',
   },
 }));
-const CreatePostPanel = ({ user }) => {
+const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
+  const [quillData, setQuillData] = useState('');
   const [links, setLinks] = useState(null);
   const [disabled, setDisable] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [location, setLocation] = useState(null);
   const status = useSelector((state) => state.posts.createPostStatus);
   const error = useSelector((state) => state.posts.error);
 
+  let productTitle;
+  if (action === 'add') {
+    productTitle = 'Post a Product';
+  } else {
+    productTitle = 'Edit a Product';
+  }
   const handleCreatePost = () => {
-    setOpen(!open);
+    if (action === 'add') {
+      setOpen(!open);
+    } else {
+      closeEdit();
+    }
   };
 
   const { visibility, data, closeModal } = useDialog({
@@ -85,8 +102,12 @@ const CreatePostPanel = ({ user }) => {
     animationFailed: FailedAnimation,
     successText: 'Success!',
   });
+
   const handleUpload = (files) => {
-    const storageRef = firebaseStorage.ref(`posts/${user.email}`);
+    const storageRef =
+      action === 'add'
+        ? firebaseStorage.ref(`add-posts/${user.email}`)
+        : firebaseStorage.ref(`edit-posts/${user.email}`);
     let data = [];
 
     files.forEach(async (file) => {
@@ -102,31 +123,39 @@ const CreatePostPanel = ({ user }) => {
 
     setLinks(data);
   };
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
-
-  const handleQuill = (data) => {
-    setValue(data);
-  };
-
   const handleSubmit = async ({ productName, price, stock }) => {
     try {
       if (links) {
-        dispatch(
-          createPost({
-            productName,
-            price,
-            stock,
-            links,
-            description: value,
-            author: user.email,
-            displayName: user.displayName,
-            date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
-          })
-        );
+        if (action === 'add') {
+          dispatch(
+            createPost({
+              productName,
+              price,
+              stock,
+              links,
+              location,
+              categories,
+              description: quillData,
+              author: user.email,
+              date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
+            })
+          );
+        } else if (action === 'edit') {
+          dispatch(
+            updatePost({
+              documentID,
+              productName,
+              price,
+              stock,
+              links,
+              location,
+              categories,
+              description: quillData,
+              author: user.email,
+              date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
+            })
+          );
+        }
       } else {
         alert('Please add image');
       }
@@ -137,23 +166,29 @@ const CreatePostPanel = ({ user }) => {
 
   return (
     <Grid className={classes.rootContainer} container item justify='center'>
-      <Card>
-        <CardContent className={classes.cardContainer}>
-          <Avatar className={classes.largeAvatar} src={user.photoURL} />
-          <TextField
-            label={`What do you want to sell, ${user.displayName}?`}
-            onClick={() => setOpen(true)}
-            color='secondary'
-            fullWidth
-            autoFocus
-            variant='filled'
-          />
-        </CardContent>
-      </Card>
+      {action === 'add' && (
+        <Card>
+          <CardContent className={classes.cardContainer}>
+            <Avatar className={classes.largeAvatar} src={user.photoURL} />
+            <TextField
+              label={`What do you want to sell, ${user.displayName}?`}
+              onClick={() => setOpen(true)}
+              color='secondary'
+              fullWidth
+              autoFocus
+              variant='filled'
+            />
+          </CardContent>
+        </Card>
+      )}
 
-      <Dialog onClose={handleCreatePost} open={open} fullWidth>
+      <Dialog
+        onClose={handleCreatePost}
+        open={action === 'add' ? open : openEdit}
+        fullWidth
+      >
         <Box display='flex' justifyContent='center'>
-          <DialogTitle>Post a Product</DialogTitle>
+          <DialogTitle>{productTitle}</DialogTitle>
         </Box>
         <Spinner visible={visibility} />
         <CustomDialog
@@ -200,8 +235,8 @@ const CreatePostPanel = ({ user }) => {
                 className={classes.selectContainer}
                 placeholder='Type definition here...'
                 theme='snow'
-                value={value}
-                onChange={handleQuill}
+                value={quillData}
+                onChange={(quillData) => setQuillData(quillData)}
               />
               <ImageUploader
                 name='image'
@@ -212,13 +247,30 @@ const CreatePostPanel = ({ user }) => {
                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                 maxFileSize={5242880}
               />
-              <Select
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
-                options={options}
-                className={classes.selectContainer}
-              />
+
+              <Box display='flex'>
+                <Select
+                  placeholder='Select at least 3 Categories'
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  options={countriesData}
+                  className={classes.selectContainer}
+                  onChange={(param) => {
+                    let categoriesArray = [];
+                    param.map(({ label }) => categoriesArray.push(label));
+                    setCategories(categoriesArray);
+                  }}
+                />
+                <Select
+                  placeholder='Select Location'
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  options={countriesData}
+                  className={classes.selectContainer}
+                  onChange={({ label }) => setLocation(label)}
+                />
+              </Box>
 
               <Button color='secondary'>Category not on the list?</Button>
               <DialogActions>
@@ -242,6 +294,11 @@ const CreatePostPanel = ({ user }) => {
   );
 };
 
-CreatePostPanel.propTypes = {};
+ProductPanel.propTypes = {
+  user: PropTypes.object.isRequired,
+  action: PropTypes.string.isRequired,
+  openEdit: PropTypes.bool,
+  closeEdit: PropTypes.any,
+};
 
-export default CreatePostPanel;
+export default ProductPanel;

@@ -9,7 +9,7 @@ const updateProfile = createAsyncThunk('updateProfile', async (params) => {
         user.updateProfile({
             displayName: name, photoURL: link
         });
-        console.log(user)
+
         return "success"
     } catch (e) {
         return e.message

@@ -27,8 +27,11 @@ const useStyles = makeStyles((theme) => ({
       width: '30.5rem',
     },
     [theme.breakpoints.up('lg')]: {
-      marginTop: '-10rem',
+      marginTop: '-13rem',
       width: '43vw',
+    },
+    [theme.breakpoints.up('xl')]: {
+      marginTop: '-17rem',
     },
   },
   imageContainer: {

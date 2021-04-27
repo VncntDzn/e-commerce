@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       width: '20vw',
     },
+    [theme.breakpoints.up('xl')]: {
+      width: '15vw',
+    },
   },
   pagination: {
     display: 'flex',

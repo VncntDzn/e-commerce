@@ -13,11 +13,12 @@ import {
   Card,
 } from '@material-ui/core';
 import { TabPanel } from 'components';
+import { Carousel } from 'react-responsive-carousel';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import FAQ from './tab-panels/FAQ';
 import ProductInformation from './tab-panels/ProductInformation';
 import Reviews from './tab-panels/Reviews';
 import PropTypes from 'prop-types';
-import { Carousel } from 'react-responsive-carousel';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,7 +90,7 @@ const SinglePost = ({ match }) => {
             <Reviews />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            Item Three
+            <FAQ />
           </TabPanel>
         </Grid>
       </Grid>

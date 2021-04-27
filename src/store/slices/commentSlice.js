@@ -1,41 +1,75 @@
 import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
+import moment from 'moment';
 
-const addComment = createAsyncThunk('addComment', async ({ author, comment, date }) => {
+const addComment = createAsyncThunk('addComment', async ({ docID, author, comment }) => {
     try {
-        firestore.collection('comments').add({
-            nanoID: nanoid(),
-            author,
-            comment,
-            date
-        })
+        await firestore
+            .collection('products')
+            .doc(docID)
+            .collection('comments')
+            .add({
+                date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
+                author,
+                comment,
+            })
 
         return "success"
     } catch (error) {
         console.log(error)
     }
 })
+const retrieveComments = createAsyncThunk('retrieveComments', async ({ docID }) => {
+    try {
+        let retrievedComments = []
+        const comments = await firestore
+            .collection('products')
+            .doc(docID)
+            .collection('comments')
+            .orderBy("date", "desc")
+            .get()
+        comments.forEach((res) => {
+            retrievedComments.push(res.data())
+        })
+        return retrievedComments
+    } catch (error) {
+        console.log(error)
+    }
+})
 const initialState = {
     comments: [],
-    status: 'idle'
+    commentStatus: 'idle'
 }
 const commentSlice = createSlice({
     name: 'comments',
     initialState,
     extraReducers: {
         [addComment.pending]: (state, action) => {
-            state.status = 'pending'
+            state.commentStatus = 'pending'
         },
         [addComment.fulfilled]: (state, action) => {
-            state.status = 'success';
+            state.commentStatus = 'success';
 
-
+            console.log(action.payload)
         },
         [addComment.rejected]: (state, action) => {
+            state.commentStatus = 'failed'
+        },
+        // RETRIEVE COMMENTS
+        [retrieveComments.pending]: (state, action) => {
+            state.commentStatus = 'pending'
+        },
+        [retrieveComments.fulfilled]: (state, action) => {
+            state.commentStatus = 'success';
+            state.comments = action.payload
 
+        },
+        [retrieveComments.rejected]: (state, action) => {
+            state.commentStatus = 'failed'
         },
     }
 });
 
 const { reducer } = commentSlice;
 export default reducer;
+export { addComment, retrieveComments };

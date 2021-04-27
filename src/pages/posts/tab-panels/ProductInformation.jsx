@@ -22,6 +22,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: '95vw',
     },
+    [theme.breakpoints.up('md')]: {
+      marginTop: '-10rem',
+      width: '30.5rem',
+    },
+    [theme.breakpoints.up('lg')]: {
+      marginTop: '-10rem',
+      width: '43vw',
+    },
   },
   imageContainer: {
     display: 'flex',

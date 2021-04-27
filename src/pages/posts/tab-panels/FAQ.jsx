@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Box,
   Accordion,
@@ -82,7 +81,5 @@ const FAQ = (props) => {
     </Box>
   );
 };
-
-FAQ.propTypes = {};
 
 export default FAQ;

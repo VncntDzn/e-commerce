@@ -61,7 +61,7 @@ const SinglePost = ({ match }) => {
             </TransformWrapper>
           </Grid>
         </Hidden>
-        <Grid container item md={6} lg={6}>
+        <Grid container item sm={12} md={6} lg={6}>
           <Card
             style={{
               height: 'fit-content',

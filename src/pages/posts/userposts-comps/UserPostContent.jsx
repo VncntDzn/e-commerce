@@ -11,7 +11,7 @@ import ReactStars from 'react-rating-stars-component';
 const useStyles = makeStyles((theme) => ({
   image: {
     objectFit: 'contain',
-    height: '100%',
+    height: '15rem',
     width: '100%',
   },
 }));

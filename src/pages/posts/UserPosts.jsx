@@ -91,7 +91,7 @@ const UserPosts = ({ user }) => {
           userPosts
             .slice(offset, offset + PER_PAGE)
             .map(({ data, docID }, index) => (
-              <Box p={1} px={2}>
+              <Box p={1}>
                 <Card raised key={index} className={classes.cardContainer}>
                   <CardContent>
                     <UserPostHeader
@@ -103,13 +103,6 @@ const UserPosts = ({ user }) => {
                     <UserPostContent data={data} />
                   </CardContent>
                 </Card>
-                <CustomPagination
-                  pageCount={pageCount}
-                  handlePageClick={handlePageClick}
-                  containerClassName={classes.pagination}
-                  pageClassName={classes.pageStyle}
-                  activeClassName={classes.paginationActive}
-                />
               </Box>
             ))
         ) : (
@@ -117,6 +110,15 @@ const UserPosts = ({ user }) => {
             <h1>Nothing to see here yet.</h1>
           </div>
         )}
+      </Box>
+      <Box display='flex' justifyContent='center'>
+        <CustomPagination
+          pageCount={pageCount}
+          handlePageClick={handlePageClick}
+          containerClassName={classes.pagination}
+          pageClassName={classes.pageStyle}
+          activeClassName={classes.paginationActive}
+        />
       </Box>
     </Box>
   );

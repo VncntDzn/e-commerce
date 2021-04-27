@@ -102,6 +102,11 @@ const initialState = {
 const postsSlice = createSlice({
     name: "posts",
     initialState,
+    reducers: {
+        resetState: (state, payload) => {
+            state.createPostStatus = null;
+        }
+    },
     extraReducers: {
         [createPost.pending]: (state, action) => {
             state.createPostStatus = 'pending'
@@ -166,6 +171,7 @@ const postsSlice = createSlice({
     }
 });
 
-const { reducer } = postsSlice;
+const { actions, reducer } = postsSlice;
+export const { resetState } = actions
 export { createPost, retrieveAllPosts, retrieveUserPosts, updatePost, deletePost }
 export default reducer;

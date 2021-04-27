@@ -1,3 +1,7 @@
+/**
+ * SinglePost Page - the component when the user clicked the view button.
+ * @param {object} [match] - the url data.
+ */
 import { useSelector } from 'react-redux';
 import { MainLayout } from 'layouts';
 import { useState } from 'react';

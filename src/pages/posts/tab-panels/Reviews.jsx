@@ -11,14 +11,27 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: '90vw',
+    [theme.breakpoints.up('sm')]: {
+      width: '95vw',
+    },
+    [theme.breakpoints.up('md')]: {
+      marginTop: '-10rem',
+      width: '30.5rem',
+    },
+    [theme.breakpoints.up('lg')]: {
+      marginTop: '-13rem',
+      width: '43vw',
+    },
+    [theme.breakpoints.up('xl')]: {
+      marginTop: '-17rem',
+    },
   },
 }));
 
 const Reviews = (props) => {
   const classes = useStyles();
   return (
-    <Box>
+    <Box className={classes.container}>
       <Card className={classes.container}>
         <CardContent>
           <TextField

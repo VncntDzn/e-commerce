@@ -1,3 +1,7 @@
+/**
+ * ProductInformation component - display the details of the post.
+ * @param {object} [info] - object passed from SinglePost Page.
+ */
 import { useState } from 'react';
 import {
   makeStyles,
@@ -41,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     objectFit: 'contain',
   },
 }));
+
 const ProductInformation = ({ info }) => {
   const classes = useStyles();
   const [readMore, setReadMore] = useState(false);

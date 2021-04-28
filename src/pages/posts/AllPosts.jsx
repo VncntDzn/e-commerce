@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles, Card, CardContent, Box } from '@material-ui/core';
 import { MainLayout } from 'layouts';

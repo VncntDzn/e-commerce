@@ -54,14 +54,14 @@ const deletePost = createAsyncThunk('deletePost', async ({ docID }) => {
         console.log(error)
     }
 })
-const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async ({ author }) => {
+const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async () => {
     try {
         let allPosts = []
         const posts = await firestore.collection("products").get()
         posts.forEach(post => {
             allPosts.push(post.data())
         })
-
+        console.log(allPosts)
         return allPosts
 
     } catch (error) {
@@ -95,7 +95,8 @@ const initialState = {
     userPosts: [{}],
     userPostStatus: 'idle',
     deletePostStatus: 'idle',
-    editPostStatus: 'idle'
+    editPostStatus: 'idle',
+    retrieveAllPostStatus: 'idle'
 };
 
 const postsSlice = createSlice({
@@ -120,15 +121,15 @@ const postsSlice = createSlice({
         },
         // RETRIEVE ALL POSTS
         [retrieveAllPosts.pending]: (state, action) => {
-            state.status = 'pending'
+            state.retrieveAllPostStatus = 'pending'
         },
         [retrieveAllPosts.fulfilled]: (state, action) => {
-            state.status = 'success';
+            state.retrieveAllPostStatus = 'success';
             state.posts = (action.payload);
 
         },
         [retrieveAllPosts.failed]: (state, action) => {
-            state.status = 'failed';
+            state.retrieveAllPostStatus = 'failed';
 
         },
 

@@ -44,7 +44,6 @@ const SinglePost = ({ match }) => {
 
   return (
     <MainLayout>
-      <Button onClick={() => console.log(product)}>SAssD</Button>
       <Breadcrumbs aria-label='breadcrumb'>
         <Link color='inherit' href='/'>
           Material-UI
@@ -93,7 +92,7 @@ const SinglePost = ({ match }) => {
             <ProductInformation info={product.data} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <Reviews docID={product.docID} />
+            <Reviews info={product.data} docID={product.docID} />
           </TabPanel>
           <TabPanel value={value} index={2}>
             <FAQ />

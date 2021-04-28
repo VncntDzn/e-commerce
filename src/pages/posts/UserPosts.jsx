@@ -73,7 +73,7 @@ const UserPosts = ({ user }) => {
   const displayName = useSelector((state) => state.auth.displayName);
 
   // get the current page
-  const handlePageClick = ({ selected: selectedPage }) => {
+  const onPageChange = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
   };
   const PER_PAGE = 9;
@@ -118,7 +118,7 @@ const UserPosts = ({ user }) => {
       <Box display='flex' justifyContent='center'>
         <CustomPagination
           pageCount={pageCount}
-          handlePageClick={handlePageClick}
+          onPageChange={onPageChange}
           containerClassName={classes.pagination}
           pageClassName={classes.pageStyle}
           activeClassName={classes.paginationActive}

@@ -68,6 +68,7 @@ const ProductInformation = ({ info }) => {
           </Hidden>
 
           {/* ADD CATEGROEIS tags */}
+
           <Box fontStyle='italic'>
             <FluidTypography
               text={`> Ships from ${info.location}`}
@@ -78,6 +79,14 @@ const ProductInformation = ({ info }) => {
               fontWeight='500'
             />
           </Box>
+          <FluidTypography
+            text={`Item by: ${info.author}`}
+            minSize='1rem'
+            size='1rem'
+            maxSize='1rem'
+            color='gray'
+            fontWeight='500'
+          />
           <FluidTypography
             text={info.productName}
             minSize='1rem'

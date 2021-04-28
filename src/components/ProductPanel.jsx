@@ -142,6 +142,8 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               categories,
               description: quillData,
               author: user.email,
+              authorDisplayName: user.displayName,
+              authorPhoto: user.photoURL,
               date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
             })
           );
@@ -157,6 +159,8 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               categories,
               description: quillData,
               author: user.email,
+              authorDisplayName: user.displayName,
+              authorPhoto: user.photoURL,
               date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
             })
           );
@@ -186,7 +190,6 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
           </CardContent>
         </Card>
       )}
-
       <Dialog
         onClose={handleCreatePost}
         open={action === 'add' ? open : openEdit}

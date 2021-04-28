@@ -1,16 +1,9 @@
-import { useState, useEffect } from 'react';
-import {
-  makeStyles,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardActions,
-  TextField,
-} from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { addComment, retrieveComments } from 'store/slices/commentSlice';
-import FluidTypography from 'components/FluidTypography';
+import { useEffect } from 'react';
+import { makeStyles, Box, Card, CardContent } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { retrieveComments } from 'store/slices/commentSlice';
+import Comments from './Comments';
+import CommentPanel from './CommentPanel';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,51 +24,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Reviews = ({ docID }) => {
+const Reviews = ({ info, docID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [comment, setComment] = useState(null);
-  const author = useSelector((state) => state.auth.displayName);
-  const retrievedComments = useSelector((state) => state.comment.comments);
 
-  const handleCommentReply = () => {
-    dispatch(addComment({ author, comment, docID }));
-  };
   useEffect(() => {
     dispatch(retrieveComments({ docID }));
   }, [dispatch, docID]);
   return (
     <Box className={classes.container}>
-      <Card className={classes.container}>
-        <CardContent>
-          <TextField
-            fullWidth
-            label='Add a review'
-            variant='outlined'
-            color='secondary'
-            onChange={(e) => setComment(e.target.value)}
-          />
-          <Box display='flex' justifyContent='flex-end' alignItems='flex-end'>
-            <CardActions>
-              <Button
-                onClick={handleCommentReply}
-                variant='contained'
-                color='secondary'
-                style={{ color: 'white' }}
-              >
-                Reply
-              </Button>
-            </CardActions>
-          </Box>
+      <Card>
+        <CardContent style={{ width: '91vw' }}>
+          <CommentPanel docID={docID} />
+          <Comments info={info} />
         </CardContent>
       </Card>
-      {retrievedComments.map((data) => (
-        <Box>
-          <FluidTypography text={data.comment} />
-          <h1>author{data.author}</h1>
-        </Box>
-      ))}
-      <Box></Box>
     </Box>
   );
 };

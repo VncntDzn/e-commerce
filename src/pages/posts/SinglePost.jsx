@@ -15,7 +15,6 @@ import {
   Link,
   Typography,
   Card,
-  Button,
 } from '@material-ui/core';
 import { TabPanel } from 'components';
 import { Carousel } from 'react-responsive-carousel';

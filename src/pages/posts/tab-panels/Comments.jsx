@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles, Box, Button, Avatar } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import FluidTypography from 'components/FluidTypography';
-
 const useStyles = makeStyles((theme) => ({
   container: {
     [theme.breakpoints.up('sm')]: {
@@ -43,47 +41,39 @@ const Comments = ({ info }) => {
         ) : (
           <>
             {retrievedComments.map((data) => (
-              <Box
-                display='flex'
-                flexDirection='column'
-                my={1}
-                width={'fit-content'}
-                height={'fit-content'}
-              >
-                <Box display='flex' alignItems='flex-start'>
-                  <Avatar className={classes.small} src={info.authorPhoto} />
-                  <Box
-                    display='flex'
-                    flexDirection='column'
-                    flex={1}
-                    style={{
-                      background: '#E0E3E4',
-                      borderRadius: '10px',
-                      padding: '0 1rem',
-                    }}
-                  >
-                    <FluidTypography
-                      minSize='0.9rem'
-                      maxSize='0.9rem'
-                      size='0.5rem'
-                      text={data.author}
-                    />
-                    <FluidTypography text={data.comment} color='black' />
+              <>
+                <Box
+                  display='flex'
+                  flexDirection='column'
+                  my={1}
+                  width={'fit-content'}
+                  height={'fit-content'}
+                >
+                  <Box display='flex' alignItems='flex-start'>
+                    <Avatar className={classes.small} src={info.authorPhoto} />
+                    <Box
+                      display='flex'
+                      flexDirection='column'
+                      flex={1}
+                      style={{
+                        background: '#E0E3E4',
+                        borderRadius: '10px',
+                        padding: '0 1rem',
+                      }}
+                    >
+                      <FluidTypography
+                        minSize='0.9rem'
+                        maxSize='0.9rem'
+                        size='0.5rem'
+                        text={data.author}
+                      />
+                      <FluidTypography text={data.comment} color='black' />
+                    </Box>
                   </Box>
                 </Box>
-                <Button
-                  color='secondary'
-                  style={{
-                    display: 'flex',
-                    alignSelf: 'flex-end',
-                    margin: 0,
-                    padding: 0,
-                  }}
-                >
-                  Reply
-                </Button>
-              </Box>
+              </>
             ))}
+
             <Button onClick={() => setReadMore(!readMore)} color='secondary'>
               Hide comments
             </Button>

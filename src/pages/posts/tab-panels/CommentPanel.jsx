@@ -37,6 +37,8 @@ const CommentPanel = ({ docID }) => {
   );
 };
 
-CommentPanel.propTypes = {};
+CommentPanel.propTypes = {
+  docID: PropTypes.number.isRequired,
+};
 
 export default CommentPanel;

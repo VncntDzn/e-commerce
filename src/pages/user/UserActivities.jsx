@@ -42,6 +42,7 @@ const UserActivities = (props) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
+  // check the pixel and change to horizontal or vertical orientation
   let orientation;
   if (matches) {
     orientation = 'vertical';

@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { addComment, retrieveComments } from 'store/slices/commentSlice';
-import FluidTypography from 'components/FluidTypography';
+import Comments from './Comments';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,12 +31,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Reviews = ({ docID }) => {
+const Reviews = ({ info, docID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [comment, setComment] = useState(null);
   const author = useSelector((state) => state.auth.displayName);
-  const retrievedComments = useSelector((state) => state.comment.comments);
 
   const handleCommentReply = () => {
     dispatch(addComment({ author, comment, docID }));
@@ -67,12 +66,8 @@ const Reviews = ({ docID }) => {
               </Button>
             </CardActions>
           </Box>
-          {retrievedComments.map((data) => (
-            <Box style={{ border: '3px solid red' }}>
-              <FluidTypography text={data.comment} />
-              <FluidTypography text={`Seller: ${data.author}`} />
-            </Box>
-          ))}
+
+          <Comments info={info} />
         </CardContent>
       </Card>
     </Box>

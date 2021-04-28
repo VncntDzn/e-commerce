@@ -26,7 +26,7 @@ const retrieveComments = createAsyncThunk('retrieveComments', async ({ docID }) 
             .collection('products')
             .doc(docID)
             .collection('comments')
-            .orderBy("date", "desc")
+            .orderBy("date")
             .get()
         comments.forEach((res) => {
             retrievedComments.push(res.data())

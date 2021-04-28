@@ -16,8 +16,11 @@ import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRo
 import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+  tabPanelContainer: {
+    [theme.breakpoints.up('md')]: {
+      width: '50vw',
+      marginLeft: '4rem',
+    },
   },
   tabsContainer: {
     display: 'flex',
@@ -67,8 +70,10 @@ const UserActivities = (props) => {
       </Tabs>
 
       <TabPanel value={value} index={0} style={{ width: '100%' }}>
-        <ProductPanel user={user} action='add' />
-        <UserPosts user={user} />
+        <Box className={classes.tabPanelContainer}>
+          <ProductPanel user={user} action='add' />
+          <UserPosts user={user} />
+        </Box>
       </TabPanel>
       <TabPanel value={value} index={1} style={{ width: '100%' }}>
         Item Two

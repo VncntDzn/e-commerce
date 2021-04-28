@@ -18,7 +18,6 @@ const updateProfile = createAsyncThunk('updateProfile', async (params) => {
 
 
 const initialState = {
-    posts: [],
     status: 'idle',
     loading: false,
     error: null,

@@ -46,8 +46,8 @@ const Reviews = ({ docID }) => {
   }, [dispatch, docID]);
   return (
     <Box className={classes.container}>
-      <Card className={classes.container}>
-        <CardContent>
+      <Card>
+        <CardContent style={{ width: '91vw' }}>
           <TextField
             fullWidth
             label='Add a review'
@@ -67,15 +67,14 @@ const Reviews = ({ docID }) => {
               </Button>
             </CardActions>
           </Box>
+          {retrievedComments.map((data) => (
+            <Box style={{ border: '3px solid red' }}>
+              <FluidTypography text={data.comment} />
+              <FluidTypography text={`Seller: ${data.author}`} />
+            </Box>
+          ))}
         </CardContent>
       </Card>
-      {retrievedComments.map((data) => (
-        <Box>
-          <FluidTypography text={data.comment} />
-          <h1>author{data.author}</h1>
-        </Box>
-      ))}
-      <Box></Box>
     </Box>
   );
 };

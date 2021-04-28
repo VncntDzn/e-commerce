@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeStyles, Card, CardContent, Box } from '@material-ui/core';
+import { makeStyles, Card, CardContent, Box, Avatar } from '@material-ui/core';
 import { MainLayout } from 'layouts';
 import { retrieveAllPosts } from 'store/slices/postsSlice';
-import { CustomPagination } from 'components';
+import { CustomPagination, FluidTypography } from 'components';
 import PostContent from './PostContent';
 import customTheme from 'theme/customTheme';
 
@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('xl')]: {
       width: '15vw',
     },
+  },
+  avatar: {
+    marginRight: '0.7rem',
   },
   pagination: {
     display: 'flex',
@@ -90,6 +93,24 @@ const AllPosts = (props) => {
               <Box p={1} key={index}>
                 <Card raised className={classes.cardContainer}>
                   <CardContent>
+                    <Box
+                      display='flex'
+                      alignItems='center'
+                      width='fit-content'
+                      mb={2}
+                    >
+                      <Avatar
+                        className={classes.avatar}
+                        src={post.data.authorPhoto}
+                      />
+                      <FluidTypography
+                        text={post.data.authorDisplayName}
+                        minSize='1rem'
+                        size='1.1rem'
+                        maxSize='1rem'
+                        color='black'
+                      />
+                    </Box>
                     <PostContent data={post.data} />
                   </CardContent>
                 </Card>

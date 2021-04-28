@@ -44,7 +44,6 @@ const SinglePost = ({ match }) => {
 
   return (
     <MainLayout>
-      <Button onClick={() => console.log(product)}>SAssD</Button>
       <Breadcrumbs aria-label='breadcrumb'>
         <Link color='inherit' href='/'>
           Material-UI

@@ -1,3 +1,7 @@
+/**
+ * SinglePost Page - the component when the user clicked the view button.
+ * @param {object} [match] - the url data.
+ */
 import { useSelector } from 'react-redux';
 import { MainLayout } from 'layouts';
 import { useState } from 'react';
@@ -11,16 +15,15 @@ import {
   Link,
   Typography,
   Card,
-  Box,
   Button,
 } from '@material-ui/core';
 import { TabPanel } from 'components';
+import { Carousel } from 'react-responsive-carousel';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import FAQ from './tab-panels/FAQ';
 import ProductInformation from './tab-panels/ProductInformation';
 import Reviews from './tab-panels/Reviews';
 import PropTypes from 'prop-types';
-
-import { Carousel } from 'react-responsive-carousel';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,9 +34,8 @@ const SinglePost = ({ match }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const { nanoID } = match.params;
-  // MALI
   const product = useSelector((state) =>
-    state.posts.userPosts.find((post) => post.data.nanoID === nanoID)
+    state.posts.posts.find((post) => post.data.nanoID === nanoID)
   );
 
   const handleChange = (event, newValue) => {
@@ -42,6 +44,7 @@ const SinglePost = ({ match }) => {
 
   return (
     <MainLayout>
+      <Button onClick={() => console.log(product)}>SAssD</Button>
       <Breadcrumbs aria-label='breadcrumb'>
         <Link color='inherit' href='/'>
           Material-UI
@@ -65,7 +68,7 @@ const SinglePost = ({ match }) => {
             </TransformWrapper>
           </Grid>
         </Hidden>
-        <Grid container item md={6} lg={6}>
+        <Grid container item sm={12} md={6} lg={6}>
           <Card
             style={{
               height: 'fit-content',
@@ -90,10 +93,10 @@ const SinglePost = ({ match }) => {
             <ProductInformation info={product.data} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <Reviews />
+            <Reviews docID={product.docID} />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            Item Three
+            <FAQ />
           </TabPanel>
         </Grid>
       </Grid>

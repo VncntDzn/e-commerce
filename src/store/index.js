@@ -10,7 +10,7 @@ import {
 } from 'redux-persist'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
-import { authSlice, userSlice, postsSlice, utilsSlice } from './slices'
+import { authSlice, userSlice, postsSlice, utilsSlice, commentSlice } from './slices'
 
 
 
@@ -22,7 +22,8 @@ const reducers = combineReducers({
     auth: authSlice,
     user: userSlice,
     posts: postsSlice,
-    utils: utilsSlice
+    utils: utilsSlice,
+    comment: commentSlice
 });
 
 const persistConfig = {

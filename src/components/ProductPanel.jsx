@@ -1,9 +1,9 @@
 /**
  * CreatePostPanel - a component where the user can add or edit the item.
- * @params {object} [user] - current user.
- * @params {string} [action] - To transform the product panel to add or edit.
- * @params {Boolean} [openEdit] - passed from UserPosts whether to open or not the ProductPanel.
- * @params {function} [closeEdit] - function passed from UserPosts whether to open or not the ProductPanel.
+ * @param {object} [user] - current user.
+ * @param {string} [action] - To transform the product panel to add or edit.
+ * @param {Boolean} [openEdit] - passed from UserPosts whether to open or not the ProductPanel.
+ * @param {function} [closeEdit] - function passed from UserPosts whether to open or not the ProductPanel.
  */
 
 import { useState } from 'react';
@@ -25,7 +25,7 @@ import { Formik, Form } from 'formik';
 import { Field, Spinner, CustomDialog } from 'components';
 import { productSchema } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost, updatePost } from 'store/slices/postsSlice';
+import { createPost, updatePost, resetState } from 'store/slices/postsSlice';
 import { useDialog, countriesData } from 'helpers';
 import { firebaseStorage } from 'firebase/firebaseConfig';
 import ReactQuill from 'react-quill';
@@ -80,8 +80,10 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   const [categories, setCategories] = useState([]);
   const [location, setLocation] = useState(null);
   const [addCategory, setAddCategoryDialog] = useState(null);
+
   const status = useSelector((state) => state.posts.createPostStatus);
   const error = useSelector((state) => state.posts.error);
+  const retrievedCategories = useSelector((state) => state.utils.categories);
 
   let productTitle;
   if (action === 'add') {
@@ -127,6 +129,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   };
   const handleSubmit = async ({ productName, price, stock }) => {
     try {
+      dispatch(resetState());
       if (links) {
         if (action === 'add') {
           dispatch(
@@ -256,7 +259,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
                   closeMenuOnSelect={false}
                   components={animatedComponents}
                   isMulti
-                  options={countriesData}
+                  options={retrievedCategories}
                   className={classes.selectContainer}
                   onChange={(param) => {
                     let categoriesArray = [];

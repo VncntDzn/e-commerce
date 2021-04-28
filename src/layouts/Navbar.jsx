@@ -93,7 +93,10 @@ const Navbar = (props) => {
                   alignItems='center'
                   style={{ marginLeft: '2rem' }}
                 >
-                  <Button className={classes.button}>
+                  <Button
+                    className={classes.button}
+                    onClick={() => history.push('/all-posts')}
+                  >
                     <div style={{ display: 'flex', cursor: 'pointer' }}>
                       <DashboardOutlinedIcon />
                       <Typography

@@ -1,9 +1,9 @@
 /**
- * UserPostContent - component for UserPost that displays the information.
+ * PostContent - component for UserPost that displays the information.
  * @param {object} [data] - information of the user's post.
  */
 import PropTypes from 'prop-types';
-import { Box, Button, makeStyles } from '@material-ui/core';
+import { CardMedia, Box, Button, makeStyles } from '@material-ui/core';
 import { FluidTypography } from 'components';
 import { useHistory } from 'react-router-dom';
 import ReactStars from 'react-rating-stars-component';
@@ -11,16 +11,21 @@ import ReactStars from 'react-rating-stars-component';
 const useStyles = makeStyles((theme) => ({
   image: {
     objectFit: 'contain',
-    height: '100%',
+    height: '15rem',
     width: '100%',
   },
 }));
-const UserPostContent = ({ data }) => {
+const PostContent = ({ data }) => {
   const classes = useStyles();
   const history = useHistory();
   return (
     <>
-      <img className={classes.image} src={data.links[0]} alt='product' />
+      <CardMedia
+        component='img'
+        className={classes.image}
+        src={data.links[0]}
+        alt='product'
+      />
 
       <FluidTypography
         text={`> Ships from ${data.location}`}
@@ -67,8 +72,8 @@ const UserPostContent = ({ data }) => {
   );
 };
 
-UserPostContent.propTypes = {
+PostContent.propTypes = {
   data: PropTypes.object.isRequired,
 };
 
-export default UserPostContent;
+export default PostContent;

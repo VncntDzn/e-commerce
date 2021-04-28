@@ -3,8 +3,7 @@ import { firestore } from 'firebase/firebaseConfig';
 
 const createPost = createAsyncThunk('createPost', async ({ categories, location, productName, stock, price, author, description, links, date }) => {
     try {
-        console.log(categories, location)
-        firestore.collection('products').add({
+        await firestore.collection('products').add({
             nanoID: nanoid(),
             productName,
             price,
@@ -55,14 +54,13 @@ const deletePost = createAsyncThunk('deletePost', async ({ docID }) => {
         console.log(error)
     }
 })
-const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async ({ author }) => {
+const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async () => {
     try {
         let allPosts = []
         const posts = await firestore.collection("products").get()
         posts.forEach(post => {
-            allPosts.push(post.data())
+            allPosts.push({ docID: post.id, data: post.data() })
         })
-
         return allPosts
 
     } catch (error) {
@@ -96,12 +94,18 @@ const initialState = {
     userPosts: [{}],
     userPostStatus: 'idle',
     deletePostStatus: 'idle',
-    editPostStatus: 'idle'
+    editPostStatus: 'idle',
+    retrieveAllPostStatus: 'idle'
 };
 
 const postsSlice = createSlice({
     name: "posts",
     initialState,
+    reducers: {
+        resetState: (state, payload) => {
+            state.createPostStatus = null;
+        }
+    },
     extraReducers: {
         [createPost.pending]: (state, action) => {
             state.createPostStatus = 'pending'
@@ -116,15 +120,15 @@ const postsSlice = createSlice({
         },
         // RETRIEVE ALL POSTS
         [retrieveAllPosts.pending]: (state, action) => {
-            state.status = 'pending'
+            state.retrieveAllPostStatus = 'pending'
         },
         [retrieveAllPosts.fulfilled]: (state, action) => {
-            state.status = 'success';
+            state.retrieveAllPostStatus = 'success';
             state.posts = (action.payload);
 
         },
         [retrieveAllPosts.failed]: (state, action) => {
-            state.status = 'failed';
+            state.retrieveAllPostStatus = 'failed';
 
         },
 
@@ -166,6 +170,7 @@ const postsSlice = createSlice({
     }
 });
 
-const { reducer } = postsSlice;
+const { actions, reducer } = postsSlice;
+export const { resetState } = actions
 export { createPost, retrieveAllPosts, retrieveUserPosts, updatePost, deletePost }
 export default reducer;

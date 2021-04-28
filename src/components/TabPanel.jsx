@@ -10,6 +10,7 @@ const TabPanel = (props) => {
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
+      style={{ height: 'fit-content' }}
     >
       {value === index && (
         <Box>

@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles, Card, CardContent, Box } from '@material-ui/core';
 import { MainLayout } from 'layouts';
 import { retrieveAllPosts } from 'store/slices/postsSlice';
+import { CustomPagination } from 'components';
 import PostContent from './PostContent';
 import customTheme from 'theme/customTheme';
-
-import { CustomPagination } from 'components';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -66,7 +65,7 @@ const AllPosts = (props) => {
   const status = useSelector((state) => state.posts.retrieveAllPostStatus);
   const posts = useSelector((state) => state.posts.posts);
   // get the current page
-  const handlePageClick = ({ selected: selectedPage }) => {
+  const onPageChange = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
   };
   const PER_PAGE = 9;
@@ -81,14 +80,15 @@ const AllPosts = (props) => {
   } else {
     pageCount = 0;
   }
+
   return (
     <MainLayout>
       <Box>
         <Box className={classes.container}>
           {posts?.length ? (
             posts.slice(offset, offset + PER_PAGE).map((post, index) => (
-              <Box p={1}>
-                <Card raised key={index} className={classes.cardContainer}>
+              <Box p={1} key={index}>
+                <Card raised className={classes.cardContainer}>
                   <CardContent>
                     <PostContent data={post.data} />
                   </CardContent>
@@ -104,7 +104,7 @@ const AllPosts = (props) => {
         <Box display='flex' justifyContent='center'>
           <CustomPagination
             pageCount={pageCount}
-            handlePageClick={handlePageClick}
+            onPageChange={onPageChange}
             containerClassName={classes.pagination}
             pageClassName={classes.pageStyle}
             activeClassName={classes.paginationActive}

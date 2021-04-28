@@ -4,7 +4,7 @@
  * @param {node} [pageClassName] - styling for pageClassName.
  * @param {node} [activeClassName] - styling for activeClassName.
  * @param {Number} [pageCount] - number of pages.
- * @param {function} [handlePageClick] - function to switch pages in pagination.
+ * @param {function} [onPageChange] - function to switch pages in pagination.
  */
 import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
@@ -16,7 +16,7 @@ const CustomPagination = ({
   pageClassName,
   activeClassName,
   pageCount,
-  handlePageClick,
+  onPageChange,
 }) => {
   return (
     <ReactPaginate
@@ -27,7 +27,7 @@ const CustomPagination = ({
       pageCount={pageCount}
       marginPagesDisplayed={1}
       pageRangeDisplayed={5}
-      onPageChange={handlePageClick}
+      onPageChange={onPageChange}
       pageClassName={pageClassName}
       containerClassName={containerClassName}
       activeClassName={activeClassName}

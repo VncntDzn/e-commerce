@@ -15,6 +15,7 @@ import {
   Link,
   Typography,
   Card,
+  Box,
 } from '@material-ui/core';
 import { TabPanel } from 'components';
 import { Carousel } from 'react-responsive-carousel';
@@ -27,6 +28,7 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: '0.5rem',
+    position: 'relative',
   },
 }));
 const SinglePost = ({ match }) => {
@@ -52,9 +54,17 @@ const SinglePost = ({ match }) => {
         </Link>
         <Typography color='textPrimary'>Breadcrumb</Typography>
       </Breadcrumbs>
-      <Grid container spacing={2} className={classes.root}>
+      <Grid container spacing={2} className={classes.root} justify='flex-end'>
         <Hidden smDown>
-          <Grid container item md={6} lg={6}>
+          <Box
+            position='absolute'
+            style={{
+              height: 'fit-content',
+              width: '30vw',
+              top: '5%',
+              left: '5%',
+            }}
+          >
             <TransformWrapper>
               <TransformComponent>
                 <Carousel emulateTouch={true}>
@@ -64,7 +74,7 @@ const SinglePost = ({ match }) => {
                 </Carousel>
               </TransformComponent>
             </TransformWrapper>
-          </Grid>
+          </Box>
         </Hidden>
         <Grid container item sm={12} md={6} lg={6}>
           <Card

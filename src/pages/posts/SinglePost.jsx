@@ -15,6 +15,7 @@ import {
   Link,
   Typography,
   Card,
+  Button,
 } from '@material-ui/core';
 import { TabPanel } from 'components';
 import { Carousel } from 'react-responsive-carousel';
@@ -34,7 +35,7 @@ const SinglePost = ({ match }) => {
   const [value, setValue] = useState(0);
   const { nanoID } = match.params;
   const product = useSelector((state) =>
-    state.posts.userPosts.find((post) => post.data.nanoID === nanoID)
+    state.posts.posts.find((post) => post.data.nanoID === nanoID)
   );
 
   const handleChange = (event, newValue) => {
@@ -43,6 +44,7 @@ const SinglePost = ({ match }) => {
 
   return (
     <MainLayout>
+      <Button onClick={() => console.log(product)}>SAssD</Button>
       <Breadcrumbs aria-label='breadcrumb'>
         <Link color='inherit' href='/'>
           Material-UI

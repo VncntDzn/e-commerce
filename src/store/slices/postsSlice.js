@@ -59,9 +59,8 @@ const retrieveAllPosts = createAsyncThunk('retrieveAllPosts', async () => {
         let allPosts = []
         const posts = await firestore.collection("products").get()
         posts.forEach(post => {
-            allPosts.push(post.data())
+            allPosts.push({ docID: post.id, data: post.data() })
         })
-        console.log(allPosts)
         return allPosts
 
     } catch (error) {

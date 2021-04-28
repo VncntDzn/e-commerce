@@ -91,7 +91,7 @@ const AllPosts = (props) => {
               <Box p={1}>
                 <Card raised key={index} className={classes.cardContainer}>
                   <CardContent>
-                    <PostContent data={post} />
+                    <PostContent data={post.data} />
                   </CardContent>
                 </Card>
               </Box>

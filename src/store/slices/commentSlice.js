@@ -4,6 +4,7 @@ import moment from 'moment';
 
 const addComment = createAsyncThunk('addComment', async ({ commentorPhoto, docID, author, comment }) => {
     try {
+
         await firestore
             .collection('products')
             .doc(docID)
@@ -13,6 +14,23 @@ const addComment = createAsyncThunk('addComment', async ({ commentorPhoto, docID
                 author,
                 comment,
                 commentorPhoto
+            })
+
+        return "success"
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+const updateComment = createAsyncThunk('updateComment', async ({ commentID, docID, comment }) => {
+    try {
+        await firestore
+            .collection('products')
+            .doc(docID)
+            .collection('comments')
+            .doc(commentID)
+            .update({
+                comment,
             })
 
         return "success"
@@ -30,7 +48,7 @@ const retrieveComments = createAsyncThunk('retrieveComments', async ({ docID }) 
             .orderBy("date")
             .get()
         comments.forEach((res) => {
-            retrievedComments.push(res.data())
+            retrievedComments.push({ commentID: res.id, commentData: res.data() })
         })
         return retrievedComments
     } catch (error) {
@@ -39,7 +57,8 @@ const retrieveComments = createAsyncThunk('retrieveComments', async ({ docID }) 
 })
 const initialState = {
     comments: [],
-    commentStatus: 'idle'
+    commentStatus: 'idle',
+    editCommentStatus: 'idle'
 }
 const commentSlice = createSlice({
     name: 'comments',
@@ -68,9 +87,19 @@ const commentSlice = createSlice({
         [retrieveComments.rejected]: (state, action) => {
             state.commentStatus = 'failed'
         },
+        // EDIT COMMENT
+        [updateComment.pending]: (state, action) => {
+            state.commentStatus = 'pending'
+        },
+        [updateComment.fulfilled]: (state, action) => {
+            state.editCommentStatus = 'success';
+        },
+        [updateComment.rejected]: (state, action) => {
+            state.commentStatus = 'failed'
+        },
     }
 });
 
 const { reducer } = commentSlice;
 export default reducer;
-export { addComment, retrieveComments };
+export { addComment, retrieveComments, updateComment };

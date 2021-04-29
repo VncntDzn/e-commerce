@@ -37,7 +37,7 @@ const Reviews = ({ docID }) => {
       <CardContent>
         <CommentPanel docID={docID} />
         <hr style={{ width: '100%' }} />
-        <Comments />
+        <Comments docID={docID} />
       </CardContent>
     </Card>
   );

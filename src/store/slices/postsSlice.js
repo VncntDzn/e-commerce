@@ -29,7 +29,6 @@ const updatePost = createAsyncThunk('updatePost', async ({ authorDisplayName, ca
         await firestore.collection('products')
             .doc(documentID)
             .set({
-
                 authorDisplayName,
                 productName,
                 stock,

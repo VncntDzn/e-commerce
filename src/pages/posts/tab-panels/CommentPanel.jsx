@@ -1,19 +1,34 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, CardActions, TextField } from '@material-ui/core';
-import { addComment } from 'store/slices/commentSlice';
+import { addComment, updateComment } from 'store/slices/commentSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-const CommentPanel = ({ docID }) => {
+const CommentPanel = ({ docID, commentID, action = 'add' }) => {
   const dispatch = useDispatch();
   const [comment, setComment] = useState(null);
   const author = useSelector((state) => state.auth.displayName);
   const user = useSelector((state) => state.auth.user);
 
   const handleCommentReply = () => {
-    dispatch(
-      addComment({ author, comment, docID, commentorPhoto: user.photoURL })
-    );
+    if (action === 'edit') {
+      dispatch(
+        updateComment({
+          comment,
+          docID,
+          commentID,
+        })
+      );
+    } else {
+      dispatch(
+        addComment({
+          author,
+          comment,
+          docID,
+          commentorPhoto: user.photoURL,
+        })
+      );
+    }
   };
   return (
     <>

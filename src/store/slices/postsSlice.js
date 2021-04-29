@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 
-const createPost = createAsyncThunk('createPost', async ({ authorDisplayName, authorPhoto, categories, location, productName, stock, price, author, description, links, date }) => {
+const createPost = createAsyncThunk('createPost', async ({ authorDisplayName, categories, location, productName, stock, price, author, description, links, date }) => {
     try {
         console.log(authorDisplayName)
         await firestore.collection('products').add({
@@ -10,7 +10,7 @@ const createPost = createAsyncThunk('createPost', async ({ authorDisplayName, au
             price,
             stock,
             author,
-            authorPhoto,
+
             authorDisplayName,
             description,
             links,
@@ -24,12 +24,12 @@ const createPost = createAsyncThunk('createPost', async ({ authorDisplayName, au
     }
 })
 
-const updatePost = createAsyncThunk('updatePost', async ({ authorDisplayName, authorPhoto, categories, location, documentID, productName, stock, price, description, links, date, author }) => {
+const updatePost = createAsyncThunk('updatePost', async ({ authorDisplayName, categories, location, documentID, productName, stock, price, description, links, date, author }) => {
     try {
         await firestore.collection('products')
             .doc(documentID)
             .set({
-                authorPhoto,
+
                 authorDisplayName,
                 productName,
                 stock,

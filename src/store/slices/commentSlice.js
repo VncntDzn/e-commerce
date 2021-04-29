@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 import moment from 'moment';
 
-const addComment = createAsyncThunk('addComment', async ({ docID, author, comment }) => {
+const addComment = createAsyncThunk('addComment', async ({ commentorPhoto, docID, author, comment }) => {
     try {
         await firestore
             .collection('products')
@@ -12,6 +12,7 @@ const addComment = createAsyncThunk('addComment', async ({ docID, author, commen
                 date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
                 author,
                 comment,
+                commentorPhoto
             })
 
         return "success"

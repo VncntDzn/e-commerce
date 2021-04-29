@@ -8,9 +8,12 @@ const CommentPanel = ({ docID }) => {
   const dispatch = useDispatch();
   const [comment, setComment] = useState(null);
   const author = useSelector((state) => state.auth.displayName);
+  const user = useSelector((state) => state.auth.user);
 
   const handleCommentReply = () => {
-    dispatch(addComment({ author, comment, docID }));
+    dispatch(
+      addComment({ author, comment, docID, commentorPhoto: user.photoURL })
+    );
   };
   return (
     <>

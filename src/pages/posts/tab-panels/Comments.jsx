@@ -1,22 +1,23 @@
+/**
+ * Comment Component - it displays the comments of the post.
+ * @param {object} [info] - information of the author and the commentor.
+ */
 import { useState } from 'react';
 import { makeStyles, Box, Button, Avatar } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import FluidTypography from 'components/FluidTypography';
+import PropTypes from 'prop-types';
+
 const useStyles = makeStyles((theme) => ({
   container: {
     [theme.breakpoints.up('sm')]: {
       width: '95vw',
     },
     [theme.breakpoints.up('md')]: {
-      marginTop: '-10rem',
       width: '30.5rem',
     },
     [theme.breakpoints.up('lg')]: {
-      marginTop: '-13rem',
       width: '43vw',
-    },
-    [theme.breakpoints.up('xl')]: {
-      marginTop: '-17rem',
     },
   },
   small: {
@@ -31,59 +32,58 @@ const Comments = ({ info }) => {
   const [readMore, setReadMore] = useState(true);
 
   return (
-    <div>
-      <hr style={{ width: '100%' }} />
-      <>
-        {readMore ? (
-          <Button onClick={() => setReadMore(!readMore)} color='secondary'>
-            View {retrievedComments.length} comments
-          </Button>
-        ) : (
-          <>
-            {retrievedComments.map((data) => (
-              <>
-                <Box
-                  display='flex'
-                  flexDirection='column'
-                  my={1}
-                  width={'fit-content'}
-                  height={'fit-content'}
-                >
-                  <Box display='flex' alignItems='flex-start'>
-                    <Avatar className={classes.small} src={info.authorPhoto} />
-                    <Box
-                      display='flex'
-                      flexDirection='column'
-                      flex={1}
-                      style={{
-                        background: '#E0E3E4',
-                        borderRadius: '10px',
-                        padding: '0 1rem',
-                      }}
-                    >
-                      <FluidTypography
-                        minSize='0.9rem'
-                        maxSize='0.9rem'
-                        size='0.5rem'
-                        text={data.author}
-                      />
-                      <FluidTypography text={data.comment} color='black' />
-                    </Box>
+    <>
+      {readMore ? (
+        <Button onClick={() => setReadMore(!readMore)} color='secondary'>
+          View {retrievedComments.length} comments
+        </Button>
+      ) : (
+        <>
+          {retrievedComments.map((data) => (
+            <>
+              <Box
+                display='flex'
+                flexDirection='column'
+                my={1}
+                width={'fit-content'}
+                height={'fit-content'}
+              >
+                <Box display='flex' alignItems='flex-start'>
+                  <Avatar className={classes.small} src={data.commentorPhoto} />
+                  <Box
+                    display='flex'
+                    flexDirection='column'
+                    flex={1}
+                    style={{
+                      background: '#E0E3E4',
+                      borderRadius: '10px',
+                      padding: '0 1rem',
+                    }}
+                  >
+                    <FluidTypography
+                      minSize='0.9rem'
+                      maxSize='0.9rem'
+                      size='0.5rem'
+                      text={data.author}
+                    />
+                    <FluidTypography text={data.comment} color='black' />
                   </Box>
                 </Box>
-              </>
-            ))}
+              </Box>
+            </>
+          ))}
 
-            <Button onClick={() => setReadMore(!readMore)} color='secondary'>
-              Hide comments
-            </Button>
-          </>
-        )}
-      </>
-    </div>
+          <Button onClick={() => setReadMore(!readMore)} color='secondary'>
+            Hide comments
+          </Button>
+        </>
+      )}
+    </>
   );
 };
 
-Comments.propTypes = {};
+Comments.propTypes = {
+  info: PropTypes.object.isRequired,
+};
 
 export default Comments;

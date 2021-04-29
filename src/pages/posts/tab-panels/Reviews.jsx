@@ -1,12 +1,19 @@
+/**
+ * Reviews component is the parent component of comment panel and comments.
+ * @param {object} [info] - information of the author and the commentor.
+ * @param {Number} [docID] - document id of the current post.
+ */
 import { useEffect } from 'react';
-import { makeStyles, Box, Card, CardContent } from '@material-ui/core';
+import { makeStyles, Card, CardContent } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { retrieveComments } from 'store/slices/commentSlice';
 import Comments from './Comments';
 import CommentPanel from './CommentPanel';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    width: '90vw',
     [theme.breakpoints.up('sm')]: {
       width: '95vw',
     },
@@ -27,17 +34,19 @@ const Reviews = ({ info, docID }) => {
     dispatch(retrieveComments({ docID }));
   }, [dispatch, docID]);
   return (
-    <Box className={classes.container}>
-      <Card>
-        <CardContent style={{ width: '91vw' }}>
-          <CommentPanel docID={docID} />
-          <Comments info={info} />
-        </CardContent>
-      </Card>
-    </Box>
+    <Card className={classes.container}>
+      <CardContent>
+        <CommentPanel docID={docID} />
+        <hr style={{ width: '100%' }} />
+        <Comments info={info} />
+      </CardContent>
+    </Card>
   );
 };
 
-Reviews.propTypes = {};
+Reviews.propTypes = {
+  info: PropTypes.object.isRequired,
+  docID: PropTypes.number.isRequired,
+};
 
 export default Reviews;

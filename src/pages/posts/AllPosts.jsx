@@ -89,7 +89,7 @@ const AllPosts = (props) => {
       <Box>
         <Box className={classes.container}>
           {posts?.length ? (
-            posts.slice(offset, offset + PER_PAGE).map((post, index) => (
+            posts.slice(offset, offset + PER_PAGE).map(({ data }, index) => (
               <Box p={1} key={index}>
                 <Card raised className={classes.cardContainer}>
                   <CardContent>
@@ -101,17 +101,17 @@ const AllPosts = (props) => {
                     >
                       <Avatar
                         className={classes.avatar}
-                        src={post.data.authorPhoto}
+                        src={data.authorPhoto}
                       />
                       <FluidTypography
-                        text={post.data.authorDisplayName}
+                        text={data.authorDisplayName}
                         minSize='1rem'
                         size='1.1rem'
                         maxSize='1rem'
                         color='black'
                       />
                     </Box>
-                    <PostContent data={post.data} />
+                    <PostContent data={data} />
                   </CardContent>
                 </Card>
               </Box>

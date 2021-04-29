@@ -101,7 +101,7 @@ const SinglePost = ({ match }) => {
             <ProductInformation info={product.data} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <Reviews info={product.data} docID={product.docID} />
+            <Reviews docID={product.docID} />
           </TabPanel>
           <TabPanel value={value} index={2}>
             <FAQ />

@@ -1,6 +1,5 @@
 /**
  * Reviews component is the parent component of comment panel and comments.
- * @param {object} [info] - information of the author and the commentor.
  * @param {Number} [docID] - document id of the current post.
  */
 import { useEffect } from 'react';
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Reviews = ({ info, docID }) => {
+const Reviews = ({ docID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -38,14 +37,13 @@ const Reviews = ({ info, docID }) => {
       <CardContent>
         <CommentPanel docID={docID} />
         <hr style={{ width: '100%' }} />
-        <Comments info={info} />
+        <Comments />
       </CardContent>
     </Card>
   );
 };
 
 Reviews.propTypes = {
-  info: PropTypes.object.isRequired,
   docID: PropTypes.number.isRequired,
 };
 

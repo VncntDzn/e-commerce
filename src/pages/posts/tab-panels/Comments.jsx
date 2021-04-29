@@ -1,12 +1,10 @@
 /**
  * Comment Component - it displays the comments of the post.
- * @param {object} [info] - information of the author and the commentor.
  */
 import { useState } from 'react';
 import { makeStyles, Box, Button, Avatar } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import FluidTypography from 'components/FluidTypography';
-import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
 }));
-const Comments = ({ info }) => {
+const Comments = () => {
   const classes = useStyles();
   const retrievedComments = useSelector((state) => state.comment.comments);
   const [readMore, setReadMore] = useState(true);
@@ -80,10 +78,6 @@ const Comments = ({ info }) => {
       )}
     </>
   );
-};
-
-Comments.propTypes = {
-  info: PropTypes.object.isRequired,
 };
 
 export default Comments;

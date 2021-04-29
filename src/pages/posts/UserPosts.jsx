@@ -92,23 +92,21 @@ const UserPosts = ({ user }) => {
     <Box>
       <Box className={classes.container}>
         {userPosts?.length ? (
-          userPosts
-            .slice(offset, offset + PER_PAGE)
-            .map(({ data, docID }, index) => (
-              <Box p={1}>
-                <Card raised key={index} className={classes.cardContainer}>
-                  <CardContent>
-                    <UserPostHeader
-                      user={user}
-                      docID={docID}
-                      displayName={displayName}
-                      photoURL={photoURL}
-                    />
-                    <PostContent data={data} />
-                  </CardContent>
-                </Card>
-              </Box>
-            ))
+          userPosts.slice(offset, offset + PER_PAGE).map(({ data, docID }) => (
+            <Box p={1}>
+              <Card raised key={docID} className={classes.cardContainer}>
+                <CardContent>
+                  <UserPostHeader
+                    user={user}
+                    docID={docID}
+                    displayName={displayName}
+                    photoURL={photoURL}
+                  />
+                  <PostContent data={data} />
+                </CardContent>
+              </Card>
+            </Box>
+          ))
         ) : (
           <div>
             <h1>Nothing to see here yet.</h1>

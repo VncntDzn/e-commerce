@@ -54,13 +54,14 @@ const SinglePost = ({ match }) => {
         </Link>
         <Typography color='textPrimary'>Breadcrumb</Typography>
       </Breadcrumbs>
+
       <Grid container spacing={2} className={classes.root} justify='flex-end'>
         <Hidden smDown>
           <Box
             position='absolute'
             style={{
               height: 'fit-content',
-              width: '30vw',
+              width: '35vw',
               top: '5%',
               left: '5%',
             }}

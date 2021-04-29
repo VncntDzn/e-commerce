@@ -33,7 +33,6 @@ import 'react-quill/dist/quill.snow.css';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import ImageUploader from 'react-images-upload';
-import moment from 'moment';
 import SuccessAnimation from 'lottie/SuccessAnimation';
 import FailedAnimation from 'lottie/FailedAnimation';
 import PropTypes from 'prop-types';
@@ -143,7 +142,6 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               description: quillData,
               author: user.email,
               authorDisplayName: user.displayName,
-              date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
             })
           );
         } else if (action === 'edit') {
@@ -157,9 +155,6 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               location,
               categories,
               description: quillData,
-              author: user.email,
-              authorDisplayName: user.displayName,
-              date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
             })
           );
         }

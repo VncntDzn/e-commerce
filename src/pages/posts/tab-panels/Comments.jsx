@@ -13,10 +13,12 @@ import {
   Menu,
   MenuItem,
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteComment } from 'store/slices/commentSlice';
 import FluidTypography from 'components/FluidTypography';
 import CommentPanel from './CommentPanel';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+
 const useStyles = makeStyles((theme) => ({
   container: {
     [theme.breakpoints.up('sm')]: {
@@ -37,16 +39,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Comments = ({ docID }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const retrievedComments = useSelector((state) => state.comment.comments);
   const [readMore, setReadMore] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const [commentid, setCommentID] = useState(null);
   const [editDialog, setEditDialog] = useState(false);
-  /* 
-  const handleDeletePost = () => {
-    dispatch(deletePost({ docID }));
-  }; */
+
+  const handleDeleteComment = () => {
+    dispatch(deleteComment({ commentID: commentid, docID }));
+  };
   const handleClick = (event, id) => {
     setAnchorEl(event.currentTarget);
     setCommentID(id);
@@ -115,7 +118,7 @@ const Comments = ({ docID }) => {
             onClose={() => setAnchorEl(null)}
           >
             <MenuItem onClick={() => setEditDialog(true)}>Edit</MenuItem>
-            <MenuItem>Delete</MenuItem>
+            <MenuItem onClick={() => handleDeleteComment()}>Delete</MenuItem>
           </Menu>
           <Dialog onClose={() => setEditDialog(!editDialog)} open={editDialog}>
             <DialogContent>

@@ -64,7 +64,7 @@ const UserActivities = (props) => {
       >
         <Tab
           icon={<PostAddRoundedIcon />}
-          label={`${userPosts.length} post/s`}
+          label={`${userPosts?.length} post/s`}
         />
         <Tab icon={<PeopleAltRoundedIcon />} label='142 followers' />
         <Tab icon={<SupervisorAccountRoundedIcon />} label='552 following' />

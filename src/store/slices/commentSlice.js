@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
-import moment from 'moment';
+import firebase from 'firebase/firebaseConfig';
 
 const addComment = createAsyncThunk('addComment', async ({ commentorPhoto, docID, author, comment }) => {
     try {
@@ -10,10 +10,10 @@ const addComment = createAsyncThunk('addComment', async ({ commentorPhoto, docID
             .doc(docID)
             .collection('comments')
             .add({
-                date: moment(new Date()).format('dddd, MMMM Do YYYY, h:mm:ss a'),
                 author,
                 comment,
-                commentorPhoto
+                commentorPhoto,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
 
         return "success"
@@ -45,7 +45,7 @@ const retrieveComments = createAsyncThunk('retrieveComments', async ({ docID }) 
             .collection('products')
             .doc(docID)
             .collection('comments')
-            .orderBy("date")
+            .orderBy("timestamp")
             .get()
         comments.forEach((res) => {
             retrievedComments.push({ commentID: res.id, commentData: res.data() })
@@ -55,6 +55,22 @@ const retrieveComments = createAsyncThunk('retrieveComments', async ({ docID }) 
         console.log(error)
     }
 })
+
+
+const deleteComment = createAsyncThunk('deleteComment', async ({ docID, commentID }) => {
+    try {
+        await firestore
+            .collection('products')
+            .doc(docID)
+            .collection('comments')
+            .doc(commentID)
+            .delete()
+        return "success"
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 const initialState = {
     comments: [],
     commentStatus: 'idle',
@@ -102,4 +118,4 @@ const commentSlice = createSlice({
 
 const { reducer } = commentSlice;
 export default reducer;
-export { addComment, retrieveComments, updateComment };
+export { addComment, retrieveComments, updateComment, deleteComment };

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
+import firebase from 'firebase/firebaseConfig';
 
 const createPost = createAsyncThunk('createPost', async ({ authorDisplayName, categories, location, productName, stock, price, author, description, links, date }) => {
     try {
@@ -10,13 +11,12 @@ const createPost = createAsyncThunk('createPost', async ({ authorDisplayName, ca
             price,
             stock,
             author,
-
             authorDisplayName,
             description,
             links,
-            date,
             categories,
-            location
+            location,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         return "success"
     } catch (error) {
@@ -24,29 +24,26 @@ const createPost = createAsyncThunk('createPost', async ({ authorDisplayName, ca
     }
 })
 
-const updatePost = createAsyncThunk('updatePost', async ({ authorDisplayName, categories, location, documentID, productName, stock, price, description, links, date, author }) => {
+const updatePost = createAsyncThunk('updatePost', async ({ categories, location, documentID, productName, stock, price, description, links, date }) => {
     try {
         await firestore.collection('products')
             .doc(documentID)
-            .set({
-                authorDisplayName,
+            .update({
                 productName,
                 stock,
                 price,
                 description,
                 links,
-                date,
-                author,
                 location,
-                categories
+                categories,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+
             })
         return "success"
     } catch (error) {
         console.log(error)
     }
 })
-
-
 
 const deletePost = createAsyncThunk('deletePost', async ({ docID }) => {
     try {
@@ -78,7 +75,7 @@ const retrieveUserPosts = createAsyncThunk('retrieveUserPosts', async ({ email }
         let retrievedUserPosts = []
         const posts = await firestore.collection("products")
             .where('author', '==', email)
-            .orderBy("date", "desc")
+            .orderBy("timestamp")
             .get()
         posts.forEach(post => {
             retrievedUserPosts.push({ docID: post.id, data: post.data() })
@@ -95,7 +92,7 @@ const initialState = {
     createPostStatus: 'idle',
     error: null,
     posts: [],
-    userPosts: [{}],
+    userPosts: [],
     userPostStatus: 'idle',
     deletePostStatus: 'idle',
     editPostStatus: 'idle',
@@ -108,7 +105,9 @@ const postsSlice = createSlice({
     reducers: {
         resetState: (state, payload) => {
             state.createPostStatus = null;
-        }
+        },
+
+
     },
     extraReducers: {
         [createPost.pending]: (state, action) => {
@@ -146,7 +145,6 @@ const postsSlice = createSlice({
         },
         [retrieveUserPosts.failed]: (state, action) => {
             state.userPostStatus = 'failed';
-            console.log(action)
         },
         // UPDATE USER POSTS
         [updatePost.pending]: (state, action) => {
@@ -175,6 +173,6 @@ const postsSlice = createSlice({
 });
 
 const { actions, reducer } = postsSlice;
-export const { resetState } = actions
+export const { resetState, } = actions
 export { createPost, retrieveAllPosts, retrieveUserPosts, updatePost, deletePost }
 export default reducer;

@@ -25,7 +25,7 @@ const loginUser = createAsyncThunk('loginUser', async ({ email, password }) => {
 const logoutUser = createAsyncThunk('logoutUser', async () => {
     try {
         firebase.auth().signOut();
-        return true
+        return "success"
     } catch (e) {
         return e.message
     }
@@ -109,14 +109,13 @@ const authSlice = createSlice({
         // LOG OUT
         [logoutUser.pending]: (state, action) => {
             state.status = 'pending';
-            state.uid = null;
+
         },
         [logoutUser.fulfilled]: (state, action) => {
-            if (action.payload) {
-                state.status = 'success';
-                state.error = null;
+            if (action.payload === 'success') {
+                state.user = null;
+                state.uid = null
             } else {
-                state.user = action.payload;
                 state.error = action.payload;
             }
         },

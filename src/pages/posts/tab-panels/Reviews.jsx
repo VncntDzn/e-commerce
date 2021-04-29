@@ -1,6 +1,6 @@
 /**
  * Reviews component is the parent component of comment panel and comments.
- * @param {Number} [docID] - document id of the current post.
+ * @param {string} [docID] - document id of the current post.
  */
 import { useEffect } from 'react';
 import { makeStyles, Card, CardContent } from '@material-ui/core';
@@ -44,7 +44,7 @@ const Reviews = ({ docID }) => {
 };
 
 Reviews.propTypes = {
-  docID: PropTypes.number.isRequired,
+  docID: PropTypes.string.isRequired,
 };
 
 export default Reviews;

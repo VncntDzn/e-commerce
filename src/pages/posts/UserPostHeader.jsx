@@ -3,7 +3,7 @@
  * @param {object} [user] - current user, if user has no post then display an h1 tag.
  * @param {string} [photoURL] - image path.
  * @param {string} [displayName] - name of the current user.
- * @param {Number} [docID] - documentID of the selected post.
+ * @param {string} [docID] - documentID of the selected post.
  *
  */
 import { useState } from 'react';
@@ -94,7 +94,7 @@ UserPostHeader.propTypes = {
   user: PropTypes.object.isRequired,
   photoURL: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  docID: PropTypes.number.isRequired,
+  docID: PropTypes.string.isRequired,
 };
 
 export default UserPostHeader;

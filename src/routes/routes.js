@@ -46,7 +46,7 @@ const routes = [
     {
         name: 'Single Post',
         component: SinglePost,
-        path: '/product/single-post/:nanoID',
+        path: '/product/single-post/:docID',
         auth: true
     },
     {

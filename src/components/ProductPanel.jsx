@@ -25,7 +25,7 @@ import { Formik, Form } from 'formik';
 import { Field, Spinner, CustomDialog } from 'components';
 import { productSchema } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost, updatePost, resetState } from 'store/slices/postsSlice';
+import { CREATE_POST, UPDATE_POST, resetState } from 'store/slices/postsSlice';
 import { useDialog, countriesData } from 'helpers';
 import { firebaseStorage } from 'firebase/firebaseConfig';
 import ReactQuill from 'react-quill';
@@ -132,7 +132,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
       if (links) {
         if (action === 'add') {
           dispatch(
-            createPost({
+            CREATE_POST({
               productName,
               price,
               stock,
@@ -142,11 +142,12 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               description: quillData,
               author: user.email,
               authorDisplayName: user.displayName,
+              authorPhoto: user.photoURL,
             })
           );
         } else if (action === 'edit') {
           dispatch(
-            updatePost({
+            UPDATE_POST({
               documentID,
               productName,
               price,

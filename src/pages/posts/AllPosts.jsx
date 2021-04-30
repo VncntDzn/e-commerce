@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { makeStyles, Card, CardContent, Box, Avatar } from '@material-ui/core';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { makeStyles, Card, CardContent, Box } from '@material-ui/core';
 import { MainLayout } from 'layouts';
-import { retrieveAllPosts } from 'store/slices/postsSlice';
-import { CustomPagination, FluidTypography } from 'components';
+import { CustomPagination } from 'components';
 import PostContent from './PostContent';
 import customTheme from 'theme/customTheme';
+import UserPostHeader from './UserPostHeader';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,9 +31,7 @@ const useStyles = makeStyles((theme) => ({
       width: '15vw',
     },
   },
-  avatar: {
-    marginRight: '0.7rem',
-  },
+
   pagination: {
     display: 'flex',
     justifyContent: 'space-around',
@@ -62,11 +60,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const AllPosts = (props) => {
-  const dispatch = useDispatch();
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState(0);
-  const status = useSelector((state) => state.posts.retrieveAllPostStatus);
-  const posts = useSelector((state) => state.posts.posts);
+  const status = useSelector((state) => state.posts.postStatus);
+  const products = useSelector((state) => state.posts.products);
   // get the current page
   const onPageChange = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
@@ -74,12 +71,9 @@ const AllPosts = (props) => {
   const PER_PAGE = 9;
   const offset = currentPage * PER_PAGE;
   let pageCount = 10;
-  useEffect(() => {
-    dispatch(retrieveAllPosts());
-  }, [dispatch]);
 
   if (status === 'success') {
-    pageCount = Math.ceil(posts.length / PER_PAGE);
+    pageCount = Math.ceil(products.length / PER_PAGE);
   } else {
     pageCount = 0;
   }
@@ -88,34 +82,24 @@ const AllPosts = (props) => {
     <MainLayout>
       <Box>
         <Box className={classes.container}>
-          {posts?.length ? (
-            posts.slice(offset, offset + PER_PAGE).map(({ data }, index) => (
-              <Box p={1} key={index}>
-                <Card raised className={classes.cardContainer}>
-                  <CardContent>
-                    <Box
-                      display='flex'
-                      alignItems='center'
-                      width='fit-content'
-                      mb={2}
-                    >
-                      <Avatar
-                        className={classes.avatar}
-                        src={data.authorPhoto}
+          {products?.length ? (
+            products
+              .slice(offset, offset + PER_PAGE)
+              .map(({ docID, data }, index) => (
+                <Box p={1} key={index}>
+                  <Card raised className={classes.cardContainer}>
+                    <CardContent>
+                      <UserPostHeader
+                        user={data}
+                        docID={docID}
+                        displayName={data.authorDisplayName}
+                        photoURL={data.authorPhoto}
                       />
-                      <FluidTypography
-                        text={data.authorDisplayName}
-                        minSize='1rem'
-                        size='1.1rem'
-                        maxSize='1rem'
-                        color='black'
-                      />
-                    </Box>
-                    <PostContent data={data} />
-                  </CardContent>
-                </Card>
-              </Box>
-            ))
+                      <PostContent docID={docID} data={data} />
+                    </CardContent>
+                  </Card>
+                </Box>
+              ))
           ) : (
             <div>
               <h1>Nothing to see here yet.</h1>

@@ -5,7 +5,7 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, Box, makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { retrieveUserPosts } from 'store/slices/postsSlice';
+import { RETRIEVE_POSTS } from 'store/slices/postsSlice';
 import { CustomPagination } from 'components';
 import PropTypes from 'prop-types';
 import UserPostHeader from './UserPostHeader';
@@ -68,8 +68,10 @@ const UserPosts = ({ user }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(0);
-  const userPosts = useSelector((state) => state.posts.userPosts);
-  const userPostStatus = useSelector((state) => state.posts.userPostStatus);
+  const products = useSelector((state) =>
+    state.posts.products.filter(({ data }) => user.email === data.author)
+  );
+  const postStatus = useSelector((state) => state.posts.postStatus);
   const displayName = useSelector((state) => state.auth.displayName);
 
   // get the current page
@@ -80,21 +82,21 @@ const UserPosts = ({ user }) => {
   const offset = currentPage * PER_PAGE;
   let pageCount = 10;
   useEffect(() => {
-    dispatch(retrieveUserPosts({ email }));
+    dispatch(RETRIEVE_POSTS());
   }, [email, dispatch]);
 
-  if (userPostStatus === 'success') {
-    pageCount = Math.ceil(userPosts.length / PER_PAGE);
+  if (postStatus === 'success') {
+    pageCount = Math.ceil(products.length / PER_PAGE);
   } else {
     pageCount = 0;
   }
   return (
     <Box>
       <Box className={classes.container}>
-        {userPosts?.length ? (
-          userPosts.slice(offset, offset + PER_PAGE).map(({ data, docID }) => (
-            <Box p={1}>
-              <Card raised key={docID} className={classes.cardContainer}>
+        {products?.length ? (
+          products.slice(offset, offset + PER_PAGE).map(({ data, docID }) => (
+            <Box key={docID} p={1}>
+              <Card raised className={classes.cardContainer}>
                 <CardContent>
                   <UserPostHeader
                     user={user}
@@ -102,7 +104,7 @@ const UserPosts = ({ user }) => {
                     displayName={displayName}
                     photoURL={photoURL}
                   />
-                  <PostContent data={data} />
+                  <PostContent docID={docID} data={data} />
                 </CardContent>
               </Card>
             </Box>

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
 }));
-const PostContent = ({ data }) => {
+const PostContent = ({ docID, data }) => {
   const classes = useStyles();
   const history = useHistory();
   return (
@@ -62,7 +62,9 @@ const PostContent = ({ data }) => {
         &nbsp;
         <Button
           variant='contained'
-          onClick={() => history.push(`/product/single-post/${data.nanoID}`)}
+          onClick={() => {
+            history.push(`/product/single-post/${docID}`);
+          }}
           style={{ backgroundColor: 'red', color: 'white' }}
         >
           View

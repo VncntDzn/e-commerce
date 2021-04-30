@@ -34,11 +34,10 @@ const useStyles = makeStyles((theme) => ({
 const SinglePost = ({ match }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const { nanoID } = match.params;
-  const product = useSelector((state) =>
-    state.posts.posts.find((post) => post.data.nanoID === nanoID)
+  const { docID } = match.params;
+  const products = useSelector((state) =>
+    state.posts.products.filter((params) => docID === params.docID)
   );
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -54,6 +53,7 @@ const SinglePost = ({ match }) => {
         </Link>
         <Typography color='textPrimary'>Breadcrumb</Typography>
       </Breadcrumbs>
+
       <Grid container spacing={2} className={classes.root} justify='flex-end'>
         <Hidden smDown>
           <Box
@@ -68,7 +68,7 @@ const SinglePost = ({ match }) => {
             <TransformWrapper>
               <TransformComponent>
                 <Carousel emulateTouch={true}>
-                  {product.data.links.map((link, index) => (
+                  {products[0].data.links.map((link, index) => (
                     <img key={index} src={link} alt='product' />
                   ))}
                 </Carousel>
@@ -97,11 +97,12 @@ const SinglePost = ({ match }) => {
               <Tab label='FAQ' />
             </Tabs>
           </Card>
+
           <TabPanel value={value} index={0}>
-            <ProductInformation info={product.data} />
+            <ProductInformation info={products[0].data} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <Reviews docID={product.docID} />
+            <Reviews docID={products[0].docID} />
           </TabPanel>
           <TabPanel value={value} index={2}>
             <FAQ />

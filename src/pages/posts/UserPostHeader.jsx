@@ -17,7 +17,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { deletePost } from 'store/slices/postsSlice';
+import { DELETE_POST } from 'store/slices/postsSlice';
 import { FluidTypography, ProductPanel } from 'components';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import PropTypes from 'prop-types';
@@ -38,7 +38,7 @@ const UserPostHeader = ({ user, photoURL, displayName, docID }) => {
   const [editDialog, setEditDialog] = useState(false);
 
   const handleDeletePost = () => {
-    dispatch(deletePost({ docID }));
+    dispatch(DELETE_POST({ docID }));
   };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

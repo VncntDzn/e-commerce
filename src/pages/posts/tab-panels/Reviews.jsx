@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Reviews = ({ docID }) => {
+const Reviews = ({ userEmail, docID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -37,7 +37,7 @@ const Reviews = ({ docID }) => {
       <CardContent>
         <CommentPanel docID={docID} />
         <hr style={{ width: '100%' }} />
-        <Comments docID={docID} />
+        <Comments userEmail={userEmail} docID={docID} />
       </CardContent>
     </Card>
   );

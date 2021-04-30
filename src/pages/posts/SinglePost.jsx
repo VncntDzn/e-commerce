@@ -97,12 +97,17 @@ const SinglePost = ({ match }) => {
               <Tab label='FAQ' />
             </Tabs>
           </Card>
-
+          <button onClick={() => console.log(products[0].data.author)}>
+            ASD
+          </button>
           <TabPanel value={value} index={0}>
             <ProductInformation info={products[0].data} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <Reviews docID={products[0].docID} />
+            <Reviews
+              userEmail={products[0].data.author}
+              docID={products[0].docID}
+            />
           </TabPanel>
           <TabPanel value={value} index={2}>
             <FAQ />

@@ -16,7 +16,7 @@ import {
   Avatar,
   Grid,
 } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_POST } from 'store/slices/postsSlice';
 import { FluidTypography, ProductPanel } from 'components';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -36,7 +36,7 @@ const UserPostHeader = ({ user, photoURL, displayName, docID }) => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const [editDialog, setEditDialog] = useState(false);
-
+  const currentUser = useSelector((state) => state.auth.user);
   const handleDeletePost = () => {
     dispatch(DELETE_POST({ docID }));
   };
@@ -76,8 +76,20 @@ const UserPostHeader = ({ user, photoURL, displayName, docID }) => {
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        <MenuItem onClick={() => setEditDialog(true)}>Edit</MenuItem>
-        <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
+        {currentUser.email === user.author || user.email ? (
+          <div>
+            <MenuItem onClick={() => setEditDialog(true)}>Edit</MenuItem>
+            <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
+          </div>
+        ) : (
+          <MenuItem
+            onClick={() => {
+              alert('NOT YET IMPLEMENTED');
+            }}
+          >
+            Report
+          </MenuItem>
+        )}
       </Menu>
       <ProductPanel
         closeEdit={() => setEditDialog(false)}

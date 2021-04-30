@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 const CommentPanel = ({ docID, commentID, action = 'add' }) => {
   const dispatch = useDispatch();
   const [comment, setComment] = useState(null);
-  const author = useSelector((state) => state.auth.displayName);
   const user = useSelector((state) => state.auth.user);
 
   const handleCommentReply = () => {
@@ -22,9 +21,10 @@ const CommentPanel = ({ docID, commentID, action = 'add' }) => {
     } else {
       dispatch(
         addComment({
-          author,
           comment,
           docID,
+          email: user.email,
+          displayName: user.displayName,
           commentorPhoto: user.photoURL,
         })
       );

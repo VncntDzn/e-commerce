@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 import firebase from 'firebase/firebaseConfig';
 
-const addComment = createAsyncThunk('addComment', async ({ commentorPhoto, docID, author, comment }) => {
+const addComment = createAsyncThunk('addComment', async ({ email, commentorPhoto, docID, displayName, comment }) => {
     try {
 
         await firestore
@@ -10,7 +10,8 @@ const addComment = createAsyncThunk('addComment', async ({ commentorPhoto, docID
             .doc(docID)
             .collection('comments')
             .add({
-                author,
+                displayName,
+                email,
                 comment,
                 commentorPhoto,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()

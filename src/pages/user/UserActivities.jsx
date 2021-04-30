@@ -33,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
 const UserActivities = (props) => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
-  const userPosts = useSelector((state) => state.posts.userPosts);
+  const products = useSelector((state) =>
+    state.posts.products.filter(({ data }) => user.email === data.author)
+  );
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -64,7 +66,7 @@ const UserActivities = (props) => {
       >
         <Tab
           icon={<PostAddRoundedIcon />}
-          label={`${userPosts?.length} post/s`}
+          label={`${products?.length} post/s`}
         />
         <Tab icon={<PeopleAltRoundedIcon />} label='142 followers' />
         <Tab icon={<SupervisorAccountRoundedIcon />} label='552 following' />

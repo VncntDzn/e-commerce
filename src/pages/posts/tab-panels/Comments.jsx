@@ -43,16 +43,16 @@ const Comments = ({ docID }) => {
   const retrievedComments = useSelector((state) => state.comment.comments);
   const [readMore, setReadMore] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
-
-  const [commentid, setCommentID] = useState(null);
+  const [data, setData] = useState({ id: null, email: null });
   const [editDialog, setEditDialog] = useState(false);
 
+  const currentUser = useSelector((state) => state.auth.user);
   const handleDeleteComment = () => {
-    dispatch(deleteComment({ commentID: commentid, docID }));
+    dispatch(deleteComment({ commentID: data, docID }));
   };
-  const handleClick = (event, id) => {
+  const handleClick = (event, id, { email }) => {
     setAnchorEl(event.currentTarget);
-    setCommentID(id);
+    setData({ id: id, email: email });
   };
   return (
     <>
@@ -95,10 +95,14 @@ const Comments = ({ docID }) => {
                         minSize='0.9rem'
                         maxSize='0.9rem'
                         size='0.5rem'
-                        text={commentData.author}
+                        text={commentData.displayName}
                       />
                       <IconButton
-                        onClick={(event) => handleClick(event, commentID)}
+                        onClick={(event) =>
+                          handleClick(event, commentID, {
+                            email: commentData.email,
+                          })
+                        }
                         style={{ padding: 0, marginRight: '-1rem' }}
                       >
                         <MoreVertIcon />
@@ -117,12 +121,27 @@ const Comments = ({ docID }) => {
             open={Boolean(anchorEl)}
             onClose={() => setAnchorEl(null)}
           >
-            <MenuItem onClick={() => setEditDialog(true)}>Edit</MenuItem>
-            <MenuItem onClick={() => handleDeleteComment()}>Delete</MenuItem>
+            {currentUser.email === data.email ? (
+              <div>
+                <MenuItem onClick={() => setEditDialog(true)}>Edit</MenuItem>
+                <MenuItem onClick={() => handleDeleteComment()}>
+                  Delete
+                </MenuItem>
+              </div>
+            ) : (
+              <MenuItem
+                onClick={() => {
+                  alert('NOT YET IMPLEMENTED');
+                }}
+              >
+                Report
+              </MenuItem>
+            )}
           </Menu>
+
           <Dialog onClose={() => setEditDialog(!editDialog)} open={editDialog}>
             <DialogContent>
-              <CommentPanel action='edit' docID={docID} commentID={commentid} />
+              <CommentPanel action='edit' docID={docID} commentID={data} />
             </DialogContent>
           </Dialog>
           <Button onClick={() => setReadMore(!readMore)} color='secondary'>

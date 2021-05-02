@@ -5,7 +5,7 @@
 import { useEffect } from 'react';
 import { makeStyles, Card, CardContent } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { retrieveComments } from 'store/slices/commentSlice';
+import { RETRIEVE_COMMENTS } from 'store/slices/commentSlice';
 import Comments from './Comments';
 import CommentPanel from './CommentPanel';
 import PropTypes from 'prop-types';
@@ -30,7 +30,7 @@ const Reviews = ({ userEmail, docID }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(retrieveComments({ docID }));
+    dispatch(RETRIEVE_COMMENTS({ docID }));
   }, [dispatch, docID]);
   return (
     <Card className={classes.container}>

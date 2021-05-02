@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, CardActions, TextField } from '@material-ui/core';
-import { addComment, updateComment } from 'store/slices/commentSlice';
+import { ADD_COMMENT, EDIT_COMMENT } from 'store/slices/commentSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const CommentPanel = ({ docID, commentID, action = 'add' }) => {
@@ -12,7 +12,7 @@ const CommentPanel = ({ docID, commentID, action = 'add' }) => {
   const handleCommentReply = () => {
     if (action === 'edit') {
       dispatch(
-        updateComment({
+        EDIT_COMMENT({
           comment,
           docID,
           commentID,
@@ -20,7 +20,7 @@ const CommentPanel = ({ docID, commentID, action = 'add' }) => {
       );
     } else {
       dispatch(
-        addComment({
+        ADD_COMMENT({
           comment,
           docID,
           email: user.email,

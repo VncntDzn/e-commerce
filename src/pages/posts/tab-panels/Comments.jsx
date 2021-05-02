@@ -14,7 +14,7 @@ import {
   MenuItem,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteComment } from 'store/slices/commentSlice';
+import { DELETE_COMMENT } from 'store/slices/commentSlice';
 import FluidTypography from 'components/FluidTypography';
 import CommentPanel from './CommentPanel';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -48,7 +48,7 @@ const Comments = ({ docID }) => {
 
   const currentUser = useSelector((state) => state.auth.user);
   const handleDeleteComment = () => {
-    dispatch(deleteComment({ commentID: data, docID }));
+    dispatch(DELETE_COMMENT({ commentID: data, docID }));
   };
   const handleClick = (event, id, { email }) => {
     setAnchorEl(event.currentTarget);

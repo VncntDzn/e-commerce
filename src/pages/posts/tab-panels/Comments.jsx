@@ -48,7 +48,7 @@ const Comments = ({ docID }) => {
 
   const currentUser = useSelector((state) => state.auth.user);
   const handleDeleteComment = () => {
-    dispatch(DELETE_COMMENT({ commentID: data, docID }));
+    dispatch(DELETE_COMMENT({ commentID: data.id, docID }));
   };
   const handleClick = (event, id, { email }) => {
     setAnchorEl(event.currentTarget);
@@ -70,6 +70,7 @@ const Comments = ({ docID }) => {
                 my={1}
                 width={'fit-content'}
                 height={'fit-content'}
+                key={commentID}
               >
                 <Box display='flex' alignItems='flex-start'>
                   <Avatar
@@ -141,7 +142,7 @@ const Comments = ({ docID }) => {
 
           <Dialog onClose={() => setEditDialog(!editDialog)} open={editDialog}>
             <DialogContent>
-              <CommentPanel action='edit' docID={docID} commentID={data} />
+              <CommentPanel action='edit' docID={docID} commentID={data.id} />
             </DialogContent>
           </Dialog>
           <Button onClick={() => setReadMore(!readMore)} color='secondary'>

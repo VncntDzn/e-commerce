@@ -5,7 +5,7 @@ import { Field, FieldIcon, Spinner, CustomDialog } from 'components';
 import { MainLayout } from 'layouts';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { registerUser } from 'store/slices/authSlice';
+import { REGISTER_USER } from 'store/slices/authSlice';
 import SignupSuccessAnimated from 'lottie/SignupSuccessAnimated';
 import FailedAnimation from 'lottie/FailedAnimation';
 import customTheme from 'theme/customTheme';
@@ -50,7 +50,7 @@ const Signup = (props) => {
   const handleSubmission = (values) => {
     const { email, password, displayName } = values;
     let photoURL = '../../user/assets/keanu.jpg';
-    dispatch(registerUser({ email, password, displayName, photoURL }));
+    dispatch(REGISTER_USER({ email, password, displayName, photoURL }));
   };
 
   return (

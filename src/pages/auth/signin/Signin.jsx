@@ -5,7 +5,7 @@ import { Field, FieldIcon, Spinner, CustomDialog } from 'components';
 import { MainLayout } from 'layouts';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser } from 'store/slices/authSlice';
+import { LOGIN_USER } from 'store/slices/authSlice';
 import customTheme from 'theme/customTheme';
 import SignupSuccessAnimated from 'lottie/SignupSuccessAnimated';
 import FailedAnimation from 'lottie/FailedAnimation';
@@ -49,7 +49,7 @@ const Signin = () => {
 
   const handleSubmission = (values) => {
     const { email, password } = values;
-    dispatch(loginUser({ email, password }));
+    dispatch(LOGIN_USER({ email, password }));
   };
 
   return (

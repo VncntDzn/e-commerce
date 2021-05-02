@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import { BrowserRouter as Router, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser } from 'store/slices/authSlice';
+import { LOGOUT_USER } from 'store/slices/authSlice';
 import customTheme from 'theme/customTheme';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -50,9 +50,8 @@ const Navbar = (props) => {
   };
 
   const logout = () => {
-    dispatch(logoutUser());
+    dispatch(LOGOUT_USER());
     history.push('/');
-    console.log(uid);
   };
   return (
     <Router>

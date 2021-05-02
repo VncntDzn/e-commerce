@@ -4,7 +4,7 @@ import { Formik, Form } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { forgotPasswordSchema, useDialog } from 'helpers';
 import { Field, Spinner, CustomDialog } from 'components';
-import { resetPassword } from 'store/slices/authSlice';
+import { RESET_PASSWORD } from 'store/slices/authSlice';
 import FailedAnimation from 'lottie/FailedAnimation';
 import ForgotPasswordAnimation from 'lottie/ForgotPasswordAnimation';
 import EmailSentAnimation from 'lottie/EmailSentAnimation';
@@ -43,7 +43,7 @@ const defaultOptions = {
 const ForgotPassword = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.auth.resetPassword);
+  const status = useSelector((state) => state.auth.resetPasswordStatus);
   const error = useSelector((state) => state.auth.error);
 
   const { visibility, data, closeModal } = useDialog({
@@ -55,7 +55,7 @@ const ForgotPassword = (props) => {
   });
 
   const handleSubmission = ({ email }) => {
-    dispatch(resetPassword({ email }));
+    dispatch(RESET_PASSWORD({ email }));
   };
 
   return (

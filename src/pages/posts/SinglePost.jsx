@@ -97,9 +97,6 @@ const SinglePost = ({ match }) => {
               <Tab label='FAQ' />
             </Tabs>
           </Card>
-          <button onClick={() => console.log(products[0].data.author)}>
-            ASD
-          </button>
           <TabPanel value={value} index={0}>
             <ProductInformation info={products[0].data} />
           </TabPanel>

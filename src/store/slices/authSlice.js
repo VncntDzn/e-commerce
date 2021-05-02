@@ -1,57 +1,15 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import firebase from 'firebase/firebaseConfig';
-
-const registerUser = createAsyncThunk('registerUser', async ({ email, password, displayName, photoURL }) => {
-    try {
-        const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        response.user.updateProfile({ displayName, photoURL })
-
-        return response.user
-    } catch (e) {
-        return e.message
-    }
-});
-const loginUser = createAsyncThunk('loginUser', async ({ email, password }) => {
-    try {
-        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-        const response = await firebase.auth().signInWithEmailAndPassword(email, password);
-        return response.user
-    } catch (e) {
-
-        return e.message
-    }
-});
-
-const logoutUser = createAsyncThunk('logoutUser', async () => {
-    try {
-        firebase.auth().signOut();
-        return "success"
-    } catch (e) {
-        return e.message
-    }
-})
-const resetPassword = createAsyncThunk('resetPassword', async ({ email }) => {
-    try {
-        await firebase.auth().sendPasswordResetEmail(email);
-        return "Success!"
-    } catch (e) {
-        return e
-    }
-});
-
-
+import { createSlice } from '@reduxjs/toolkit'
+import { LOGIN_USER, REGISTER_USER, LOGOUT_USER, RESET_PASSWORD } from './auth'
 const initialState = {
-    posts: [],
     status: 'idle',
     loading: false,
     error: null,
-    observer: null,
     user: [],
     forgotPassword: null,
     uid: null,
     loginStatus: '',
     registerStatus: '',
-    resetPassword: '',
+    resetPasswordStatus: '',
     displayName: ''
 };
 const authSlice = createSlice({
@@ -61,7 +19,6 @@ const authSlice = createSlice({
         getCurrentUser: (state, action) => {
             state.uid = action.payload.uid;
             state.displayName = action.payload.displayName
-            console.log(state.uid)
         },
         resetState: (state, action) => {
             state.loginStatus = null;
@@ -71,10 +28,10 @@ const authSlice = createSlice({
     },
     extraReducers: {
         // REGISTER
-        [registerUser.pending]: (state, action) => {
+        [REGISTER_USER.pending]: (state, action) => {
             state.registerStatus = 'pending'
         },
-        [registerUser.fulfilled]: (state, action) => {
+        [REGISTER_USER.fulfilled]: (state, action) => {
             if (action.payload instanceof Object) {
                 state.error = null;
                 state.user = action.payload;
@@ -85,15 +42,14 @@ const authSlice = createSlice({
                 state.registerStatus = 'failed';
             }
         },
-        [registerUser.rejected]: (state, action) => {
+        [REGISTER_USER.rejected]: (state, action) => {
             state.registerStatus = 'failed';
-            console.log("REJECTED")
         },
         // LOGIN
-        [loginUser.pending]: (state, action) => {
+        [LOGIN_USER.pending]: (state, action) => {
             state.loginStatus = 'pending'
         },
-        [loginUser.fulfilled]: (state, action) => {
+        [LOGIN_USER.fulfilled]: (state, action) => {
             if (action.payload instanceof Object) {
                 state.error = null;
                 state.loginStatus = 'success';
@@ -103,15 +59,15 @@ const authSlice = createSlice({
                 state.error = action.payload;
             }
         },
-        [loginUser.rejected]: (state, action) => {
+        [LOGIN_USER.rejected]: (state, action) => {
             state.loginStatus = 'failed'
         },
         // LOG OUT
-        [logoutUser.pending]: (state, action) => {
+        [LOGOUT_USER.pending]: (state, action) => {
             state.status = 'pending';
 
         },
-        [logoutUser.fulfilled]: (state, action) => {
+        [LOGOUT_USER.fulfilled]: (state, action) => {
             if (action.payload === 'success') {
                 state.user = null;
                 state.uid = null
@@ -120,24 +76,24 @@ const authSlice = createSlice({
             }
         },
 
-        [logoutUser.rejected]: (state, action) => {
+        [LOGOUT_USER.rejected]: (state, action) => {
             state.status = 'failed'
         },
         // FORGOT PASSWORD
-        [resetPassword.pending]: (state, action) => {
-            state.resetPassword = 'pending'
+        [RESET_PASSWORD.pending]: (state, action) => {
+            state.resetPasswordStatus = 'pending'
         },
-        [resetPassword.fulfilled]: (state, action) => {
+        [RESET_PASSWORD.fulfilled]: (state, action) => {
             if (action.payload instanceof Object) {
                 state.error = null;
-                state.resetPassword = 'success';
+                state.resetPasswordStatus = 'success';
                 state.forgotPassword = action.payload;
             } else {
                 state.error = action.payload;
             }
         },
-        [resetPassword.rejected]: (state, action) => {
-            state.resetPassword = 'failed'
+        [RESET_PASSWORD.rejected]: (state, action) => {
+            state.resetPasswordStatus = 'failed'
 
         },
     }
@@ -148,4 +104,4 @@ const { actions, reducer } = authSlice;
 export const { getCurrentUser, resetState } = actions;
 export default reducer;
 //export default authSlice;
-export { registerUser, loginUser, logoutUser, resetPassword };
+export { REGISTER_USER, LOGIN_USER, LOGOUT_USER, RESET_PASSWORD };

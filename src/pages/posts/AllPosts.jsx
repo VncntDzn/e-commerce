@@ -6,6 +6,7 @@ import { CustomPagination } from 'components';
 import PostContent from './PostContent';
 import customTheme from 'theme/customTheme';
 import UserPostHeader from './UserPostHeader';
+import { useFetchPosts } from 'helpers';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -64,6 +65,7 @@ const AllPosts = (props) => {
   const [currentPage, setCurrentPage] = useState(0);
   const status = useSelector((state) => state.posts.postStatus);
   const products = useSelector((state) => state.posts.products);
+  const { allPosts } = useFetchPosts();
   // get the current page
   const onPageChange = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
@@ -82,8 +84,8 @@ const AllPosts = (props) => {
     <MainLayout>
       <Box>
         <Box className={classes.container}>
-          {products?.length ? (
-            products
+          {allPosts?.length ? (
+            allPosts
               .slice(offset, offset + PER_PAGE)
               .map(({ docID, data }, index) => (
                 <Box p={1} key={index}>

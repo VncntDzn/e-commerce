@@ -7,6 +7,7 @@ import { Card, CardContent, Box, makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { RETRIEVE_POSTS } from 'store/slices/postsSlice';
 import { CustomPagination } from 'components';
+import { useFetchPosts } from 'helpers';
 import PropTypes from 'prop-types';
 import UserPostHeader from './UserPostHeader';
 import PostContent from './PostContent';
@@ -68,9 +69,11 @@ const UserPosts = ({ user }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(0);
-  const products = useSelector((state) =>
-    state.posts.products.filter(({ data }) => user.email === data.author)
+  const { allPosts } = useFetchPosts();
+  const products = Object.values(allPosts).filter(
+    ({ data }) => user.email === data.author
   );
+
   const postStatus = useSelector((state) => state.posts.postStatus);
   const displayName = useSelector((state) => state.auth.displayName);
 
@@ -81,6 +84,7 @@ const UserPosts = ({ user }) => {
   const PER_PAGE = 9;
   const offset = currentPage * PER_PAGE;
   let pageCount = 10;
+
   useEffect(() => {
     dispatch(RETRIEVE_POSTS());
   }, [email, dispatch]);

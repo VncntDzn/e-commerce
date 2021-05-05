@@ -20,3 +20,29 @@ const RETRIEVE_COMMENTS = createAsyncThunk('retrieveComments', async ({ docID })
 })
 
 export default RETRIEVE_COMMENTS
+
+/*
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { firestore } from 'firebase/firebaseConfig';
+
+const RETRIEVE_COMMENTS = createAsyncThunk('retrieveComments', ({ docID }) => {
+    return new Promise((resolve, reject) => {
+        firestore
+            .collection('products')
+            .doc(docID)
+            .collection('comments')
+            .orderBy("timestamp")
+            .onSnapshot(snapshot => {
+                let array = []
+                if (snapshot.size) {
+                    snapshot.forEach((doc) => array.push({commentData: }))
+                    resolve(array)
+                } else {
+                    reject('may error')
+                }
+            })
+    })
+})
+
+export default RETRIEVE_COMMENTS
+*/

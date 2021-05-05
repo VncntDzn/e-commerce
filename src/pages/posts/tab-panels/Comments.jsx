@@ -1,7 +1,7 @@
 /**
  * Comment Component - it displays the comments of the post.
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   makeStyles,
   Box,
@@ -18,6 +18,7 @@ import { DELETE_COMMENT } from 'store/slices/commentSlice';
 import FluidTypography from 'components/FluidTypography';
 import CommentPanel from './CommentPanel';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { firestore } from 'firebase/firebaseConfig';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -40,13 +41,13 @@ const useStyles = makeStyles((theme) => ({
 const Comments = ({ docID }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const retrievedComments = useSelector((state) => state.comment.comments);
   const [readMore, setReadMore] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [data, setData] = useState({ id: null, email: null });
   const [editDialog, setEditDialog] = useState(false);
-
+  const [comments, setComments] = useState(null);
   const currentUser = useSelector((state) => state.auth.user);
+
   const handleDeleteComment = () => {
     dispatch(DELETE_COMMENT({ commentID: data.id, docID }));
   };
@@ -54,15 +55,32 @@ const Comments = ({ docID }) => {
     setAnchorEl(event.currentTarget);
     setData({ id: id, email: email });
   };
+
+  useEffect(() => {
+    return firestore
+      .collection('products')
+      .doc(docID)
+      .collection('comments')
+      .orderBy('timestamp')
+      .onSnapshot((snapshot) => {
+        let commentsArray = [];
+        snapshot.forEach((doc) =>
+          commentsArray.push({ commentID: doc.id, commentData: doc.data() })
+        );
+        setComments(commentsArray);
+      });
+  }, [docID]);
   return (
     <>
       {readMore ? (
-        <Button onClick={() => setReadMore(!readMore)} color='secondary'>
-          View {retrievedComments.length} comments
-        </Button>
+        <div>
+          <Button onClick={() => setReadMore(!readMore)} color='secondary'>
+            View {comments?.length} comments
+          </Button>
+        </div>
       ) : (
         <>
-          {retrievedComments.map(({ commentData, commentID }) => (
+          {comments.map(({ commentData, commentID }) => (
             <>
               <Box
                 display='flex'

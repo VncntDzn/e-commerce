@@ -26,6 +26,7 @@ const commentSlice = createSlice({
         [RETRIEVE_COMMENTS.fulfilled]: (state, action) => {
             state.commentStatus = 'success';
             state.comments = action.payload
+            console.log(action.payload)
 
         },
         [RETRIEVE_COMMENTS.rejected]: (state, action) => {

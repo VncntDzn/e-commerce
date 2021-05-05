@@ -79,7 +79,10 @@ const authSlice = createSlice({
             state.status = 'pending'
         },
         [RESET_PASSWORD.fulfilled]: (state, action) => {
-            if (action.payload === 'success') {
+            console.log(action.payload)
+            if (action.payload === 'Success!') {
+
+                console.log(action.payload)
                 state.status = 'success';
                 state.error = null;
                 state.forgotPassword = action.payload;

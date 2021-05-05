@@ -90,7 +90,7 @@ const ForgotPassword = (props) => {
                     color='secondary'
                     onClick={() => history.push('/auth/signin')}
                   >
-                    Forgot Password?
+                    Signin
                   </Button>
                 </Box>
               </Form>

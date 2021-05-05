@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = (props) => {
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.auth.registerStatus);
+  const status = useSelector((state) => state.auth.status);
   const error = useSelector((state) => state.auth.error);
   const classes = useStyles();
   const history = useHistory();

@@ -7,47 +7,36 @@ import {
 } from './posts/'
 
 const initialState = {
-    createPostStatus: 'idle',
-    deletePostStatus: 'idle',
-    editPostStatus: 'idle',
-    productsStatus: 'idle',
+    status: 'idle',
     error: null,
     products: [],
-
-
-
 };
 
 const postsSlice = createSlice({
     name: "posts",
     initialState,
-    reducers: {
-        resetState: (state, payload) => {
-            state.createPostStatus = null;
-        },
-    },
     extraReducers: {
         [CREATE_POST.pending]: (state, action) => {
-            state.createPostStatus = 'pending'
+            state.status = 'pending'
         },
         [CREATE_POST.fulfilled]: (state, action) => {
-            state.createPostStatus = 'success';
+            state.status = 'success';
             state.error = null
         },
         [CREATE_POST.failed]: (state, action) => {
-            state.createPostStatus = 'failed';
+            state.status = 'failed';
         },
         // RETRIEVE  POSTS
         [RETRIEVE_POSTS.pending]: (state, action) => {
-            state.productsStatus = 'pending'
+            state.status = 'pending'
         },
         [RETRIEVE_POSTS.fulfilled]: (state, action) => {
-            state.productsStatus = 'success';
+            state.status = 'success';
             state.products = action.payload;
 
         },
         [RETRIEVE_POSTS.failed]: (state, action) => {
-            state.productsStatus = 'failed';
+            state.status = 'failed';
 
         },
 
@@ -64,14 +53,14 @@ const postsSlice = createSlice({
         },
         // DELETE POST POSTS
         [DELETE_POST.pending]: (state, action) => {
-            state.deletePostStatus = 'pending'
+            state.status = 'pending'
         },
         [DELETE_POST.fulfilled]: (state, action) => {
-            state.deletePostStatus = 'success';
+            state.status = 'success';
 
         },
         [DELETE_POST.failed]: (state, action) => {
-            state.deletePostStatus = 'failed';
+            state.status = 'failed';
             console.log(action)
         },
 
@@ -79,7 +68,6 @@ const postsSlice = createSlice({
     }
 });
 
-const { actions, reducer } = postsSlice;
-export const { resetState, } = actions
+const { reducer } = postsSlice;
 export { CREATE_POST, RETRIEVE_POSTS, UPDATE_POST, DELETE_POST }
 export default reducer;

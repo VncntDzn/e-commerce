@@ -28,7 +28,7 @@ const PostContent = ({ docID, data }) => {
       />
 
       <FluidTypography
-        text={`> Ships from ${data.location}`}
+        text={`Ships from ${data.location}`}
         minSize='0.8rem'
         size='0.7rem'
         maxSize='0.8rem'

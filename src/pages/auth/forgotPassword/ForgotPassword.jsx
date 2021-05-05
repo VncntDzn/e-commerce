@@ -1,6 +1,7 @@
 import { MainLayout } from 'layouts';
 import { Card, CardContent, Button, Box, makeStyles } from '@material-ui/core';
 import { Formik, Form } from 'formik';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { forgotPasswordSchema, useDialog } from 'helpers';
 import { Field, Spinner, CustomDialog } from 'components';
@@ -41,9 +42,10 @@ const defaultOptions = {
   },
 };
 const ForgotPassword = (props) => {
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.auth.resetPasswordStatus);
+  const status = useSelector((state) => state.auth.status);
   const error = useSelector((state) => state.auth.error);
 
   const { visibility, data, closeModal } = useDialog({
@@ -83,6 +85,12 @@ const ForgotPassword = (props) => {
                     type='submit'
                   >
                     Submit
+                  </Button>
+                  <Button
+                    color='secondary'
+                    onClick={() => history.push('/auth/signin')}
+                  >
+                    Forgot Password?
                   </Button>
                 </Box>
               </Form>

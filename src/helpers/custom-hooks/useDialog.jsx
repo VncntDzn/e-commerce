@@ -29,6 +29,7 @@ const useDialog = (...props) => {
   const closeModal = () => {
     setData({ show: false });
   };
+
   useEffect(() => {
     if (status === 'pending') {
       setVisibility(true);
@@ -47,7 +48,7 @@ const useDialog = (...props) => {
       setData({ show: true, text: error, lottie: animationFailed });
     }
     // reset values of the state
-    dispatch(resetState());
+    dispatch(resetState(status));
   }, [
     status,
     error,

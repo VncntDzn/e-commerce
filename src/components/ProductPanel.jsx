@@ -25,7 +25,7 @@ import { Formik, Form } from 'formik';
 import { Field, Spinner, CustomDialog } from 'components';
 import { productSchema } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { CREATE_POST, UPDATE_POST, resetState } from 'store/slices/postsSlice';
+import { CREATE_POST, UPDATE_POST } from 'store/slices/postsSlice';
 import { useDialog, countriesData } from 'helpers';
 import { firebaseStorage } from 'firebase/firebaseConfig';
 import ReactQuill from 'react-quill';
@@ -80,7 +80,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   const [location, setLocation] = useState(null);
   const [addCategory, setAddCategoryDialog] = useState(null);
 
-  const status = useSelector((state) => state.posts.createPostStatus);
+  const status = useSelector((state) => state.posts.status);
   const error = useSelector((state) => state.posts.error);
   const retrievedCategories = useSelector((state) => state.utils.categories);
 
@@ -128,7 +128,6 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   };
   const handleSubmit = async ({ productName, price, stock }) => {
     try {
-      dispatch(resetState());
       if (links) {
         if (action === 'add') {
           dispatch(

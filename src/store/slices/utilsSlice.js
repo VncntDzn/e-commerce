@@ -32,7 +32,7 @@ const retrieveCategories = createAsyncThunk('retrieveCategories', async () => {
 const initialState = {
     categories: [],
     error: null,
-    categoryStatus: 'idle'
+    status: 'idle'
 
 }
 const utilsSlice = createSlice({
@@ -40,24 +40,24 @@ const utilsSlice = createSlice({
     initialState,
     extraReducers: {
         [addCategories.pending]: (state, action) => {
-            state.categoryStatus = 'pending'
+            state.status = 'pending'
         },
         [addCategories.fulfilled]: (state, action) => {
-            state.categoryStatus = 'success';
+            state.status = 'success';
         },
         [addCategories.rejected]: (state, action) => {
-            state.categoryStatus = 'failed';
+            state.status = 'failed';
         },
         [retrieveCategories.pending]: (state, action) => {
-            state.categoryStatus = 'pending'
+            state.status = 'pending'
         },
         [retrieveCategories.fulfilled]: (state, action) => {
-            state.categoryStatus = 'success';
+            state.status = 'success';
             state.categories = action.payload
             console.log(action.payload)
         },
         [retrieveCategories.rejected]: (state, action) => {
-            state.categoryStatus = 'failed';
+            state.status = 'failed';
         },
     }
 });

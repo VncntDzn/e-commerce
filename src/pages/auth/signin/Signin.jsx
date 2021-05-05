@@ -35,7 +35,7 @@ const Signin = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.auth.loginStatus);
+  const status = useSelector((state) => state.auth.status);
   const error = useSelector((state) => state.auth.error);
 
   const { visibility, data, closeModal } = useDialog({

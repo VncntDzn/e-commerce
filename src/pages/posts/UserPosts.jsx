@@ -74,7 +74,7 @@ const UserPosts = ({ user }) => {
     ({ data }) => user.email === data.author
   );
 
-  const postStatus = useSelector((state) => state.posts.postStatus);
+  const postStatus = useSelector((state) => state.posts.status);
   const displayName = useSelector((state) => state.auth.displayName);
 
   // get the current page

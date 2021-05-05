@@ -63,9 +63,9 @@ const useStyles = makeStyles((theme) => ({
 const AllPosts = (props) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState(0);
-  const status = useSelector((state) => state.posts.postStatus);
-  const products = useSelector((state) => state.posts.products);
+  const status = useSelector((state) => state.posts.status);
   const { allPosts } = useFetchPosts();
+
   // get the current page
   const onPageChange = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
@@ -75,7 +75,7 @@ const AllPosts = (props) => {
   let pageCount = 10;
 
   if (status === 'success') {
-    pageCount = Math.ceil(products.length / PER_PAGE);
+    pageCount = Math.ceil(allPosts.length / PER_PAGE);
   } else {
     pageCount = 0;
   }

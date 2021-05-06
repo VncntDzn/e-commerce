@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 import firebase from 'firebase/firebaseConfig';
 
-const UPDATE_POST = createAsyncThunk('updatePost', async ({ categories, location, documentID, productName, stock, price, description, links, date }) => {
+const UPDATE_POST = createAsyncThunk('updatePost', async ({ brand, categories, location, documentID, productName, stock, price, description, links, date }) => {
     try {
         await firestore.collection('products')
             .doc(documentID).update({
@@ -13,6 +13,7 @@ const UPDATE_POST = createAsyncThunk('updatePost', async ({ categories, location
                 links,
                 location,
                 categories,
+                brand,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
         return "success"

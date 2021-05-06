@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 const productSchema = Yup.object().shape({
     productName: Yup.string()
         .required('Product Name is required'),
+    brand: Yup.string()
+        .required('Product Name is required'),
     price: Yup.number()
         .positive()
         .required('Price is required'),

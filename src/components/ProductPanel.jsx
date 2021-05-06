@@ -23,10 +23,14 @@ import {
 } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import { Field, Spinner, CustomDialog } from 'components';
-import { productSchema } from 'helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { CREATE_POST, UPDATE_POST } from 'store/slices/postsSlice';
-import { useDialog, countriesData } from 'helpers';
+import {
+  useDialog,
+  productSchema,
+  countriesData,
+  categoriesData,
+} from 'helpers';
 import { firebaseStorage } from 'firebase/firebaseConfig';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -36,7 +40,6 @@ import ImageUploader from 'react-images-upload';
 import SuccessAnimation from 'lottie/SuccessAnimation';
 import FailedAnimation from 'lottie/FailedAnimation';
 import PropTypes from 'prop-types';
-import AddCategoryDialog from 'pages/user/AddCategoryDialog';
 
 const animatedComponents = makeAnimated();
 
@@ -74,15 +77,13 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [quillData, setQuillData] = useState('');
-  const [links, setLinks] = useState(null);
   const [disabled, setDisable] = useState(true);
+  const [links, setLinks] = useState(null);
   const [categories, setCategories] = useState([]);
   const [location, setLocation] = useState(null);
-  const [addCategory, setAddCategoryDialog] = useState(null);
 
   const status = useSelector((state) => state.posts.status);
   const error = useSelector((state) => state.posts.error);
-  const retrievedCategories = useSelector((state) => state.utils.categories);
 
   let productTitle;
   if (action === 'add') {
@@ -126,7 +127,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
 
     setLinks(data);
   };
-  const handleSubmit = async ({ productName, price, stock }) => {
+  const handleSubmit = async ({ productName, price, stock, brand }) => {
     try {
       if (links) {
         if (action === 'add') {
@@ -138,6 +139,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               links,
               location,
               categories,
+              brand,
               description: quillData,
               author: user.email,
               authorDisplayName: user.displayName,
@@ -154,6 +156,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               links,
               location,
               categories,
+              brand,
               description: quillData,
             })
           );
@@ -189,7 +192,10 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
         fullWidth
       >
         <Box display='flex' justifyContent='center'>
-          <DialogTitle>{productTitle}</DialogTitle>
+          <DialogTitle>
+            {categories}
+            {productTitle}
+          </DialogTitle>
         </Box>
         <Spinner visible={visibility} />
         <CustomDialog
@@ -204,6 +210,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               productName: '',
               price: '',
               stock: '',
+              brand: '',
             }}
             validationSchema={productSchema}
             onSubmit={(values) => handleSubmit(values)}
@@ -251,18 +258,14 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
 
               <Box display='flex'>
                 <Select
-                  placeholder='Select at least 3 Categories'
+                  placeholder='Select Categories'
                   closeMenuOnSelect={false}
                   components={animatedComponents}
-                  isMulti
-                  options={retrievedCategories}
+                  options={categoriesData}
                   className={classes.selectContainer}
-                  onChange={(param) => {
-                    let categoriesArray = [];
-                    param.map(({ label }) => categoriesArray.push(label));
-                    setCategories(categoriesArray);
-                  }}
+                  onChange={({ label }) => setCategories(label)}
                 />
+
                 <Select
                   placeholder='Select Location'
                   closeMenuOnSelect={false}
@@ -272,13 +275,12 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
                   onChange={({ label }) => setLocation(label)}
                 />
               </Box>
-
-              <Button
+              <Field
+                label='Brand'
+                name='brand'
                 color='secondary'
-                onClick={() => setAddCategoryDialog(true)}
-              >
-                Category not on the list?
-              </Button>
+                variant='outlined'
+              />
               <DialogActions>
                 <Button variant='outlined' onClick={handleCreatePost}>
                   Cancel
@@ -296,10 +298,6 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
           </Formik>
         </DialogContent>
       </Dialog>
-      <AddCategoryDialog
-        open={addCategory}
-        onClose={() => setAddCategoryDialog(false)}
-      />
     </Grid>
   );
 };

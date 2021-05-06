@@ -5,6 +5,7 @@ import productSchema from './schema/productSchema';
 import useDialog from './custom-hooks/useDialog';
 import useFetchPosts from './custom-hooks/useFetchPosts'
 import countriesData from './countriesData'
+import categoriesData from './categoriesData'
 
 export {
     signinSchema,
@@ -13,5 +14,6 @@ export {
     useDialog,
     productSchema,
     useFetchPosts,
-    countriesData
+    countriesData,
+    categoriesData
 }

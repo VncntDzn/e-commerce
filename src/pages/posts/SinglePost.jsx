@@ -45,15 +45,11 @@ const SinglePost = ({ match }) => {
   return (
     <MainLayout>
       <Breadcrumbs aria-label='breadcrumb'>
-        <Link color='inherit' href='/'>
-          Material-UI
-        </Link>
-        <Link color='inherit' href='/getting-started/installation/'>
-          Core
-        </Link>
-        <Typography color='textPrimary'>Breadcrumb</Typography>
+        <Link color='inherit'>Categories</Link>
+        <Typography color='textPrimary'>
+          {products[0].data.categories}
+        </Typography>
       </Breadcrumbs>
-
       <Grid container spacing={2} className={classes.root} justify='flex-end'>
         <Hidden smDown>
           <Box

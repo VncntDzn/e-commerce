@@ -70,9 +70,7 @@ const UserPosts = ({ user }) => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(0);
   const { allPosts } = useFetchPosts();
-  const products = Object.values(allPosts).filter(
-    ({ data }) => user.email === data.author
-  );
+  const products = allPosts.filter(({ data }) => user.email === data.author);
 
   const postStatus = useSelector((state) => state.posts.status);
   const displayName = useSelector((state) => state.auth.displayName);

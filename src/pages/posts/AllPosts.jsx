@@ -1,12 +1,19 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { makeStyles, Card, CardContent, Box } from '@material-ui/core';
+import {
+  makeStyles,
+  Card,
+  CardContent,
+  Box,
+  Checkbox,
+} from '@material-ui/core';
 import { MainLayout } from 'layouts';
-import { CustomPagination } from 'components';
+import { CustomPagination, FluidTypography } from 'components';
 import PostContent from './PostContent';
 import customTheme from 'theme/customTheme';
 import UserPostHeader from './UserPostHeader';
 import { useFetchPosts } from 'helpers';
+import ScrollArea from 'react-scrollbar';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -64,7 +71,6 @@ const AllPosts = (props) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState(0);
   const status = useSelector((state) => state.posts.status);
-  const { allPosts } = useFetchPosts();
 
   // get the current page
   const onPageChange = ({ selected: selectedPage }) => {
@@ -74,48 +80,79 @@ const AllPosts = (props) => {
   const offset = currentPage * PER_PAGE;
   let pageCount = 10;
 
+  const [checked, setChecked] = useState(false);
+  const [author, setAuthor] = useState(null);
+
+  const handleChange = (author, index) => {
+    setChecked(index);
+    setAuthor(author);
+  };
+  const { allPosts } = useFetchPosts(author);
   if (status === 'success') {
     pageCount = Math.ceil(allPosts.length / PER_PAGE);
   } else {
     pageCount = 0;
   }
-
+  let uniqueAuthors = [];
+  allPosts.map(({ data }) =>
+    uniqueAuthors.includes(data.author) ? null : uniqueAuthors.push(data.author)
+  );
   return (
     <MainLayout>
-      <Box>
-        <Box className={classes.container}>
-          {allPosts?.length ? (
-            allPosts
-              .slice(offset, offset + PER_PAGE)
-              .map(({ docID, data }, index) => (
-                <Box p={1} key={index}>
-                  <Card raised className={classes.cardContainer}>
-                    <CardContent>
-                      <UserPostHeader
-                        user={data}
-                        docID={docID}
-                        displayName={data.authorDisplayName}
-                        photoURL={data.authorPhoto}
-                      />
-                      <PostContent docID={docID} data={data} />
-                    </CardContent>
-                  </Card>
-                </Box>
-              ))
-          ) : (
-            <div>
-              <h1>Nothing to see here yet.</h1>
-            </div>
-          )}
+      <Box display='flex'>
+        <Box style={{ border: '3px solid red', width: 'fit-content' }}>
+          <FluidTypography text='Sellers' />
+          {uniqueAuthors.map((author, i) => (
+            <Box
+              display='flex'
+              alignItems='center'
+              justifyContent='flex-start'
+              key={i}
+            >
+              <Checkbox
+                checked={checked === i}
+                onChange={(e) => handleChange(e, author, i)}
+                inputProps={{ 'aria-label': 'primary checkbox' }}
+              />
+              <FluidTypography text={author} />
+            </Box>
+          ))}
         </Box>
-        <Box display='flex' justifyContent='center'>
-          <CustomPagination
-            pageCount={pageCount}
-            onPageChange={onPageChange}
-            containerClassName={classes.pagination}
-            pageClassName={classes.pageStyle}
-            activeClassName={classes.paginationActive}
-          />
+        <Box>
+          <Box className={classes.container}>
+            {allPosts?.length ? (
+              allPosts
+                .slice(offset, offset + PER_PAGE)
+                .map(({ docID, data }, index) => (
+                  <Box p={1} key={index}>
+                    <Card raised className={classes.cardContainer}>
+                      <CardContent>
+                        <UserPostHeader
+                          user={data}
+                          docID={docID}
+                          displayName={data.authorDisplayName}
+                          photoURL={data.authorPhoto}
+                        />
+                        <PostContent docID={docID} data={data} />
+                      </CardContent>
+                    </Card>
+                  </Box>
+                ))
+            ) : (
+              <div>
+                <h1>Nothing to see here yet.</h1>
+              </div>
+            )}
+          </Box>
+          <Box display='flex' justifyContent='center'>
+            <CustomPagination
+              pageCount={pageCount}
+              onPageChange={onPageChange}
+              containerClassName={classes.pagination}
+              pageClassName={classes.pageStyle}
+              activeClassName={classes.paginationActive}
+            />
+          </Box>
         </Box>
       </Box>
     </MainLayout>

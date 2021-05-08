@@ -1,19 +1,12 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  makeStyles,
-  Card,
-  CardContent,
-  Box,
-  Checkbox,
-} from '@material-ui/core';
+import { makeStyles, Card, CardContent, Box } from '@material-ui/core';
 import { MainLayout } from 'layouts';
-import { CustomPagination, FluidTypography } from 'components';
+import { CustomPagination } from 'components';
 import PostContent from './PostContent';
 import customTheme from 'theme/customTheme';
 import UserPostHeader from './UserPostHeader';
-import { useFetchPosts } from 'helpers';
-import ScrollArea from 'react-scrollbar';
+import Sidebar from './Sidebar';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -39,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
       width: '15vw',
     },
   },
-
   pagination: {
     display: 'flex',
     justifyContent: 'space-around',
@@ -70,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 const AllPosts = (props) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState(0);
+  const [callbackData, setCallbackData] = useState(null);
   const status = useSelector((state) => state.posts.status);
 
   // get the current page
@@ -80,48 +73,20 @@ const AllPosts = (props) => {
   const offset = currentPage * PER_PAGE;
   let pageCount = 10;
 
-  const [checked, setChecked] = useState(false);
-  const [author, setAuthor] = useState(null);
-
-  const handleChange = (e, author, index) => {
-    setChecked(index);
-    setAuthor(author);
-  };
-  const { allPosts, authors } = useFetchPosts({ compareFrom: author });
   if (status === 'success') {
-    pageCount = Math.ceil(allPosts.length / PER_PAGE);
+    pageCount = Math.ceil(callbackData?.length / PER_PAGE);
   } else {
     pageCount = 0;
   }
-  let uniqueAuthors = [];
-  authors.map(({ data }) =>
-    uniqueAuthors.includes(data.author) ? null : uniqueAuthors.push(data.author)
-  );
+
   return (
     <MainLayout>
       <Box display='flex'>
-        <Box style={{ border: '3px solid red', width: 'fit-content' }}>
-          <FluidTypography text='Sellers' />
-          {uniqueAuthors.map((author, i) => (
-            <Box
-              display='flex'
-              alignItems='center'
-              justifyContent='flex-start'
-              key={i}
-            >
-              <Checkbox
-                checked={checked === i}
-                onChange={(e) => handleChange(e, author, i)}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-              <FluidTypography text={author} />
-            </Box>
-          ))}
-        </Box>
+        <Sidebar parentCallback={(allPosts) => setCallbackData(allPosts)} />
         <Box>
           <Box className={classes.container}>
-            {allPosts?.length ? (
-              allPosts
+            {callbackData?.length ? (
+              callbackData
                 .slice(offset, offset + PER_PAGE)
                 .map(({ docID, data }, index) => (
                   <Box p={1} key={index}>

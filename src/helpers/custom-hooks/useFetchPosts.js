@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { firestore } from 'firebase/firebaseConfig';
 
-const useFetchPosts = (param) => {
+const useFetchPosts = ({ compareTo = 'author', compareFrom }) => {
     const [allPosts, setAllPosts] = useState([]);
-
+    const [authors, setAuthors] = useState([]);
     useEffect(() => {
-        return param ? firestore
+        return compareFrom ? firestore
             .collection('products')
             .orderBy('timestamp', 'desc')
-            .where('author', '==', param)
+            .where(compareTo, '==', compareFrom)
             .onSnapshot((snapshot) => {
                 let postsArray = [];
                 snapshot.forEach((doc) =>
@@ -24,8 +24,9 @@ const useFetchPosts = (param) => {
                         postsArray.push({ docID: doc.id, data: doc.data() })
                     );
                     setAllPosts(postsArray);
+                    setAuthors(postsArray)
                 })
-    }, [param]);
-    return { allPosts }
+    }, [compareTo, compareFrom]);
+    return { allPosts, authors }
 }
 export default useFetchPosts

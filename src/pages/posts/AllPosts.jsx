@@ -83,18 +83,18 @@ const AllPosts = (props) => {
   const [checked, setChecked] = useState(false);
   const [author, setAuthor] = useState(null);
 
-  const handleChange = (author, index) => {
+  const handleChange = (e, author, index) => {
     setChecked(index);
     setAuthor(author);
   };
-  const { allPosts } = useFetchPosts(author);
+  const { allPosts, authors } = useFetchPosts({ compareFrom: author });
   if (status === 'success') {
     pageCount = Math.ceil(allPosts.length / PER_PAGE);
   } else {
     pageCount = 0;
   }
   let uniqueAuthors = [];
-  allPosts.map(({ data }) =>
+  authors.map(({ data }) =>
     uniqueAuthors.includes(data.author) ? null : uniqueAuthors.push(data.author)
   );
   return (

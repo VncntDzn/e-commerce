@@ -1,13 +1,36 @@
 import { useState } from 'react';
-import { makeStyles, Box, Checkbox } from '@material-ui/core';
+import {
+  makeStyles,
+  Box,
+  Checkbox,
+  Hidden,
+  Button,
+  Icon,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  useTheme,
+  useMediaQuery,
+} from '@material-ui/core';
 import { FluidTypography } from 'components';
 import { useFetchPosts } from 'helpers';
 import ScrollArea from 'react-scrollbar';
+import FilterListSharpIcon from '@material-ui/icons/FilterListSharp';
 
+const useStyles = makeStyles((theme) => ({
+  container: {
+    width: 'fit-content',
+  },
+}));
 const Sidebar = ({ parentCallback }) => {
+  const classes = useStyles();
   const [checked, setChecked] = useState(false);
   const [author, setAuthor] = useState(null);
+  const [open, setOpen] = useState(false);
   const { allPosts, authors } = useFetchPosts({ compareFrom: author });
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
   parentCallback(allPosts);
   const handleChange = (e, author, index) => {
     setChecked(index);
@@ -19,8 +42,8 @@ const Sidebar = ({ parentCallback }) => {
     uniqueAuthors.includes(data.author) ? null : uniqueAuthors.push(data.author)
   );
 
-  return (
-    <Box style={{ border: '3px solid red', width: 'fit-content' }}>
+  let content = (
+    <Box className={classes.container}>
       <FluidTypography text='Sellers' />
       {uniqueAuthors.map((author, i) => (
         <Box
@@ -37,6 +60,36 @@ const Sidebar = ({ parentCallback }) => {
           <FluidTypography text={author} />
         </Box>
       ))}
+    </Box>
+  );
+  return (
+    <Box className={classes.container}>
+      <Hidden mdUp>
+        <Button
+          variant='outlined'
+          color='secondary'
+          onClick={() => setOpen(!open)}
+          endIcon={
+            <Icon>
+              <FilterListSharpIcon />
+            </Icon>
+          }
+        >
+          Filter
+        </Button>
+      </Hidden>
+      <Dialog
+        onClose={() => setOpen(!open)}
+        aria-labelledby='simple-dialog-title'
+        open={open}
+      >
+        <DialogTitle>Filter Options</DialogTitle>
+        <DialogContent>{content}</DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(!open)}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Hidden mdDown>{content}</Hidden>
     </Box>
   );
 };

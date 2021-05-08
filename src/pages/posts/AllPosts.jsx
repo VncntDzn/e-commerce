@@ -81,7 +81,7 @@ const AllPosts = (props) => {
 
   return (
     <MainLayout>
-      <Box display='flex'>
+      <Box display='flex' flexDirection='column'>
         <Sidebar parentCallback={(allPosts) => setCallbackData(allPosts)} />
         <Box>
           <Box className={classes.container}>

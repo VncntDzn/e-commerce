@@ -10,8 +10,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  useTheme,
-  useMediaQuery,
 } from '@material-ui/core';
 import { FluidTypography } from 'components';
 import { useFetchPosts } from 'helpers';
@@ -19,6 +17,9 @@ import ScrollArea from 'react-scrollbar';
 import FilterListSharpIcon from '@material-ui/icons/FilterListSharp';
 
 const useStyles = makeStyles((theme) => ({
+  scrollArea: {
+    height: '18rem',
+  },
   container: {
     width: 'fit-content',
   },
@@ -29,8 +30,7 @@ const Sidebar = ({ parentCallback }) => {
   const [author, setAuthor] = useState(null);
   const [open, setOpen] = useState(false);
   const { allPosts, authors } = useFetchPosts({ compareFrom: author });
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('md'));
+
   parentCallback(allPosts);
   const handleChange = (e, author, index) => {
     setChecked(index);
@@ -43,28 +43,42 @@ const Sidebar = ({ parentCallback }) => {
   );
 
   let content = (
-    <Box className={classes.container}>
-      <FluidTypography text='Sellers' />
-      {uniqueAuthors.map((author, i) => (
-        <Box
-          display='flex'
-          alignItems='center'
-          justifyContent='flex-start'
-          key={i}
-        >
-          <Checkbox
-            checked={checked === i}
-            onChange={(e) => handleChange(e, author, i)}
-            inputProps={{ 'aria-label': 'primary checkbox' }}
-          />
-          <FluidTypography text={author} />
-        </Box>
-      ))}
-    </Box>
+    <ScrollArea
+      speed={1}
+      className={classes.scrollArea}
+      contentClassName='content'
+      horizontal={false}
+      smoothScrolling={true}
+    >
+      <FluidTypography
+        text='Sellers'
+        minSize='1.2rem'
+        size='1.2rem'
+        maxSize='1.2rem'
+        fontWeight={500}
+      />
+      <Box className={classes.container}>
+        {uniqueAuthors.map((author, i) => (
+          <Box
+            display='flex'
+            alignItems='center'
+            justifyContent='flex-start'
+            key={i}
+          >
+            <Checkbox
+              checked={checked === i}
+              onChange={(e) => handleChange(e, author, i)}
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+            <FluidTypography text={author} />
+          </Box>
+        ))}
+      </Box>
+    </ScrollArea>
   );
   return (
     <Box className={classes.container}>
-      <Hidden mdUp>
+      <Hidden lgUp>
         <Button
           variant='outlined'
           color='secondary'

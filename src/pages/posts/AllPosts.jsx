@@ -9,6 +9,13 @@ import UserPostHeader from './UserPostHeader';
 import Sidebar from './Sidebar';
 
 const useStyles = makeStyles((theme) => ({
+  rootContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row',
+    },
+  },
   container: {
     display: 'flex',
     flexDirection: 'row',
@@ -81,7 +88,7 @@ const AllPosts = (props) => {
 
   return (
     <MainLayout>
-      <Box display='flex' flexDirection='column'>
+      <Box className={classes.rootContainer}>
         <Sidebar parentCallback={(allPosts) => setCallbackData(allPosts)} />
         <Box>
           <Box className={classes.container}>

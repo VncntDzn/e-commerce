@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -11,37 +12,38 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import customTheme from 'theme/customTheme';
 
+const useStyles = makeStyles({
+  root: {
+    width: '100vw',
+    position: 'fixed',
+    bottom: 0,
+    backgroundColor: customTheme.palette.secondary.main,
+  },
+  '&:selected': {
+    color: 'blue',
+  },
+});
 const BottomNav = (props) => {
-  const useStyles = makeStyles({
-    root: {
-      width: '100vw',
-      position: 'fixed',
-      bottom: 0,
-      backgroundColor: customTheme.palette.secondary.main,
-    },
-    '&:selected': {
-      color: 'blue',
-    },
-  });
   const classes = useStyles();
-  const [value, setValue] = useState('/');
+  const history = useHistory();
 
-  const handleChange = (event, newValue) => {
-    /*   TODO: FIX THE BUG */
-
-    setValue(newValue);
-  };
+  const location = useLocation();
+  const [value, setValue] = useState(location.pathname);
 
   return (
     <Hidden only={['lg', 'xl']}>
       <BottomNavigation
         value={value}
-        onChange={(data, value) => handleChange}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+          history.push(newValue);
+        }}
+        showLabels
         className={classes.root}
       >
         <BottomNavigationAction
           label='Dashboard'
-          value='/'
+          value='/all-posts'
           icon={<DashboardOutlinedIcon />}
         />
         <BottomNavigationAction
@@ -51,12 +53,12 @@ const BottomNav = (props) => {
         />
         <BottomNavigationAction
           label='Favorite'
-          value='/favorite'
+          value='/payment'
           icon={<FavoriteBorderOutlinedIcon />}
         />
         <BottomNavigationAction
           label='Search'
-          value='/search'
+          value='/'
           icon={<SearchOutlinedIcon />}
         />
       </BottomNavigation>

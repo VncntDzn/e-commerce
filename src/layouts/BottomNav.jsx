@@ -40,16 +40,13 @@ const BottomNav = (props) => {
         showLabels
         className={classes.root}
       >
+        <BottomNavigationAction label='Feed' value='/' icon={<RssFeedIcon />} />
         <BottomNavigationAction
           label='Dashboard'
           value='/all-posts'
           icon={<DashboardOutlinedIcon />}
         />
-        <BottomNavigationAction
-          label='Feed'
-          value='/search'
-          icon={<RssFeedIcon />}
-        />
+
         <BottomNavigationAction
           label='Cart'
           value='/payment'

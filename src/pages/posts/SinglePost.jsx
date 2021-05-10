@@ -94,7 +94,10 @@ const SinglePost = ({ match }) => {
             </Tabs>
           </Card>
           <TabPanel value={value} index={0}>
-            <ProductInformation info={products[0].data} />
+            <ProductInformation
+              docID={products[0].docID}
+              info={products[0].data}
+            />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Reviews

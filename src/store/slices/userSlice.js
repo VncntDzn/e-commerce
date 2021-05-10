@@ -33,11 +33,9 @@ const userSlice = createSlice({
         },
         [updateProfile.fulfilled]: (state, actions) => {
             state.status = 'finished';
-            console.log(actions)
         },
         [updateProfile.failed]: (state, actions) => {
             state.status = 'failed';
-            console.log(actions)
         },
     }
 

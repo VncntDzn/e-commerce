@@ -11,15 +11,17 @@ import {
   Card,
   CardContent,
 } from '@material-ui/core';
-import { Carousel } from 'react-responsive-carousel';
 import { FluidTypography } from 'components';
+import { useSelector, useDispatch } from 'react-redux';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { Carousel } from 'react-responsive-carousel';
+import { ADD_TO_CHECKOUT } from 'store/slices/orderSlice';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 import ReactStars from 'react-rating-stars-component';
 import PropTypes from 'prop-types';
-import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -41,9 +43,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductInformation = ({ info }) => {
+const ProductInformation = ({ docID, info }) => {
   const classes = useStyles();
   const [readMore, setReadMore] = useState(false);
+  const dispatch = useDispatch();
+  const uid = useSelector((state) => state.auth.uid);
+  const currentUserDisplayName = useSelector((state) => state.auth.displayName);
   return (
     <Box className={classes.container}>
       <Card>
@@ -61,8 +66,6 @@ const ProductInformation = ({ info }) => {
               </TransformWrapper>
             </Box>
           </Hidden>
-
-          {/* ADD CATEGROEIS tags */}
 
           <Box fontStyle='italic'>
             <FluidTypography
@@ -151,15 +154,24 @@ const ProductInformation = ({ info }) => {
             />
           )}
 
-          <Box display='flex' justifyContent='space-between'>
+          <Box display='flex' justifyContent='flex-end'>
             <Button
               variant='contained'
               color='secondary'
               style={{ color: 'white' }}
+              onClick={() =>
+                dispatch(
+                  ADD_TO_CHECKOUT({
+                    docID,
+                    info,
+                    uid,
+                    buyer: currentUserDisplayName,
+                  })
+                )
+              }
             >
-              Buy Now
+              Add to Cart
             </Button>
-            <Button variant='outlined'>Add to Cart</Button>
           </Box>
         </CardContent>
       </Card>

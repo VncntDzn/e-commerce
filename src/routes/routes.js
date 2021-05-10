@@ -1,4 +1,4 @@
-import { AllPost, Home, PaymentMain, UserProfile, Signin, Signup, ForgotPassword, SinglePost, NotFound } from 'pages';
+import { AllPost, Home, PaymentMain, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, NotFound } from 'pages';
 
 const routes = [
     {
@@ -47,6 +47,12 @@ const routes = [
         name: 'Single Post',
         component: SinglePost,
         path: '/product/single-post/:docID',
+        auth: true
+    },
+    {
+        name: 'Orders',
+        component: Orders,
+        path: '/checkout',
         auth: true
     },
     {

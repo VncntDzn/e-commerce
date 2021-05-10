@@ -54,14 +54,6 @@ const PostContent = ({ docID, data }) => {
       <Box display='flex' justifyContent='flex-end'>
         <Button
           variant='contained'
-          color='secondary'
-          style={{ color: 'white' }}
-        >
-          Buy
-        </Button>
-        &nbsp;
-        <Button
-          variant='contained'
           onClick={() => {
             history.push(`/product/single-post/${docID}`);
           }}

@@ -3,7 +3,6 @@ import { firestore } from 'firebase/firebaseConfig';
 import firebase from 'firebase/firebaseConfig';
 
 const CREATE_POST = createAsyncThunk('createPost', async ({ brand, authorPhoto, authorDisplayName, categories, location, productName, stock, price, author, description, links, date }) => {
-    console.log(categories)
     try {
         await firestore.collection('products').add({
             productName,

@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { firestore } from 'firebase/firebaseConfig';
 import { FluidTypography } from 'components';
-import { UPDATE_ITEM } from 'store/slices/orderSlice';
+import { UPDATE_ITEM, DELETE_ITEM } from 'store/slices/orderSlice';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import customTheme from 'theme/customTheme';
@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 const OrdersList = (props) => {
   const history = useHistory();
-
   const dispatch = useDispatch();
   const classes = useStyles();
   const uid = useSelector((state) => state.auth.uid);
@@ -48,7 +47,9 @@ const OrdersList = (props) => {
   const decreaseOrder = (e, docID, data) => {
     dispatch(UPDATE_ITEM({ docID, orderCount: data.orderCount - 1 }));
   };
-
+  const removeItem = (docID) => {
+    dispatch(DELETE_ITEM({ docID }));
+  };
   useEffect(() => {
     // unsubscribe to onSnapshot
     return firestore
@@ -103,7 +104,10 @@ const OrdersList = (props) => {
                         color='black'
                       />
                     </Box>
-                    <IconButton style={{ padding: 0 }}>
+                    <IconButton
+                      onClick={() => removeItem(docID)}
+                      style={{ padding: 0 }}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </Box>

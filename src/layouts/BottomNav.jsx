@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   BottomNavigation,
   BottomNavigationAction,
   Hidden,
   makeStyles,
+  Badge,
 } from '@material-ui/core';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import customTheme from 'theme/customTheme';
+import { firestore } from 'firebase/firebaseConfig';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
   root: {
@@ -25,10 +28,25 @@ const useStyles = makeStyles({
 const BottomNav = (props) => {
   const classes = useStyles();
   const history = useHistory();
-
   const location = useLocation();
   const [value, setValue] = useState(location.pathname);
+  const uid = useSelector((state) => state.auth.uid);
 
+  const [orders, setOrders] = useState([]);
+  useEffect(() => {
+    // unsubscribe to onSnapshot
+    return firestore
+      .collection('orders')
+      .orderBy('timestamp', 'desc')
+      .where('uid', '==', uid)
+      .onSnapshot((snapshot) => {
+        let ordersArray = [];
+        snapshot.forEach((doc) =>
+          ordersArray.push({ docID: doc.id, data: doc.data() })
+        );
+        setOrders(ordersArray);
+      });
+  }, [uid]);
   return (
     <Hidden lgUp>
       <BottomNavigation
@@ -50,7 +68,17 @@ const BottomNav = (props) => {
         <BottomNavigationAction
           label='Cart'
           value='/payment'
-          icon={<ShoppingCartOutlinedIcon />}
+          icon={
+            <Badge
+              color='error'
+              overlap='circle'
+              badgeContent={orders?.length}
+              max={10}
+              style={{ paddingTop: '.5rem' }}
+            >
+              <ShoppingCartOutlinedIcon />
+            </Badge>
+          }
         />
       </BottomNavigation>
     </Hidden>

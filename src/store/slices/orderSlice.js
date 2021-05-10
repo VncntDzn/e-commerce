@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
     ADD_TO_CHECKOUT,
-    UPDATE_ITEM
+    UPDATE_ITEM,
+    DELETE_ITEM
 } from './checkout'
 
 const initialState = {
@@ -34,10 +35,20 @@ const postsSlice = createSlice({
         [UPDATE_ITEM.failed]: (state, action) => {
             state.status = 'failed';
         },
+        [DELETE_ITEM.pending]: (state, action) => {
+            state.status = 'pending'
+        },
+        [DELETE_ITEM.fulfilled]: (state, action) => {
+            state.status = 'success';
+            state.error = null
+        },
+        [DELETE_ITEM.failed]: (state, action) => {
+            state.status = 'failed';
+        },
 
     }
 });
 
 const { reducer } = postsSlice;
-export { ADD_TO_CHECKOUT, UPDATE_ITEM }
+export { ADD_TO_CHECKOUT, UPDATE_ITEM, DELETE_ITEM }
 export default reducer;

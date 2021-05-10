@@ -19,7 +19,7 @@ import { LOGOUT_USER } from 'store/slices/authSlice';
 import customTheme from 'theme/customTheme';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import SearchIcon from '@material-ui/icons/Search';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 
@@ -143,6 +143,16 @@ const Navbar = (props) => {
                   onClick={() => history.push('/payment')}
                 >
                   <ShoppingCartOutlinedIcon />
+                </IconButton>
+              </Hidden>
+
+              <Hidden mdUp>
+                <IconButton
+                  color='inherit'
+                  aria-label='cart'
+                  onClick={() => history.push('/payment')}
+                >
+                  <SearchIcon />
                 </IconButton>
               </Hidden>
               <IconButton

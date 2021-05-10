@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import RssFeedIcon from '@material-ui/icons/RssFeed';
 import customTheme from 'theme/customTheme';
 
 const useStyles = makeStyles({
@@ -30,7 +30,7 @@ const BottomNav = (props) => {
   const [value, setValue] = useState(location.pathname);
 
   return (
-    <Hidden only={['lg', 'xl']}>
+    <Hidden lgUp>
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {
@@ -46,14 +46,14 @@ const BottomNav = (props) => {
           icon={<DashboardOutlinedIcon />}
         />
         <BottomNavigationAction
+          label='Feed'
+          value='/search'
+          icon={<RssFeedIcon />}
+        />
+        <BottomNavigationAction
           label='Cart'
           value='/payment'
           icon={<ShoppingCartOutlinedIcon />}
-        />
-        <BottomNavigationAction
-          label='Search'
-          value='/'
-          icon={<SearchOutlinedIcon />}
         />
       </BottomNavigation>
     </Hidden>

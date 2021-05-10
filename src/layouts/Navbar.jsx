@@ -137,9 +137,12 @@ const Navbar = (props) => {
                     <TextField placeholder='Search' />
                   </Grid>
                 </Hidden>
-
-                <IconButton color='inherit' aria-label='menu'>
-                  <FavoriteBorderOutlinedIcon />
+                <IconButton
+                  color='inherit'
+                  aria-label='cart'
+                  onClick={() => history.push('/payment')}
+                >
+                  <ShoppingCartOutlinedIcon />
                 </IconButton>
               </Hidden>
               <IconButton
@@ -148,13 +151,6 @@ const Navbar = (props) => {
                 onClick={handleClick}
               >
                 <AccountCircleOutlinedIcon />
-              </IconButton>
-              <IconButton
-                color='inherit'
-                aria-label='cart'
-                onClick={() => history.push('/payment')}
-              >
-                <ShoppingCartOutlinedIcon />
               </IconButton>
             </Grid>
           </Box>

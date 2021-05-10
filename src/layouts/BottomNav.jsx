@@ -7,8 +7,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import customTheme from 'theme/customTheme';
 
@@ -47,14 +46,9 @@ const BottomNav = (props) => {
           icon={<DashboardOutlinedIcon />}
         />
         <BottomNavigationAction
-          label='Account'
-          value='/auth/signin'
-          icon={<AccountCircleOutlinedIcon />}
-        />
-        <BottomNavigationAction
-          label='Favorite'
+          label='Cart'
           value='/payment'
-          icon={<FavoriteBorderOutlinedIcon />}
+          icon={<ShoppingCartOutlinedIcon />}
         />
         <BottomNavigationAction
           label='Search'

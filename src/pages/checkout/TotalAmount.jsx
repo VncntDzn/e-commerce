@@ -1,5 +1,7 @@
+/**
+ * TotalAmount - component for Orders that computes the total price of the orders.
+ */
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { FluidTypography } from 'components';
 import {
   Box,
@@ -20,7 +22,8 @@ const TotalAmount = (props) => {
 
   let totalAmount = 0;
   orders.map(({ data }) => {
-    totalAmount += Number(data.info.price);
+    totalAmount += Number(data.info.price * data.orderCount);
+
     return parseFloat(totalAmount).toFixed(2);
   });
   return (
@@ -137,11 +140,10 @@ const TotalAmount = (props) => {
       <ConfirmationDialog
         open={dialogOpen}
         onClose={() => setDialogOpen(!dialogOpen)}
+        paymentMethod={paymentMethod}
       />
     </Box>
   );
 };
-
-TotalAmount.propTypes = {};
 
 export default TotalAmount;

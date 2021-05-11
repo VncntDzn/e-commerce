@@ -1,9 +1,8 @@
 /**
  * Orders Page - the root file for orders.
  */
-import React from 'react';
 import { MainLayout } from 'layouts';
-import { Box, Grid, Radio, FormControlLabel, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { FluidTypography } from 'components';
 import OrdersList from './OrdersList';

@@ -3,9 +3,11 @@
  */
 import React from 'react';
 import { MainLayout } from 'layouts';
+import { Box, Grid, Radio, FormControlLabel, Button } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { FluidTypography } from 'components';
 import OrdersList from './OrdersList';
+import TotalAmount from './TotalAmount';
 
 const Orders = (props) => {
   const displayName = useSelector((state) => state.auth.displayName);
@@ -19,7 +21,14 @@ const Orders = (props) => {
         fontWeight={500}
         color='black'
       />
-      <OrdersList />
+      <Grid container spacing={2}>
+        <Grid xs={12} item lg={8} xl={8}>
+          <OrdersList />
+        </Grid>
+        <Grid item xs={12} lg={4} xl={4} style={{ paddingTop: '1rem' }}>
+          <TotalAmount />
+        </Grid>
+      </Grid>
     </MainLayout>
   );
 };

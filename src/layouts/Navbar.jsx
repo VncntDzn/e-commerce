@@ -131,15 +131,15 @@ const Navbar = (props) => {
               justify='flex-end'
               alignItems='flex-end'
             >
-              <Hidden xsDown>
-                <Hidden smDown>
-                  <Grid item style={{ marginBottom: '0.3rem' }}>
-                    <SearchOutlinedIcon />
-                  </Grid>
-                  <Grid item style={{ marginBottom: '0.5rem' }}>
-                    <TextField placeholder='Search' />
-                  </Grid>
-                </Hidden>
+              <Hidden smDown>
+                <Grid item style={{ marginBottom: '0.3rem' }}>
+                  <SearchOutlinedIcon />
+                </Grid>
+                <Grid item style={{ marginBottom: '0.5rem' }}>
+                  <TextField placeholder='Search' />
+                </Grid>
+              </Hidden>
+              <Hidden mdDown>
                 <IconButton
                   color='inherit'
                   aria-label='cart'
@@ -156,7 +156,6 @@ const Navbar = (props) => {
                   </Badge>
                 </IconButton>
               </Hidden>
-
               <Hidden mdUp>
                 <IconButton
                   color='inherit'

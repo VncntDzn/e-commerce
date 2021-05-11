@@ -12,10 +12,12 @@ import {
   makeStyles,
   Menu,
   MenuItem,
+  Badge,
 } from '@material-ui/core';
 import { BrowserRouter as Router, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGOUT_USER } from 'store/slices/authSlice';
+import { useNotifications } from 'helpers';
 import customTheme from 'theme/customTheme';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -42,6 +44,7 @@ const Navbar = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const { orders } = useNotifications();
   const uid = useSelector((state) => state.auth.uid);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -140,9 +143,17 @@ const Navbar = (props) => {
                 <IconButton
                   color='inherit'
                   aria-label='cart'
-                  onClick={() => history.push('/payment')}
+                  onClick={() => history.push('/checkout')}
                 >
-                  <ShoppingCartOutlinedIcon />
+                  <Badge
+                    color='error'
+                    overlap='circle'
+                    badgeContent={orders?.length}
+                    max={10}
+                    style={{ paddingTop: '.5rem' }}
+                  >
+                    <ShoppingCartOutlinedIcon />
+                  </Badge>
                 </IconButton>
               </Hidden>
 

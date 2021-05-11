@@ -1,6 +1,7 @@
 /**
  * ProductInformation component - display the details of the post.
  * @param {object} [info] - object passed from SinglePost Page.
+ * @param {string} [docID] - document id passed from SinglePost Page.
  */
 import { useState } from 'react';
 import {

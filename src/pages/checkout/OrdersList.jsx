@@ -1,4 +1,7 @@
-import { useState, useEffect } from 'react';
+/**
+ * OrdersList - a component for Orders Page.
+ * It also, lists the orders of the current user if any.
+ */
 import {
   Box,
   makeStyles,
@@ -9,11 +12,10 @@ import {
   TextField,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { firestore } from 'firebase/firebaseConfig';
+import { useDispatch } from 'react-redux';
 import { FluidTypography } from 'components';
 import { UPDATE_ITEM, DELETE_ITEM } from 'store/slices/orderSlice';
-import PropTypes from 'prop-types';
+import { useNotifications } from 'helpers';
 import DeleteIcon from '@material-ui/icons/Delete';
 import customTheme from 'theme/customTheme';
 import AddIcon from '@material-ui/icons/Add';
@@ -34,12 +36,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const OrdersList = (props) => {
+const OrdersList = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyles();
-  const uid = useSelector((state) => state.auth.uid);
-  const [orders, setOrders] = useState([]);
+  const { orders } = useNotifications();
 
   const increaseOrder = (e, docID, data) => {
     dispatch(UPDATE_ITEM({ docID, orderCount: data.orderCount + 1 }));
@@ -50,20 +51,6 @@ const OrdersList = (props) => {
   const removeItem = (docID) => {
     dispatch(DELETE_ITEM({ docID }));
   };
-  useEffect(() => {
-    // unsubscribe to onSnapshot
-    return firestore
-      .collection('orders')
-      .orderBy('timestamp', 'desc')
-      .where('uid', '==', uid)
-      .onSnapshot((snapshot) => {
-        let ordersArray = [];
-        snapshot.forEach((doc) =>
-          ordersArray.push({ docID: doc.id, data: doc.data() })
-        );
-        setOrders(ordersArray);
-      });
-  }, [uid]);
 
   return (
     <>
@@ -153,6 +140,5 @@ const OrdersList = (props) => {
     </>
   );
 };
-OrdersList.propTypes = {};
 
 export default OrdersList;

@@ -3,7 +3,8 @@ import signupSchema from './schema/signupSchema';
 import forgotPasswordSchema from './schema/forgotPasswordSchema';
 import productSchema from './schema/productSchema';
 import useDialog from './custom-hooks/useDialog';
-import useFetchPosts from './custom-hooks/useFetchPosts'
+import useFetchPosts from './custom-hooks/useFetchPosts';
+import useNotifications from './custom-hooks/useNotifications'
 import countriesData from './countriesData'
 import categoriesData from './categoriesData'
 
@@ -15,5 +16,6 @@ export {
     productSchema,
     useFetchPosts,
     countriesData,
-    categoriesData
+    categoriesData,
+    useNotifications
 }

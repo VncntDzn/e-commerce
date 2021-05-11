@@ -1,5 +1,7 @@
+/**
+ * Orders Page - the root file for orders.
+ */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { MainLayout } from 'layouts';
 import { useSelector } from 'react-redux';
 import { FluidTypography } from 'components';
@@ -21,7 +23,5 @@ const Orders = (props) => {
     </MainLayout>
   );
 };
-
-Orders.propTypes = {};
 
 export default Orders;

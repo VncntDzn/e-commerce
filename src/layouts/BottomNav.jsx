@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   BottomNavigation,
@@ -7,12 +7,11 @@ import {
   makeStyles,
   Badge,
 } from '@material-ui/core';
+import { useNotifications } from 'helpers';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import customTheme from 'theme/customTheme';
-import { firestore } from 'firebase/firebaseConfig';
-import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
   root: {
@@ -25,28 +24,13 @@ const useStyles = makeStyles({
     color: 'blue',
   },
 });
-const BottomNav = (props) => {
+const BottomNav = () => {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
   const [value, setValue] = useState(location.pathname);
-  const uid = useSelector((state) => state.auth.uid);
+  const { orders } = useNotifications();
 
-  const [orders, setOrders] = useState([]);
-  useEffect(() => {
-    // unsubscribe to onSnapshot
-    return firestore
-      .collection('orders')
-      .orderBy('timestamp', 'desc')
-      .where('uid', '==', uid)
-      .onSnapshot((snapshot) => {
-        let ordersArray = [];
-        snapshot.forEach((doc) =>
-          ordersArray.push({ docID: doc.id, data: doc.data() })
-        );
-        setOrders(ordersArray);
-      });
-  }, [uid]);
   return (
     <Hidden lgUp>
       <BottomNavigation
@@ -84,7 +68,4 @@ const BottomNav = (props) => {
     </Hidden>
   );
 };
-
-BottomNav.propTypes = {};
-
 export default BottomNav;

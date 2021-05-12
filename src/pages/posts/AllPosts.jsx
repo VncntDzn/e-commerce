@@ -13,9 +13,13 @@ const useStyles = makeStyles((theme) => ({
   rootContainer: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'space-between',
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
     },
+  },
+  filterProductsContainer: {
+    flex: 0.2,
   },
   container: {
     display: 'flex',
@@ -97,10 +101,12 @@ const AllPosts = (props) => {
   return (
     <MainLayout>
       <Box className={classes.rootContainer}>
-        <FilterProducts
-          parentCallback={(allPosts) => setCallbackData(allPosts)}
-        />
-        <Box>
+        <Box className={classes.filterProductsContainer}>
+          <FilterProducts
+            parentCallback={(allPosts) => setCallbackData(allPosts)}
+          />
+        </Box>
+        <Box style={{ flex: 1 }}>
           <Box className={classes.container}>
             {posts?.length ? (
               posts

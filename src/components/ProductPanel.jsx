@@ -40,6 +40,7 @@ import ImageUploader from 'react-images-upload';
 import SuccessAnimation from 'lottie/SuccessAnimation';
 import FailedAnimation from 'lottie/FailedAnimation';
 import PropTypes from 'prop-types';
+import { resetState } from 'store/slices/authSlice';
 
 const animatedComponents = makeAnimated();
 
@@ -81,14 +82,17 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   const [links, setLinks] = useState(null);
   const [categories, setCategories] = useState([]);
   const [location, setLocation] = useState(null);
-  const status = useSelector((state) => state.post.status);
+  const postStatus = useSelector((state) => state.post.createPostStatus);
+  const editStatus = useSelector((state) => state.post.editPostStatus);
   const error = useSelector((state) => state.post.error);
-
+  let status;
   let productTitle;
   if (action === 'add') {
     productTitle = 'Post a Product';
+    status = postStatus;
   } else {
     productTitle = 'Edit a Product';
+    status = editStatus;
   }
   const handleCreatePost = () => {
     if (action === 'add') {
@@ -97,7 +101,6 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
       closeEdit();
     }
   };
-
   const { visibility, data, closeModal } = useDialog({
     status,
     error,
@@ -128,6 +131,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   };
   const handleSubmit = async ({ productName, price, stock, brand }) => {
     try {
+      dispatch(resetState(status));
       if (links) {
         if (action === 'add') {
           dispatch(
@@ -282,7 +286,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               />
               <DialogActions>
                 <Button variant='outlined' onClick={handleCreatePost}>
-                  Cancel
+                  Close
                 </Button>
                 <Button
                   disabled={disabled}

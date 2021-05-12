@@ -47,10 +47,13 @@ const Navbar = (props) => {
   const dispatch = useDispatch();
   const { orders } = useNotifications();
   const uid = useSelector((state) => state.auth.uid);
+  const user = useSelector((state) => state.auth.user);
   const [anchorEl, setAnchorEl] = useState(null);
   const currentUser = useSelector((state) => state.auth.user);
   const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
-  const user = allPosts.filter(({ data }) => data.author === currentUser.email);
+  const allPostUser = allPosts.filter(
+    ({ data }) => data.author === currentUser.email
+  );
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -198,7 +201,11 @@ const Navbar = (props) => {
         ) : (
           <Box>
             <MenuItem
-              onClick={() => history.push(`/profile/${user[0].data.author}`)}
+              onClick={() =>
+                history.push(
+                  `/profile/${allPostUser[0]?.data.author || user.email}`
+                )
+              }
             >
               My account
             </MenuItem>

@@ -11,6 +11,7 @@ import {
   Button,
   Card,
   CardContent,
+  IconButton,
 } from '@material-ui/core';
 import { FluidTypography } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,6 +24,7 @@ import 'react-quill/dist/quill.snow.css';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 import ReactStars from 'react-rating-stars-component';
 import PropTypes from 'prop-types';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -68,9 +70,12 @@ const ProductInformation = ({ docID, info }) => {
             </Box>
           </Hidden>
 
-          <Box fontStyle='italic'>
+          <Box fontStyle='italic' display='flex' alignItems='center'>
+            <IconButton color='secondary'>
+              <LocalShippingIcon />
+            </IconButton>
             <FluidTypography
-              text={`> Ships from ${info?.location}`}
+              text={`Ships from ${info?.location}`}
               minSize='1rem'
               size='1rem'
               maxSize='1rem'
@@ -104,6 +109,17 @@ const ProductInformation = ({ docID, info }) => {
             &nbsp;
             <FluidTypography
               text='932 ratings'
+              minSize='1rem'
+              size='1.1rem'
+              maxSize='1.5rem'
+              color='black'
+              fontWeight='500'
+            />
+            &nbsp;
+            <h2 style={{ padding: 0, margin: 0 }}>|</h2>
+            &nbsp;
+            <FluidTypography
+              text='4000 sold'
               minSize='1rem'
               size='1.1rem'
               maxSize='1.5rem'

@@ -51,7 +51,7 @@ const BottomNav = () => {
 
         <BottomNavigationAction
           label='Cart'
-          value='/payment'
+          value='/checkout'
           icon={
             <Badge
               color='error'

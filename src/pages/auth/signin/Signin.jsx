@@ -44,7 +44,7 @@ const Signin = () => {
     animationSuccess: SignupSuccessAnimated,
     animationFailed: FailedAnimation,
     successText: 'Success! Redirecting you to homepage.',
-    location: '/profile',
+    location: '/all-posts',
   });
 
   const handleSubmission = (values) => {

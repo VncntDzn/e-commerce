@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const UserActivities = (props) => {
+const UserActivities = ({ email }) => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
   const [value, setValue] = useState(0);
@@ -74,8 +74,8 @@ const UserActivities = (props) => {
 
       <TabPanel value={value} index={0} style={{ width: '100%' }}>
         <Box className={classes.tabPanelContainer}>
-          <ProductPanel user={user} action='add' />
-          <UserPosts user={user} />
+          {user.email === email && <ProductPanel user={user} action='add' />}
+          <UserPosts email={email} user={user} />
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1} style={{ width: '100%' }}>

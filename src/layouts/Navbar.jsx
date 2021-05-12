@@ -25,6 +25,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 
+import { useFetchPosts } from 'helpers';
 const useStyles = makeStyles((theme) => ({
   boxContainer: {
     [theme.breakpoints.up('lg')]: {
@@ -47,7 +48,9 @@ const Navbar = (props) => {
   const { orders } = useNotifications();
   const uid = useSelector((state) => state.auth.uid);
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const currentUser = useSelector((state) => state.auth.user);
+  const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
+  const user = allPosts.filter(({ data }) => data.author === currentUser.email);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -160,7 +163,7 @@ const Navbar = (props) => {
                 <IconButton
                   color='inherit'
                   aria-label='cart'
-                  onClick={() => history.push('/payment')}
+                  onClick={() => history.push('/checkout')}
                 >
                   <SearchIcon />
                 </IconButton>
@@ -194,7 +197,9 @@ const Navbar = (props) => {
           </Box>
         ) : (
           <Box>
-            <MenuItem onClick={() => history.push('/profile')}>
+            <MenuItem
+              onClick={() => history.push(`/profile/${user[0].data.author}`)}
+            >
               My account
             </MenuItem>
             <MenuItem onClick={logout}>Signout</MenuItem>

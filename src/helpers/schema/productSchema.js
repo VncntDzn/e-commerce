@@ -9,13 +9,13 @@ const productSchema = Yup.object().shape({
     productName: Yup.string()
         .required('Product Name is required'),
     brand: Yup.string()
-        .required('Product Name is required'),
+        .required('Brand is required'),
     price: Yup.number()
         .positive()
         .required('Price is required'),
     stock: Yup.number()
         .positive()
-        .required('Price is required'),
+        .required('Stock is required'),
 
 });
 

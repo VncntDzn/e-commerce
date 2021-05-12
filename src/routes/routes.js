@@ -28,7 +28,7 @@ const routes = [
     {
         name: 'User Profile',
         component: UserProfile,
-        path: '/profile',
+        path: '/profile/:email',
         auth: true
     },
     {

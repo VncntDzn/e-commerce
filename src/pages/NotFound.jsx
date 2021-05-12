@@ -14,9 +14,14 @@ const defaultOptions = {
 const NotFound = () => {
   return (
     <MainLayout>
-      <Box display='flex' flexDirection='column' alignItems='center'>
+      <Box
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='center'
+      >
         <Typography variant='h4'>Not Found</Typography>
-        <Lottie options={defaultOptions} height={'80vh'} width={'90vw'} />
+        <Lottie options={defaultOptions} />
       </Box>
     </MainLayout>
   );

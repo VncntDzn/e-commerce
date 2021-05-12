@@ -1,5 +1,7 @@
 /**
- * Comment Component - it displays the comments of the post.
+ * Comments Component - it displays the comments of the post.
+ * Also you can do CRUD operations in this component.
+ * @param {string} [docID] - document ID of the product.
  */
 import { useEffect, useState } from 'react';
 import {
@@ -15,10 +17,11 @@ import {
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_COMMENT } from 'store/slices/commentSlice';
+import { firestore } from 'firebase/firebaseConfig';
+import PropTypes from 'prop-types';
 import FluidTypography from 'components/FluidTypography';
 import CommentPanel from './CommentPanel';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { firestore } from 'firebase/firebaseConfig';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -170,6 +173,10 @@ const Comments = ({ docID }) => {
       )}
     </>
   );
+};
+
+Comments.propTypes = {
+  docID: PropTypes.string.isRequired,
 };
 
 export default Comments;

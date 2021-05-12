@@ -13,6 +13,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
+import { useFetchPosts } from 'helpers';
 import { updateProfile } from 'store/slices/userSlice';
 import { FluidTypography } from 'components';
 import { firebaseStorage } from 'firebase/firebaseConfig';
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const UserDetails = () => {
+const UserDetails = ({ email }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
@@ -65,6 +66,10 @@ const UserDetails = () => {
   const [name, setName] = useState(null);
   const [link, setLink] = useState(null);
   const [disable, setDisable] = useState(true);
+
+  const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
+  const info = allPosts.filter(({ data }) => email === data.author);
+
   const handleClose = () => {
     setOpen(!open);
   };
@@ -92,16 +97,22 @@ const UserDetails = () => {
         src={AbstractArt}
         alt='abstract'
       />
-      <Avatar className={classes.largeAvatar} src={user.photoURL} />
+      <Avatar className={classes.largeAvatar} src={info[0]?.data.authorPhoto} />
 
-      <FluidTypography text={user.displayName} />
-      <Button
-        onClick={() => setOpen(!open)}
-        variant='outlined'
-        color='secondary'
-      >
-        Edit Profile
-      </Button>
+      {user.email === info[0]?.data.author ? (
+        <>
+          <FluidTypography text={user.displayName} />
+          <Button
+            onClick={() => setOpen(!open)}
+            variant='outlined'
+            color='secondary'
+          >
+            Edit Profile
+          </Button>
+        </>
+      ) : (
+        <FluidTypography text={info[0]?.data.authorDisplayName} />
+      )}
 
       <Dialog
         onClose={handleClose}

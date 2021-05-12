@@ -10,6 +10,8 @@ const initialState = {
     status: 'idle',
     error: null,
     productsPosts: [],
+    createPostStatus: null,
+    editPostStatus: null,
 };
 
 const postsSlice = createSlice({
@@ -17,14 +19,14 @@ const postsSlice = createSlice({
     initialState,
     extraReducers: {
         [CREATE_POST.pending]: (state, action) => {
-            state.status = 'pending'
+            state.createPostStatus = 'pending'
         },
         [CREATE_POST.fulfilled]: (state, action) => {
-            state.status = 'success';
+            state.createPostStatus = 'success';
             state.error = null
         },
         [CREATE_POST.failed]: (state, action) => {
-            state.status = 'failed';
+            state.createPostStatus = 'failed';
         },
         // RETRIEVE  POSTS
         [RETRIEVE_POSTS.pending]: (state, action) => {
@@ -32,7 +34,6 @@ const postsSlice = createSlice({
         },
         [RETRIEVE_POSTS.fulfilled]: (state, action) => {
             state.status = 'success';
-            console.log(action.payload)
             state.productsPosts = action.payload;
 
         },
@@ -43,14 +44,14 @@ const postsSlice = createSlice({
 
         // UPDATE USER POSTS
         [UPDATE_POST.pending]: (state, action) => {
-            state.status = 'pending'
+            state.editPostStatus = 'pending'
         },
         [UPDATE_POST.fulfilled]: (state, action) => {
-            state.status = 'success';
+            state.editPostStatus = 'success';
         },
         [UPDATE_POST.failed]: (state, action) => {
-            state.status = 'failed';
-            console.log(action)
+            state.editPostStatus = 'failed';
+
         },
         // DELETE POST POSTS
         [DELETE_POST.pending]: (state, action) => {

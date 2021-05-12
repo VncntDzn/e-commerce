@@ -11,7 +11,7 @@ import {
   Breadcrumbs,
   Hidden,
   Grid,
-  Link,
+  Button,
   Typography,
   Card,
   Box,
@@ -19,10 +19,11 @@ import {
 import { TabPanel } from 'components';
 import { Carousel } from 'react-responsive-carousel';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { useFetchPosts } from 'helpers';
+import { useHistory } from 'react-router-dom';
 import FAQ from './tab-panels/FAQ';
 import ProductInformation from './tab-panels/ProductInformation';
 import Reviews from './tab-panels/Reviews';
-import { useFetchPosts } from 'helpers';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const SinglePost = ({ match }) => {
   const classes = useStyles();
+  const history = useHistory();
   const [value, setValue] = useState(0);
   const { docID } = match.params;
   const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
@@ -44,9 +46,15 @@ const SinglePost = ({ match }) => {
   return (
     <MainLayout>
       <Breadcrumbs aria-label='breadcrumb'>
-        <Link color='inherit'>Categories</Link>
+        <Typography color='textPrimary'>E-comm</Typography>
+        <Button color='inherit' onClick={() => history.push('/all-posts')}>
+          Categories
+        </Button>
         <Typography color='textPrimary'>
           {products[0]?.data.categories}
+        </Typography>
+        <Typography color='textPrimary'>
+          {products[0]?.data.productName}
         </Typography>
       </Breadcrumbs>
 

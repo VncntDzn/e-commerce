@@ -10,15 +10,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const UserProfile = () => {
+const UserProfile = ({ match }) => {
   const classes = useStyles();
-
+  const { email } = match.params;
   return (
     <MainLayout>
       <Container className={classes.container}>
-        <UserDetails />
+        <UserDetails email={email} />
         <hr style={{ width: '100%' }} />
-        <UserActivities />
+        <UserActivities email={email} />
       </Container>
     </MainLayout>
   );

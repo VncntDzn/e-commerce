@@ -64,16 +64,13 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20%',
   },
 }));
-const UserPosts = ({ user }) => {
-  const { email, photoURL } = user;
+const UserPosts = ({ email }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(0);
   const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
-  const products = allPosts.filter(({ data }) => user.email === data.author);
-
+  const products = allPosts.filter(({ data }) => email === data.author);
   const postStatus = useSelector((state) => state.post.status);
-  const displayName = useSelector((state) => state.auth.displayName);
 
   // get the current page
   const onPageChange = ({ selected: selectedPage }) => {
@@ -100,12 +97,7 @@ const UserPosts = ({ user }) => {
             <Box key={docID} p={1}>
               <Card raised className={classes.cardContainer}>
                 <CardContent>
-                  <UserPostHeader
-                    user={user}
-                    docID={docID}
-                    displayName={displayName}
-                    photoURL={photoURL}
-                  />
+                  <UserPostHeader email={email} docID={docID} data={data} />
                   <PostContent docID={docID} data={data} />
                 </CardContent>
               </Card>

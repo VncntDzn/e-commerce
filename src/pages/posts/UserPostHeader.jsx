@@ -15,12 +15,15 @@ import {
   MenuItem,
   Avatar,
   Grid,
+  Typography,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_POST } from 'store/slices/postsSlice';
-import { FluidTypography, ProductPanel } from 'components';
+import { ProductPanel } from 'components';
+import { useHistory } from 'react-router-dom';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import PropTypes from 'prop-types';
+import customTheme from 'theme/customTheme';
 
 const useStyles = makeStyles((theme) => ({
   largeAvatar: {
@@ -30,13 +33,21 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignSelf: 'center',
   },
+  nameBtnStyle: {
+    '&:hover': {
+      borderBottom: `2px solid ${customTheme.palette.secondary.main}`,
+      cursor: 'pointer',
+    },
+  },
 }));
-const UserPostHeader = ({ user, photoURL, displayName, docID }) => {
+const UserPostHeader = ({ email, data, docID }) => {
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const [editDialog, setEditDialog] = useState(false);
   const currentUser = useSelector((state) => state.auth.user);
+
   const handleDeletePost = () => {
     dispatch(DELETE_POST({ docID }));
   };
@@ -46,15 +57,13 @@ const UserPostHeader = ({ user, photoURL, displayName, docID }) => {
   return (
     <Grid container justify='space-between' direction='row'>
       <Box display='flex' alignItems='center' width='fit-content'>
-        <Avatar className={classes.largeAvatar} src={photoURL} />
-        <FluidTypography
-          text={displayName}
-          minSize='1rem'
-          size='0.9rem'
-          maxSize='1rem'
-          fontWeight='500'
-          variant='subtitle1'
-        />
+        <Avatar className={classes.largeAvatar} src={data.authorPhoto} />
+        <Typography
+          className={classes.nameBtnStyle}
+          onClick={() => history.push(`/profile/${email}`)}
+        >
+          {data.authorDisplayName}
+        </Typography>
       </Box>
       <Box
         display='flex'
@@ -76,7 +85,7 @@ const UserPostHeader = ({ user, photoURL, displayName, docID }) => {
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        {currentUser.email === user.author || user.email ? (
+        {currentUser.email === data.author || data.email ? (
           <div>
             <MenuItem onClick={() => setEditDialog(true)}>Edit</MenuItem>
             <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
@@ -95,7 +104,7 @@ const UserPostHeader = ({ user, photoURL, displayName, docID }) => {
         closeEdit={() => setEditDialog(false)}
         action='edit'
         openEdit={editDialog}
-        user={user}
+        user={data}
         documentID={docID}
       />
     </Grid>

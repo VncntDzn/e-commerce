@@ -1,4 +1,6 @@
-import React from 'react';
+/**
+ * FAQ Component - it contains the dummy data for all of the product.
+ */
 import {
   Box,
   Accordion,
@@ -7,7 +9,6 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core/';
-
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({

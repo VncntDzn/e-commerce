@@ -44,9 +44,10 @@ const FilterProducts = ({ parentCallback }) => {
           Filter
         </Button>
       </Hidden>
-      <Authors authorsCallback={(filteredPosts) => setData(filteredPosts)} />
-      <Brands brandsCallback={(filteredPosts) => setData(filteredPosts)} />
-
+      <Hidden mdDown>
+        <Authors authorsCallback={(filteredPosts) => setData(filteredPosts)} />
+        <Brands brandsCallback={(filteredPosts) => setData(filteredPosts)} />
+      </Hidden>
       <Dialog
         onClose={() => setOpen(!open)}
         aria-labelledby='simple-dialog-title'

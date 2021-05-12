@@ -1,4 +1,4 @@
-import { AllPost, Home, PaymentMain, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, NotFound } from 'pages';
+import { AllPost, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, NotFound } from 'pages';
 
 const routes = [
     {
@@ -26,15 +26,9 @@ const routes = [
         auth: false
     },
     {
-        name: 'Payment',
-        component: PaymentMain,
-        path: '/payment',
-        auth: true
-    },
-    {
         name: 'User Profile',
         component: UserProfile,
-        path: '/profile',
+        path: '/profile/:email',
         auth: true
     },
     {

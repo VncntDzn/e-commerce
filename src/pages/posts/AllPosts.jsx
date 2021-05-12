@@ -110,10 +110,9 @@ const AllPosts = (props) => {
                     <Card raised className={classes.cardContainer}>
                       <CardContent>
                         <UserPostHeader
-                          user={data}
                           docID={docID}
-                          displayName={data.authorDisplayName}
-                          photoURL={data.authorPhoto}
+                          data={data}
+                          email={data.author}
                         />
                         <PostContent docID={docID} data={data} />
                       </CardContent>

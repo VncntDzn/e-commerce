@@ -6,7 +6,6 @@ import Promotions from './promotions/Promotions';
 import MenWomen from './promotions/MenWomen';
 import Community from './community/Community';
 import Footer from './Footer';
-import PaymentMain from './payment/PaymentMain';
 import ForgotPassword from './auth/forgotPassword/ForgotPassword';
 import Home from './Home';
 import NotFound from './NotFound';
@@ -26,7 +25,6 @@ export {
   MenWomen,
   Community,
   Footer,
-  PaymentMain,
   Home,
   NotFound,
   UserProfile,

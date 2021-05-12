@@ -15,6 +15,7 @@ import {
   MenuItem,
   Avatar,
   Grid,
+  Button,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_POST } from 'store/slices/postsSlice';

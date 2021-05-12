@@ -45,6 +45,7 @@ const Signup = (props) => {
     animationSuccess: SignupSuccessAnimated,
     animationFailed: FailedAnimation,
     successText: 'You are now registered with e-comm!',
+    location: '/profile',
   });
 
   const handleSubmission = (values) => {

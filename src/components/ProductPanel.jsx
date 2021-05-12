@@ -81,9 +81,8 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
   const [links, setLinks] = useState(null);
   const [categories, setCategories] = useState([]);
   const [location, setLocation] = useState(null);
-
-  const status = useSelector((state) => state.posts.status);
-  const error = useSelector((state) => state.posts.error);
+  const status = useSelector((state) => state.post.status);
+  const error = useSelector((state) => state.post.error);
 
   let productTitle;
   if (action === 'add') {

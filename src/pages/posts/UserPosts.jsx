@@ -72,7 +72,7 @@ const UserPosts = ({ user }) => {
   const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
   const products = allPosts.filter(({ data }) => user.email === data.author);
 
-  const postStatus = useSelector((state) => state.posts.status);
+  const postStatus = useSelector((state) => state.post.status);
   const displayName = useSelector((state) => state.auth.displayName);
 
   // get the current page

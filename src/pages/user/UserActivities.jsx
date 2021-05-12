@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { TabPanel } from 'components';
+import { useFetchPosts } from 'helpers';
 import { ProductPanel } from 'components';
 import UserPosts from '../posts/UserPosts';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
@@ -33,10 +34,9 @@ const useStyles = makeStyles((theme) => ({
 const UserActivities = (props) => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
-  const products = useSelector((state) =>
-    state.posts.products.filter(({ data }) => user.email === data.author)
-  );
   const [value, setValue] = useState(0);
+  const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
+  const products = allPosts.filter(({ data }) => user.email === data.author);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

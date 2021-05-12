@@ -9,7 +9,7 @@ import {
 const initialState = {
     status: 'idle',
     error: null,
-    products: [],
+    productsPosts: [],
 };
 
 const postsSlice = createSlice({
@@ -32,7 +32,8 @@ const postsSlice = createSlice({
         },
         [RETRIEVE_POSTS.fulfilled]: (state, action) => {
             state.status = 'success';
-            state.products = action.payload;
+            console.log(action.payload)
+            state.productsPosts = action.payload;
 
         },
         [RETRIEVE_POSTS.failed]: (state, action) => {

@@ -2,7 +2,6 @@
  * SinglePost Page - the component when the user clicked the view button.
  * @param {object} [match] - the url data.
  */
-import { useSelector } from 'react-redux';
 import { MainLayout } from 'layouts';
 import { useState } from 'react';
 import {
@@ -23,6 +22,7 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import FAQ from './tab-panels/FAQ';
 import ProductInformation from './tab-panels/ProductInformation';
 import Reviews from './tab-panels/Reviews';
+import { useFetchPosts } from 'helpers';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,9 +35,8 @@ const SinglePost = ({ match }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const { docID } = match.params;
-  const products = useSelector((state) =>
-    state.posts.products.filter((params) => docID === params.docID)
-  );
+  const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
+  const products = allPosts.filter((params) => params.docID === docID);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -47,9 +46,10 @@ const SinglePost = ({ match }) => {
       <Breadcrumbs aria-label='breadcrumb'>
         <Link color='inherit'>Categories</Link>
         <Typography color='textPrimary'>
-          {products[0].data.categories}
+          {products[0]?.data.categories}
         </Typography>
       </Breadcrumbs>
+
       <Grid container spacing={2} className={classes.root} justify='flex-end'>
         <Hidden smDown>
           <Box
@@ -64,7 +64,7 @@ const SinglePost = ({ match }) => {
             <TransformWrapper>
               <TransformComponent>
                 <Carousel emulateTouch={true}>
-                  {products[0].data.links.map((link, index) => (
+                  {products[0]?.data.links.map((link, index) => (
                     <img key={index} src={link} alt='product' />
                   ))}
                 </Carousel>
@@ -95,14 +95,14 @@ const SinglePost = ({ match }) => {
           </Card>
           <TabPanel value={value} index={0}>
             <ProductInformation
-              docID={products[0].docID}
-              info={products[0].data}
+              docID={products[0]?.docID}
+              info={products[0]?.data}
             />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Reviews
-              userEmail={products[0].data.author}
-              docID={products[0].docID}
+              userEmail={products[0]?.data.author}
+              docID={products[0]?.docID}
             />
           </TabPanel>
           <TabPanel value={value} index={2}>

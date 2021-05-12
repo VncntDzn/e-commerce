@@ -19,7 +19,7 @@ const customizedMiddleware = getDefaultMiddleware({
 const reducers = combineReducers({
     auth: authSlice,
     user: userSlice,
-    posts: postsSlice,
+    post: postsSlice,
     utils: utilsSlice,
     comment: commentSlice,
     order: orderSlice

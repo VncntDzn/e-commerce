@@ -59,7 +59,7 @@ const ProductInformation = ({ docID, info }) => {
               <TransformWrapper>
                 <TransformComponent>
                   <Carousel emulateTouch={true}>
-                    {info.links.map((link, index) => (
+                    {info?.links.map((link, index) => (
                       <img key={index} src={link} alt='product' />
                     ))}
                   </Carousel>
@@ -70,7 +70,7 @@ const ProductInformation = ({ docID, info }) => {
 
           <Box fontStyle='italic'>
             <FluidTypography
-              text={`> Ships from ${info.location}`}
+              text={`> Ships from ${info?.location}`}
               minSize='1rem'
               size='1rem'
               maxSize='1rem'
@@ -79,7 +79,7 @@ const ProductInformation = ({ docID, info }) => {
             />
           </Box>
           <FluidTypography
-            text={`Item by: ${info.author}`}
+            text={`Item by: ${info?.author}`}
             minSize='1rem'
             size='1rem'
             maxSize='1rem'
@@ -87,7 +87,7 @@ const ProductInformation = ({ docID, info }) => {
             fontWeight='500'
           />
           <FluidTypography
-            text={info.productName}
+            text={info?.productName}
             minSize='1rem'
             size='1.3rem'
             maxSize='1.5rem'
@@ -113,7 +113,7 @@ const ProductInformation = ({ docID, info }) => {
           </Box>
           <Box display='flex' justifyContent='space-between'>
             <FluidTypography
-              text={`₱${parseFloat(info.price).toFixed(2)}`}
+              text={`₱${parseFloat(info?.price).toFixed(2)}`}
               minSize='1rem'
               size='1.3rem'
               maxSize='1.5rem'
@@ -121,7 +121,7 @@ const ProductInformation = ({ docID, info }) => {
               fontWeight='500'
             />
             <FluidTypography
-              text={`Stock: ${info.stock}`}
+              text={`Stock: ${info?.stock}`}
               minSize='1rem'
               size='1.3rem'
               maxSize='1.5rem'
@@ -143,11 +143,11 @@ const ProductInformation = ({ docID, info }) => {
               className={classes.selectContainer}
               theme='bubble'
               readOnly={true}
-              value={info.description}
+              value={info?.description}
             />
           ) : (
             <HTMLEllipsis
-              unsafeHTML={info.description}
+              unsafeHTML={info?.description}
               maxLine='3'
               ellipsisHTML='<span style="color: blue"> &nbsp;Read more...</span> '
               basedOn='letters'

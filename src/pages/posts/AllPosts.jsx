@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import { makeStyles, Card, CardContent, Box } from '@material-ui/core';
 import { MainLayout } from 'layouts';
 import { CustomPagination } from 'components';
+import { useFetchPosts } from 'helpers';
 import PostContent from './PostContent';
 import customTheme from 'theme/customTheme';
 import UserPostHeader from './UserPostHeader';
-import Sidebar from './Sidebar';
+import FilterProducts from './FilterProducts';
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
@@ -70,8 +71,10 @@ const AllPosts = (props) => {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState(0);
   const [callbackData, setCallbackData] = useState(null);
-  const status = useSelector((state) => state.posts.status);
-
+  const status = useSelector((state) => state.post.status);
+  const { allPosts } = useFetchPosts({
+    compareTo: 'author',
+  });
   // get the current page
   const onPageChange = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
@@ -80,20 +83,27 @@ const AllPosts = (props) => {
   const offset = currentPage * PER_PAGE;
   let pageCount = 10;
 
+  let posts;
+  if (callbackData) {
+    posts = callbackData;
+  } else {
+    posts = allPosts;
+  }
   if (status === 'success') {
-    pageCount = Math.ceil(callbackData?.length / PER_PAGE);
+    pageCount = Math.ceil(posts?.length / PER_PAGE);
   } else {
     pageCount = 0;
   }
-
   return (
     <MainLayout>
       <Box className={classes.rootContainer}>
-        <Sidebar parentCallback={(allPosts) => setCallbackData(allPosts)} />
+        <FilterProducts
+          parentCallback={(allPosts) => setCallbackData(allPosts)}
+        />
         <Box>
           <Box className={classes.container}>
-            {callbackData?.length ? (
-              callbackData
+            {posts?.length ? (
+              posts
                 .slice(offset, offset + PER_PAGE)
                 .map(({ docID, data }, index) => (
                   <Box p={1} key={index}>

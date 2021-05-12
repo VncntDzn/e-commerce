@@ -3,18 +3,19 @@ import { firestore } from 'firebase/firebaseConfig';
 
 const RETRIEVE_POSTS = createAsyncThunk('retrievePosts', async () => {
     try {
-        let retrievedPosts = [];
-        const posts = await firestore
+        let retrievedProducts = [];
+        const products = await firestore
             .collection("products")
             .orderBy("timestamp")
             .get()
-        posts.forEach(post => {
-            retrievedPosts.push({
+        products.forEach(post => {
+            retrievedProducts.push({
                 docID: post.id,
                 data: post.data()
             })
         })
-        return retrievedPosts
+        console.log(retrievedProducts)
+        return retrievedProducts
     } catch (error) {
         return error
     }

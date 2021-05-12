@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { firestore } from 'firebase/firebaseConfig';
 
 const useFetchPosts = ({ compareTo = 'author', compareFrom }) => {
+    const [filteredPosts, setFilteredPosts] = useState([]);
     const [allPosts, setAllPosts] = useState([]);
-    const [authors, setAuthors] = useState([]);
+
     useEffect(() => {
         return compareFrom ? firestore
             .collection('products')
@@ -14,7 +15,7 @@ const useFetchPosts = ({ compareTo = 'author', compareFrom }) => {
                 snapshot.forEach((doc) =>
                     postsArray.push({ docID: doc.id, data: doc.data() })
                 );
-                setAllPosts(postsArray);
+                setFilteredPosts(postsArray);
             }) : firestore
                 .collection('products')
                 .orderBy('timestamp', 'desc')
@@ -23,10 +24,10 @@ const useFetchPosts = ({ compareTo = 'author', compareFrom }) => {
                     snapshot.forEach((doc) =>
                         postsArray.push({ docID: doc.id, data: doc.data() })
                     );
-                    setAllPosts(postsArray);
-                    setAuthors(postsArray)
+                    setFilteredPosts(postsArray);
+                    setAllPosts(postsArray)
                 })
     }, [compareTo, compareFrom]);
-    return { allPosts, authors }
+    return { filteredPosts, allPosts }
 }
 export default useFetchPosts

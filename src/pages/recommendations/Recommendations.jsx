@@ -42,12 +42,12 @@ const Recommendations = (props) => {
             <ListItemAvatar style={{ paddingRight: '1rem' }}>
               <Avatar
                 className={classes.avatarLarge}
-                alt={currentUser.displayName}
-                src={currentUser.photoURL}
+                alt={currentUser?.displayName || 'unknown'}
+                src={currentUser?.photoURL || 'unknown'}
               />
             </ListItemAvatar>
             <ListItemText
-              primary={`Hi ${currentUser.displayName}, this is some recommendation`}
+              primary={`Hi ${currentUser?.displayName}, this is some recommendation`}
               secondary='Recommendation'
             />
           </ListItem>

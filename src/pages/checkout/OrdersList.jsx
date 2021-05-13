@@ -9,6 +9,7 @@ import {
   IconButton,
   Card,
   Hidden,
+  Grid,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -17,6 +18,9 @@ import { DELETE_ITEM } from 'store/slices/orderSlice';
 import { useNotifications } from 'helpers';
 import DeleteIcon from '@material-ui/icons/Delete';
 import OrdersCount from './OrdersCount';
+import ReactStars from 'react-rating-stars-component';
+import { useState } from 'react';
+import TotalAmount from './TotalAmount';
 
 const useStyles = makeStyles((theme) => ({
   container: {},
@@ -40,7 +44,13 @@ const OrdersList = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { orders } = useNotifications();
+  const [rating, setRatings] = useState(0);
+  const [index, setIndex] = useState(null);
 
+  const handleRatings = (ratings, index) => {
+    setIndex(index);
+    setRatings(ratings);
+  };
   const removeItem = (docID) => {
     dispatch(DELETE_ITEM({ docID }));
   };
@@ -48,63 +58,89 @@ const OrdersList = () => {
   return (
     <>
       {orders?.length ? (
-        <>
-          {orders.map(({ docID, data }, index) => (
-            <Card key={index} style={{ margin: '1rem 0', padding: '0.5rem' }}>
-              <Box
-                display='flex'
-                flexDirection='column'
-                flexWrap='wrap'
-                width='100%'
-              >
+        <Grid container item spacing={2}>
+          <Grid item xs={12} lg={8} xl={8}>
+            {orders.map(({ docID, data }, index) => (
+              <Card key={index} style={{ margin: '1rem 0', padding: '0.5rem' }}>
                 <Box
                   display='flex'
-                  justifyContent='space-evenly'
-                  alignItems='center'
-                  height='min-content'
+                  flexDirection='column'
+                  flexWrap='wrap'
                   width='100%'
                 >
-                  <img
-                    className={classes.image}
-                    src={data.info.links[0]}
-                    alt={data.info.productName}
-                  />
-                  <Hidden xsDown>
-                    <OrdersCount data={data} docID={docID} />
-                  </Hidden>
-                  <Box>
-                    <Button
-                      color='secondary'
-                      onClick={() => {
-                        history.push(`/product/single-post/${data.docID}`);
-                      }}
+                  <Box
+                    display='flex'
+                    justifyContent='space-evenly'
+                    alignItems='center'
+                    height='min-content'
+                    width='100%'
+                  >
+                    <Box display='flex' flexDirection='column'>
+                      <img
+                        className={classes.image}
+                        src={data.info.links[0]}
+                        alt={data.info.productName}
+                      />
+                      <ReactStars
+                        count={5}
+                        edit={true}
+                        isHalf={true}
+                        size={24}
+                        activeColor='#ffd700'
+                        value={rating}
+                        onChange={(newRating) =>
+                          handleRatings(newRating, index)
+                        }
+                      />
+                    </Box>
+                    <Hidden xsDown>
+                      <OrdersCount data={data} docID={docID} />
+                    </Hidden>
+                    <Box>
+                      <Button
+                        color='secondary'
+                        onClick={() => {
+                          history.push(`/product/single-post/${data.docID}`);
+                        }}
+                        style={{ padding: 0 }}
+                      >
+                        {data.info.productName}
+                      </Button>
+                      <FluidTypography
+                        text={`₱ ${parseFloat(data.info.price).toFixed(2)}`}
+                        minSize='1rem'
+                        size='1rem'
+                        maxSize='1.2rem'
+                        fontWeight={600}
+                        color='black'
+                      />
+                    </Box>
+                    <IconButton
+                      onClick={() => removeItem(docID)}
                       style={{ padding: 0 }}
                     >
-                      {data.info.productName}
-                    </Button>
-                    <FluidTypography
-                      text={`₱ ${parseFloat(data.info.price).toFixed(2)}`}
-                      minSize='1rem'
-                      size='1rem'
-                      maxSize='1.2rem'
-                      fontWeight={600}
-                      color='black'
-                    />
+                      <DeleteIcon />
+                    </IconButton>
                   </Box>
-                  <IconButton
-                    onClick={() => removeItem(docID)}
-                    style={{ padding: 0 }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+
+                  <Hidden smUp>
+                    <OrdersCount data={data} docID={docID} />
+                  </Hidden>
                 </Box>
-                <Hidden smUp>
-                  <OrdersCount data={data} docID={docID} />
-                </Hidden>
-              </Box>
-            </Card>
-          ))}
-        </>
+              </Card>
+            ))}
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={4}
+            xl={4}
+            alignSelf='flex-start'
+            justifyContent='flex-start'
+          >
+            <TotalAmount rating={rating} index={index} />
+          </Grid>
+        </Grid>
       ) : (
         <h1>Cart is empty</h1>
       )}

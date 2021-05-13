@@ -17,7 +17,7 @@ const defaultOptions = {
     preserveAspectRatio: 'xMidYMid slice',
   },
 };
-const ConfirmationDialog = ({ open, onClose, paymentMethod }) => {
+const ConfirmationDialog = ({ address, open, onClose, paymentMethod }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
@@ -25,7 +25,8 @@ const ConfirmationDialog = ({ open, onClose, paymentMethod }) => {
         <Button color='secondary'>{paymentMethod}</Button>
       </DialogTitle>
       <DialogContent>
-        <FluidTypography text='Our driver is on the way!' />
+        <FluidTypography text={`Our driver is on the way to ${address}!`} />
+
         <Lottie options={defaultOptions} />
       </DialogContent>
       <DialogActions>

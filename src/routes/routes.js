@@ -1,4 +1,4 @@
-import { AllPost, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, NotFound } from 'pages';
+import { AllPost, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, Credits, NotFound } from 'pages';
 
 const routes = [
     {
@@ -48,6 +48,12 @@ const routes = [
         component: Orders,
         path: '/checkout',
         auth: true
+    },
+    {
+        name: 'Credits',
+        component: Credits,
+        path: '/credits',
+        auth: false
     },
     {
         name: 'Not Found',

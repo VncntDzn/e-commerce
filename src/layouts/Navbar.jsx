@@ -197,6 +197,9 @@ const Navbar = (props) => {
             <MenuItem onClick={() => history.push('/auth/signup')}>
               Signup
             </MenuItem>
+            <MenuItem onClick={() => history.push('/credits')}>
+              Credits
+            </MenuItem>
           </Box>
         ) : (
           <Box>
@@ -210,6 +213,9 @@ const Navbar = (props) => {
               My account
             </MenuItem>
             <MenuItem onClick={logout}>Signout</MenuItem>
+            <MenuItem onClick={() => history.push('/credits')}>
+              Credits
+            </MenuItem>
           </Box>
         )}
       </Menu>

@@ -41,11 +41,11 @@ const UserActivities = ({ email }) => {
   });
   // Get the user's post accordingly.
   let userPosts = [];
-  allPosts.map(({ data }) => {
-    if (user.email === data.author) {
-      userPosts.push(user.email === data.author);
-    }
-  });
+  allPosts.map(({ data }) =>
+    user.email === data.author
+      ? userPosts.push(user.email === data.author)
+      : null
+  );
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

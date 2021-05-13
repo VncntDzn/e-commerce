@@ -16,6 +16,7 @@ const CREATE_POST = createAsyncThunk('createPost', async ({ brand, authorPhoto, 
             categories,
             location,
             rating: 0,
+            sold: 0,
             brand,
             isSelected: false,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()

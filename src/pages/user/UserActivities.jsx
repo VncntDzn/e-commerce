@@ -35,8 +35,17 @@ const UserActivities = ({ email }) => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
   const [value, setValue] = useState(0);
-  const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
-  const products = allPosts.filter(({ data }) => user.email === data.author);
+  const { allPosts } = useFetchPosts({
+    compareTo: null,
+    compareFrom: null,
+  });
+  // Get the user's post accordingly.
+  let userPosts = [];
+  allPosts.map(({ data }) => {
+    if (user.email === data.author) {
+      userPosts.push(user.email === data.author);
+    }
+  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -66,7 +75,7 @@ const UserActivities = ({ email }) => {
       >
         <Tab
           icon={<PostAddRoundedIcon />}
-          label={`${products?.length} post/s`}
+          label={`${userPosts.length} post/s`}
         />
         <Tab icon={<PeopleAltRoundedIcon />} label='142 followers' />
         <Tab icon={<SupervisorAccountRoundedIcon />} label='552 following' />
@@ -77,9 +86,9 @@ const UserActivities = ({ email }) => {
           {user.email === email && (
             <div>
               <ProductPanel user={user} action='add' />
-              <UserPosts email={email} user={user} />
             </div>
           )}
+          <UserPosts email={email} user={user} />
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1} style={{ width: '100%' }}>

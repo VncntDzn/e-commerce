@@ -104,11 +104,13 @@ const ProductInformation = ({ docID, info }) => {
               count={5}
               edit={false}
               size={24}
+              isHalf={true}
+              value={info?.rating}
               activeColor='#ffd700'
             />
             &nbsp;
             <FluidTypography
-              text='932 ratings'
+              text={`${[info?.rating].length} rating/s`}
               minSize='1rem'
               size='1.1rem'
               maxSize='1.5rem'
@@ -119,7 +121,7 @@ const ProductInformation = ({ docID, info }) => {
             <h2 style={{ padding: 0, margin: 0 }}>|</h2>
             &nbsp;
             <FluidTypography
-              text='4000 sold'
+              text={`${[info?.sold].length} sold`}
               minSize='1rem'
               size='1.1rem'
               maxSize='1.5rem'

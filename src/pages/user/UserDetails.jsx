@@ -99,7 +99,7 @@ const UserDetails = ({ email }) => {
       />
       <Avatar className={classes.largeAvatar} src={info[0]?.data.authorPhoto} />
 
-      {user.email === info[0]?.data.author || user ? (
+      {user.email === info[0]?.data.author ? (
         <>
           <FluidTypography text={user.displayName} />
           <Button

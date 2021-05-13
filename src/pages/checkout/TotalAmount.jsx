@@ -27,9 +27,10 @@ const TotalAmount = ({ rating, index }) => {
 
   const handleCheckout = () => {
     setDialogOpen(!dialogOpen);
-
+    //TODO: REMOVE THE ITEMS IF CHECKOUT IS CLICKED
     dispatch(
       UPDATE_POST({
+        sold: 1,
         rating,
         documentID: orders[index].data.docID,
         brand: orders[index].data.info.brand,

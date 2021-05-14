@@ -50,14 +50,19 @@ const SearchMenu = ({ anchorEl, onClose, data }) => {
           </Box>
           {data?.length ? (
             data.map(({ productName, docID }) => (
-              <ListItem className={classes.listItem} key={docID}>
-                <Typography
-                  className={classes.product}
-                  onClick={() => history.push(`/product/single-post/${docID}`)}
-                >
-                  {productName}
-                </Typography>
-              </ListItem>
+              <div>
+                <hr />
+                <ListItem className={classes.listItem} key={docID}>
+                  <Typography
+                    className={classes.product}
+                    onClick={() =>
+                      history.push(`/product/single-post/${docID}`)
+                    }
+                  >
+                    {productName}
+                  </Typography>
+                </ListItem>
+              </div>
             ))
           ) : (
             <h2 style={{ textAlign: 'center' }}>Start typing to search</h2>

@@ -77,7 +77,7 @@ const AllPosts = (props) => {
   const [callbackData, setCallbackData] = useState(null);
   const status = useSelector((state) => state.post.status);
   const { allPosts } = useFetchPosts({
-    compareTo: 'author',
+    compareTo: null,
   });
   // get the current page
   const onPageChange = ({ selected: selectedPage }) => {
@@ -98,6 +98,7 @@ const AllPosts = (props) => {
   } else {
     pageCount = 0;
   }
+
   return (
     <MainLayout>
       <Box className={classes.rootContainer}>

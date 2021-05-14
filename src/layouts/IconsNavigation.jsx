@@ -5,13 +5,13 @@ import {
   Grid,
   TextField,
   Badge,
+  Box,
   InputAdornment,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useNotifications } from 'helpers';
+import { useNotifications, useFetchPosts } from 'helpers';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import SearchIcon from '@material-ui/icons/Search';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import AccountMenu from './menus/AccountMenu';
 import SearchMenu from './menus/SearchMenu';
@@ -21,15 +21,31 @@ const IconsNavigation = (props) => {
   const { orders } = useNotifications();
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchAnchorEl, setSearchAnchorEl] = useState(null);
+  const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
+  const [searched, setSearchedValue] = useState(null);
+
+  let productName = [];
+  allPosts.map(({ data, docID }) => {
+    return productName.push({
+      productName: data.productName.toUpperCase(),
+      docID,
+    });
+  });
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  const handleSearch = (e) => {
+    let searchedValue = productName.filter(({ productName }) =>
+      productName.includes(e.target.value.toUpperCase())
+    );
+    setSearchedValue(searchedValue);
   };
   return (
     <>
       <Grid
         container
-        xs={6}
+        xs={7}
         lg={5}
         md={5}
         item
@@ -42,6 +58,7 @@ const IconsNavigation = (props) => {
           <TextField
             label='Search E-comm'
             color='secondary'
+            onKeyUp={(e) => handleSearch(e)}
             onClick={(event) => setSearchAnchorEl(event.currentTarget)}
             InputProps={{
               endAdornment: (
@@ -72,21 +89,33 @@ const IconsNavigation = (props) => {
             </Badge>
           </IconButton>
         </Hidden>
-        <Hidden mdUp>
-          <IconButton
-            color='inherit'
-            aria-label='cart'
-            onClick={() => history.push('/checkout')}
-          >
-            <SearchIcon />
+        <Box display='flex'>
+          <Hidden mdUp>
+            <TextField
+              label='Search E-comm'
+              color='secondary'
+              onKeyUp={(e) => handleSearch(e)}
+              onClick={(event) => setSearchAnchorEl(event.currentTarget)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchOutlinedIcon />
+                  </InputAdornment>
+                ),
+              }}
+              style={{
+                paddingBottom: '0.8rem',
+              }}
+            />
+          </Hidden>
+          <IconButton color='inherit' aria-label='auth' onClick={handleClick}>
+            <AccountCircleOutlinedIcon />
           </IconButton>
-        </Hidden>
-        <IconButton color='inherit' aria-label='auth' onClick={handleClick}>
-          <AccountCircleOutlinedIcon />
-        </IconButton>
+        </Box>
       </Grid>
       <AccountMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
       <SearchMenu
+        data={searched}
         anchorEl={searchAnchorEl}
         onClose={() => setSearchAnchorEl(null)}
       />

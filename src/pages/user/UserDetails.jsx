@@ -1,23 +1,16 @@
 /**
  * User Details is intended for user information.
  * Also it is the component where you can update the user information.
+ * @param {string} [email] - the email of the chosen user.
  */
 import { useState } from 'react';
-import {
-  Button,
-  makeStyles,
-  Avatar,
-  Box,
-  Dialog,
-  DialogActions,
-  TextField,
-} from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
+import { Button, makeStyles, Avatar, Box } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import { useFetchPosts } from 'helpers';
-import { updateProfile } from 'store/slices/userSlice';
 import { FluidTypography } from 'components';
-import { firebaseStorage } from 'firebase/firebaseConfig';
 import AbstractArt from './assets/abstractart.jpg';
+import UpdateProfileDialog from './UpdateProfileDialog';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
@@ -60,35 +53,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 const UserDetails = ({ email }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState(null);
-  const [link, setLink] = useState(null);
-  const [disable, setDisable] = useState(true);
-
   const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
   const info = allPosts.filter(({ data }) => email === data.author);
-
-  const handleClose = () => {
-    setOpen(!open);
-  };
-  const handleUpload = async (files) => {
-    const storageRef = firebaseStorage.ref(`update-user/${user.email}`);
-    let picture = files.target.files[0];
-
-    try {
-      let fileRef = storageRef.child(picture.name);
-      await fileRef.put(picture);
-      setLink(await fileRef.getDownloadURL());
-      setDisable(false);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  const updateProfileDetails = () => {
-    dispatch(updateProfile({ name, link }));
-  };
 
   return (
     <Box className={classes.rootContainer}>
@@ -99,7 +67,7 @@ const UserDetails = ({ email }) => {
       />
       <Avatar className={classes.largeAvatar} src={info[0]?.data.authorPhoto} />
 
-      {user.email === info[0]?.data.author || user ? (
+      {user.email === email ? (
         <>
           <FluidTypography text={user.displayName} />
           <Button
@@ -113,48 +81,13 @@ const UserDetails = ({ email }) => {
       ) : (
         <FluidTypography text={info[0]?.data.authorDisplayName} />
       )}
-
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby='simple-dialog-title'
-        open={open}
-        fullWidth
-      >
-        <Box p={2}>
-          <TextField
-            style={{ margin: 5 }}
-            fullWidth
-            variant='outlined'
-            color='secondary'
-            label='New Full Name'
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            style={{ margin: 5 }}
-            fullWidth
-            variant='outlined'
-            color='secondary'
-            type='file'
-            inputProps={{ accept: 'image/*' }}
-            onChange={handleUpload}
-          />
-        </Box>
-        <DialogActions>
-          <Button
-            color='secondary'
-            variant='outlined'
-            onClick={updateProfileDetails}
-            disabled={disable}
-          >
-            Update
-          </Button>
-          <Button variant='outlined' onClick={handleClose}>
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <UpdateProfileDialog open={open} onClose={() => setOpen(!open)} />
     </Box>
   );
+};
+
+UpdateProfileDialog.propTypes = {
+  email: PropTypes.string.isRequired,
 };
 
 export default UserDetails;

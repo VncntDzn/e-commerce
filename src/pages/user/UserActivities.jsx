@@ -83,11 +83,7 @@ const UserActivities = ({ email }) => {
 
       <TabPanel value={value} index={0} style={{ width: '100%' }}>
         <Box className={classes.tabPanelContainer}>
-          {user.email === email && (
-            <div>
-              <ProductPanel user={user} action='add' />
-            </div>
-          )}
+          {user.email === email && <ProductPanel user={user} action='add' />}
           <UserPosts email={email} user={user} />
         </Box>
       </TabPanel>

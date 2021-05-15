@@ -4,7 +4,7 @@ import customTheme from 'theme/customTheme';
 const Footer = () => {
   const useStyles = makeStyles((theme) => ({
     container: {
-      marginTop: '40vh',
+      marginTop: '35rem',
       backgroundColor: customTheme.palette.secondary.light,
       padding: theme.spacing(3),
     },

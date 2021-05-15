@@ -10,6 +10,7 @@ const EDIT_COMMENT = createAsyncThunk('editComment', async ({ commentID, docID, 
             .doc(commentID)
             .update({
                 comment,
+                isEdited: true
             })
 
         return "success"

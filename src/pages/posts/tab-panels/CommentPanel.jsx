@@ -10,9 +10,9 @@ import { Box, Button, CardActions, TextField } from '@material-ui/core';
 import { ADD_COMMENT, EDIT_COMMENT } from 'store/slices/commentSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-const CommentPanel = ({ docID, commentID, action = 'add' }) => {
+const CommentPanel = ({ docID, commentID, prevComment, action = 'add' }) => {
   const dispatch = useDispatch();
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState(prevComment);
   const user = useSelector((state) => state.auth.user);
 
   const handleCommentReply = (e) => {
@@ -44,10 +44,13 @@ const CommentPanel = ({ docID, commentID, action = 'add' }) => {
       <TextField
         fullWidth
         label='Add a review'
+        type='text'
         variant='outlined'
         color='secondary'
         value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        onChange={(e) => {
+          setComment(e.target.value);
+        }}
       />
       <Box display='flex' justifyContent='flex-end' alignItems='flex-end'>
         <CardActions>

@@ -100,14 +100,15 @@ const ProductInformation = ({ docID, info }) => {
             fontWeight='500'
           />
           <Box display='flex' justifyContent='flex-start' alignItems='center'>
-            <ReactStars
-              count={5}
-              edit={false}
-              size={24}
-              isHalf={true}
-              value={info?.rating}
-              activeColor='#ffd700'
-            />
+            {info?.rating && (
+              <ReactStars
+                value={info?.rating}
+                count={5}
+                edit={false}
+                size={24}
+                activeColor='#ffd700'
+              />
+            )}
             &nbsp;
             <FluidTypography
               text={`${[info?.rating].length} rating/s`}

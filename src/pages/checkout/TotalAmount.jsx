@@ -28,19 +28,20 @@ const TotalAmount = ({ rating, index }) => {
   const handleCheckout = () => {
     setDialogOpen(!dialogOpen);
     //TODO: REMOVE THE ITEMS IF CHECKOUT IS CLICKED
+
     dispatch(
       UPDATE_POST({
         sold: 1,
         rating,
-        documentID: orders[index].data.docID,
-        brand: orders[index].data.info.brand,
-        categories: orders[index].data.info.categories,
-        location: orders[index].data.info.location,
-        productName: orders[index].data.info.productName,
-        stock: orders[index].data.orderCount,
-        price: orders[index].data.info.price,
-        description: orders[index].data.info.description,
-        links: orders[index].data.info.links,
+        documentID: orders[index]?.data.docID,
+        brand: orders[index]?.data.info.brand,
+        categories: orders[index]?.data.info.categories,
+        location: orders[index]?.data.info.location,
+        productName: orders[index]?.data.info.productName,
+        stock: orders[index]?.data.orderCount,
+        price: orders[index]?.data.info.price,
+        description: orders[index]?.data.info.description,
+        links: orders[index]?.data.info.links,
       })
     );
   };

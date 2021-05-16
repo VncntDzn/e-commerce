@@ -3,7 +3,6 @@ import { firestore } from 'firebase/firebaseConfig';
 import firebase from 'firebase/firebaseConfig';
 
 const UPDATE_POST = createAsyncThunk('updatePost', async ({ brand, categories, location, documentID, productName, stock, price, description, links, rating, sold }) => {
-    console.log(rating)
     try {
         await firestore.collection('products')
             .doc(documentID).update({

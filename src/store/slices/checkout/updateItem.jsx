@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 
-const UDPATE_ITEM = createAsyncThunk(
+const UPDATE_ITEM = createAsyncThunk(
   'updateItem',
   async ({ docID, orderCount }) => {
     try {
@@ -12,4 +12,4 @@ const UDPATE_ITEM = createAsyncThunk(
     }
   }
 );
-export default UDPATE_ITEM;
+export default UPDATE_ITEM;

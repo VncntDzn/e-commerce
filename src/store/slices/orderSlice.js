@@ -9,6 +9,7 @@ const initialState = {
     status: 'idle',
     error: null,
     orders: [],
+    favorites: []
 };
 
 const postsSlice = createSlice({
@@ -25,6 +26,7 @@ const postsSlice = createSlice({
         [ADD_TO_CHECKOUT.failed]: (state, action) => {
             state.status = 'failed';
         },
+
         [UPDATE_ITEM.pending]: (state, action) => {
             state.status = 'pending'
         },

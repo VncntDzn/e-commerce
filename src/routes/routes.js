@@ -1,4 +1,4 @@
-import { AllPost, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, Credits, NotFound } from 'pages';
+import { AllPost, Favorites, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, Credits, NotFound } from 'pages';
 
 const routes = [
     {
@@ -53,6 +53,12 @@ const routes = [
         name: 'Credits',
         component: Credits,
         path: '/credits',
+        auth: false
+    },
+    {
+        name: 'Favorites',
+        component: Favorites,
+        path: '/favorites',
         auth: false
     },
     {

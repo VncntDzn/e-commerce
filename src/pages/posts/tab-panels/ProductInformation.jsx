@@ -174,7 +174,25 @@ const ProductInformation = ({ docID, info }) => {
             />
           )}
 
-          <Box display='flex' justifyContent='flex-end'>
+          <Box display='flex' justifyContent='space-between'>
+            <Button
+              variant='outlined'
+              color='secondary'
+              onClick={() =>
+                dispatch(
+                  ADD_TO_CHECKOUT({
+                    docID,
+                    info,
+                    uid,
+                    type: 'favorite',
+                    buyer: currentUserDisplayName,
+                  })
+                )
+              }
+            >
+              Add to Favorites
+            </Button>
+            &nbsp;
             <Button
               variant='contained'
               color='secondary'
@@ -185,6 +203,7 @@ const ProductInformation = ({ docID, info }) => {
                     docID,
                     info,
                     uid,
+                    type: 'order',
                     buyer: currentUserDisplayName,
                   })
                 )

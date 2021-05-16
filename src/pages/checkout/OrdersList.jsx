@@ -1,6 +1,6 @@
 /**
  * OrdersList - a component for Orders Page.
- * It also, lists the orders of the current user if any.
+ * It also, lists the userOrders of the current user if any.
  */
 import {
   Box,
@@ -46,7 +46,13 @@ const OrdersList = () => {
   const { orders } = useNotifications();
   const [rating, setRatings] = useState(0);
   const [index, setIndex] = useState(null);
-
+  let userOrders = [],
+    favoriteOrders = [];
+  orders.filter(({ data, docID }) =>
+    data.type === 'order'
+      ? userOrders.push({ docID, data })
+      : favoriteOrders.push({ docID, data })
+  );
   const handleRatings = (ratings, index) => {
     setIndex(index);
     setRatings(ratings);
@@ -57,10 +63,10 @@ const OrdersList = () => {
 
   return (
     <>
-      {orders?.length ? (
+      {userOrders?.length ? (
         <Grid container item spacing={2}>
           <Grid item xs={12} lg={8} xl={8}>
-            {orders.map(({ docID, data }, index) => (
+            {userOrders.map(({ docID, data }, index) => (
               <Card key={index} style={{ margin: '1rem 0', padding: '0.5rem' }}>
                 <Box
                   display='flex'
@@ -78,8 +84,8 @@ const OrdersList = () => {
                     <Box display='flex' flexDirection='column'>
                       <img
                         className={classes.image}
-                        src={data.info.links[0]}
-                        alt={data.info.productName}
+                        src={data?.info.links[0]}
+                        alt={data?.info.productName}
                       />
                       <ReactStars
                         count={5}
@@ -100,14 +106,14 @@ const OrdersList = () => {
                       <Button
                         color='secondary'
                         onClick={() => {
-                          history.push(`/product/single-post/${data.docID}`);
+                          history.push(`/product/single-post/${data?.docID}`);
                         }}
                         style={{ padding: 0 }}
                       >
-                        {data.info.productName}
+                        {data?.info.productName}
                       </Button>
                       <FluidTypography
-                        text={`₱ ${parseFloat(data.info.price).toFixed(2)}`}
+                        text={`₱ ${parseFloat(data?.info.price).toFixed(2)}`}
                         minSize='1rem'
                         size='1rem'
                         maxSize='1.2rem'
@@ -131,12 +137,13 @@ const OrdersList = () => {
             ))}
           </Grid>
           <Grid
+            container
             item
             xs={12}
             lg={4}
             xl={4}
             alignSelf='flex-start'
-            justifyContent='flex-start'
+            justify='flex-start'
           >
             <TotalAmount rating={rating} index={index} />
           </Grid>

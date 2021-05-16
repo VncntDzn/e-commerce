@@ -8,9 +8,10 @@ import {
   Badge,
 } from '@material-ui/core';
 import { useNotifications } from 'helpers';
-import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
-import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import customTheme from 'theme/customTheme';
 
 const useStyles = makeStyles({
@@ -30,6 +31,12 @@ const BottomNav = () => {
   const location = useLocation();
   const [value, setValue] = useState(location.pathname);
   const { orders } = useNotifications();
+  const favorites = [],
+    userOrders = [];
+
+  orders.filter(({ data }) =>
+    data.type === 'favorite' ? favorites.push(data) : userOrders.push(data)
+  );
 
   return (
     <Hidden lgUp>
@@ -46,9 +53,23 @@ const BottomNav = () => {
         <BottomNavigationAction
           label='Dashboard'
           value='/all-posts'
-          icon={<DashboardOutlinedIcon />}
+          icon={<DashboardIcon />}
         />
-
+        <BottomNavigationAction
+          label='Favorites'
+          value='/favorites'
+          icon={
+            <Badge
+              color='error'
+              overlap='circle'
+              badgeContent={favorites?.length}
+              max={10}
+              style={{ paddingTop: '.5rem' }}
+            >
+              <FavoriteIcon />
+            </Badge>
+          }
+        />
         <BottomNavigationAction
           label='Cart'
           value='/checkout'
@@ -56,11 +77,11 @@ const BottomNav = () => {
             <Badge
               color='error'
               overlap='circle'
-              badgeContent={orders?.length}
+              badgeContent={userOrders?.length}
               max={10}
               style={{ paddingTop: '.5rem' }}
             >
-              <ShoppingCartOutlinedIcon />
+              <ShoppingCartIcon />
             </Badge>
           }
         />

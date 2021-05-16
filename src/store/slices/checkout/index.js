@@ -3,4 +3,4 @@ import UPDATE_ITEM from './updateItem'
 import DELETE_ITEM from './deleteItem'
 
 
-export { ADD_TO_CHECKOUT, UPDATE_ITEM, DELETE_ITEM }
+export { ADD_TO_CHECKOUT, UPDATE_ITEM, DELETE_ITEM, }

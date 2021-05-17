@@ -10,6 +10,8 @@ import { useFetchPosts } from 'helpers';
 import { FluidTypography } from 'components';
 import AbstractArt from './assets/abstractart.jpg';
 import UpdateProfileDialog from './UpdateProfileDialog';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
@@ -79,7 +81,34 @@ const UserDetails = ({ email }) => {
           </Button>
         </>
       ) : (
-        <FluidTypography text={info[0]?.data.authorDisplayName} />
+        <>
+          <FluidTypography text={info[0]?.data.authorDisplayName} />
+          <Box display='flex' justifyContent='space-between'>
+            <Button
+              variant='contained'
+              color='secondary'
+              className={classes.button}
+              style={{ color: 'white', width: '8rem', maxWidth: '10rem' }}
+              startIcon={<PersonAddIcon />}
+            >
+              Follow
+            </Button>
+            &nbsp;
+            <Button
+              variant='contained'
+              className={classes.button}
+              style={{
+                color: 'white',
+                backgroundColor: 'red',
+                maxWidth: '10rem',
+                width: '8rem',
+              }}
+              startIcon={<RemoveCircleOutlineIcon />}
+            >
+              Unfollow
+            </Button>
+          </Box>
+        </>
       )}
       <UpdateProfileDialog open={open} onClose={() => setOpen(!open)} />
     </Box>

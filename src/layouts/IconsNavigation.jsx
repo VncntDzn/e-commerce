@@ -10,11 +10,10 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useNotifications, useFetchPosts } from 'helpers';
-
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountMenu from './menus/AccountMenu';
 import SearchMenu from './menus/SearchMenu';
 
@@ -103,7 +102,7 @@ const IconsNavigation = (props) => {
               max={10}
               style={{ paddingTop: '.5rem' }}
             >
-              <FavoriteIcon />
+              <FavoriteBorderOutlinedIcon />
             </Badge>
           </IconButton>
           <IconButton
@@ -118,7 +117,7 @@ const IconsNavigation = (props) => {
               max={10}
               style={{ paddingTop: '.5rem' }}
             >
-              <ShoppingCartIcon />
+              <ShoppingCartOutlinedIcon />
             </Badge>
           </IconButton>
         </Hidden>

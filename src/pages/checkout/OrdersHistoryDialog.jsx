@@ -29,25 +29,31 @@ const OrdersHistory = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Order History</DialogTitle>
-
-      {historyOrders.map((params) => (
-        <DialogContent>
-          <ScrollArea
-            speed={1}
-            className={classes.scrollArea}
-            contentClassName='content'
-            horizontal={false}
-            smoothScrolling={true}
-          >
-            <FluidTypography text={`Buyer: ${params.buyer}`} />
-            <FluidTypography text={`Address: ${params.address}`} />
-            <FluidTypography text={`Order Count: ${params.orderCount}`} />
-            <FluidTypography text={`Payment Method: ${params.paymentMethod}`} />
-          </ScrollArea>
-          <hr />
-        </DialogContent>
-      ))}
-
+      {historyOrders?.length ? (
+        <>
+          {historyOrders.map((params) => (
+            <DialogContent>
+              <ScrollArea
+                speed={1}
+                className={classes.scrollArea}
+                contentClassName='content'
+                horizontal={false}
+                smoothScrolling={true}
+              >
+                <FluidTypography text={`Buyer: ${params.buyer}`} />
+                <FluidTypography text={`Address: ${params.address}`} />
+                <FluidTypography text={`Order Count: ${params.orderCount}`} />
+                <FluidTypography
+                  text={`Payment Method: ${params.paymentMethod}`}
+                />
+              </ScrollArea>
+              <hr />
+            </DialogContent>
+          ))}
+        </>
+      ) : (
+        <DialogTitle>You don't have any orders yet.</DialogTitle>
+      )}
       <DialogActions>
         <Button onClick={() => onClose()}>Close</Button>
       </DialogActions>

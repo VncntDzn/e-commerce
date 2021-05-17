@@ -23,11 +23,19 @@ const IconsNavigation = (props) => {
 
   const { orders } = useNotifications();
   const favorites = [],
-    userOrders = [];
+    userOrders = [],
+    historyOrders = [];
 
-  orders.filter(({ data }) =>
-    data.type === 'favorite' ? favorites.push(data) : userOrders.push(data)
-  );
+  orders.filter(({ data }) => {
+    if (data.type === 'favorite') {
+      favorites.push(data);
+    } else if (data.type === 'order') {
+      userOrders.push(data);
+    } else {
+      historyOrders.push(data);
+    }
+    return null;
+  });
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchAnchorEl, setSearchAnchorEl] = useState(null);
   const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
@@ -61,7 +69,7 @@ const IconsNavigation = (props) => {
         direction='row'
         alignContent='center'
         justify='flex-end'
-        alignItems='flex-end'
+        alignItems='center'
       >
         <Hidden smDown>
           <TextField

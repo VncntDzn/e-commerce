@@ -15,6 +15,7 @@ import { useNotifications } from 'helpers';
 import { UPDATE_POST } from 'store/slices/posts';
 import { useDispatch } from 'react-redux';
 import ConfirmationDialog from './ConfirmationDialog';
+import { UPDATE_ITEM } from 'store/slices/checkout';
 
 const TotalAmount = ({ rating, index }) => {
   const SHIPPING_FEE = 50;
@@ -27,23 +28,38 @@ const TotalAmount = ({ rating, index }) => {
 
   const handleCheckout = () => {
     setDialogOpen(!dialogOpen);
-    //TODO: REMOVE THE ITEMS IF CHECKOUT IS CLICKED
 
-    dispatch(
-      UPDATE_POST({
-        sold: 1,
-        rating,
-        documentID: orders[index]?.data.docID,
-        brand: orders[index]?.data.info.brand,
-        categories: orders[index]?.data.info.categories,
-        location: orders[index]?.data.info.location,
-        productName: orders[index]?.data.info.productName,
-        stock: orders[index]?.data.orderCount,
-        price: orders[index]?.data.info.price,
-        description: orders[index]?.data.info.description,
-        links: orders[index]?.data.info.links,
-      })
-    );
+    if (rating === 0) {
+      alert('Please add a rating');
+    } else {
+      dispatch(
+        UPDATE_POST({
+          sold: 1,
+          rating,
+          documentID: orders[index]?.data.docID,
+          brand: orders[index]?.data.info.brand,
+          categories: orders[index]?.data.info.categories,
+          location: orders[index]?.data.info.location,
+          productName: orders[index]?.data.info.productName,
+          stock: orders[index]?.data.orderCount,
+          price: orders[index]?.data.info.price,
+          description: orders[index]?.data.info.description,
+          links: orders[index]?.data.info.links,
+        })
+      );
+      setTimeout(() => {
+        dispatch(
+          UPDATE_ITEM({
+            paymentMethod,
+            address: address,
+            docID: orders[index].docID,
+            orderCount: orders[index].data.orderCount,
+            paid: true,
+            type: 'history',
+          })
+        );
+      }, 2000);
+    }
   };
   let totalAmount = 0;
   orders.map(({ data }) => {
@@ -69,6 +85,7 @@ const TotalAmount = ({ rating, index }) => {
               variant='filled'
               fullWidth
               color='secondary'
+              required
               onChange={(e) => setAddress(e.target.value)}
             />
           </Box>
@@ -161,12 +178,15 @@ const TotalAmount = ({ rating, index }) => {
               Checkout
             </Button>
           </Box>
-          <ConfirmationDialog
-            open={dialogOpen}
-            address={address}
-            onClose={() => setDialogOpen(!dialogOpen)}
-            paymentMethod={paymentMethod}
-          />
+
+          {rating === 0 ? null : (
+            <ConfirmationDialog
+              open={dialogOpen}
+              address={address}
+              onClose={() => setDialogOpen(!dialogOpen)}
+              paymentMethod={paymentMethod}
+            />
+          )}
         </>
       ) : null}
     </Box>

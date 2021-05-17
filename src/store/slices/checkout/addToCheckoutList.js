@@ -7,16 +7,19 @@ import firebase from 'firebase/firebaseConfig';
     favorite - to favorites
     history - to checkout history
 */
-const ADD_TO_CHECKOUT = createAsyncThunk('addToCheckout', async ({ type = 'order', info, buyer, uid, docID, }) => {
+const ADD_TO_CHECKOUT = createAsyncThunk('addToCheckout', async ({ paymentMethod = 'COD', address, type = 'order', info, buyer, uid, docID, paid = false }) => {
     console.log(type)
     try {
         await firestore.collection('orders').add({
+            address,
             docID,
             buyer,
             uid,
             info,
             type,
+            paid,
             orderCount: 1,
+            paymentMethod,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         return "success"

@@ -182,6 +182,7 @@ const ProductInformation = ({ docID, info }) => {
                 dispatch(
                   ADD_TO_CHECKOUT({
                     docID,
+                    address: null,
                     info,
                     uid,
                     type: 'favorite',
@@ -201,6 +202,7 @@ const ProductInformation = ({ docID, info }) => {
                 dispatch(
                   ADD_TO_CHECKOUT({
                     docID,
+                    address: null,
                     info,
                     uid,
                     type: 'order',

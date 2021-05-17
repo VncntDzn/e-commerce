@@ -32,11 +32,20 @@ const BottomNav = () => {
   const [value, setValue] = useState(location.pathname);
   const { orders } = useNotifications();
   const favorites = [],
-    userOrders = [];
+    userOrders = [],
+    historyOrders = [];
 
-  orders.filter(({ data }) =>
-    data.type === 'favorite' ? favorites.push(data) : userOrders.push(data)
-  );
+  orders.filter(({ data }) => {
+    if (data.type === 'favorite') {
+      favorites.push(data);
+    } else if (data.type === 'order') {
+      userOrders.push(data);
+    } else {
+      historyOrders.push(data);
+    }
+
+    return null;
+  });
 
   return (
     <Hidden lgUp>

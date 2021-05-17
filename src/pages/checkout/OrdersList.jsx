@@ -53,6 +53,7 @@ const OrdersList = () => {
       ? userOrders.push({ docID, data })
       : favoriteOrders.push({ docID, data })
   );
+
   const handleRatings = (ratings, index) => {
     setIndex(index);
     setRatings(ratings);

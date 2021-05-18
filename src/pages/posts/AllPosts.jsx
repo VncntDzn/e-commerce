@@ -19,11 +19,15 @@ const useStyles = makeStyles((theme) => ({
   },
   filterProductsContainer: {
     flex: 0.2,
+    [theme.breakpoints.up('lg')]: {
+      marginLeft: '-5rem',
+    },
   },
   container: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    flex: 1,
     justifyContent: 'space-evenly',
     height: 'fit-content',
   },
@@ -56,7 +60,7 @@ const AllPosts = (props) => {
   const onPageChange = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
   };
-  const PER_PAGE = 9;
+  const PER_PAGE = 6;
   const offset = currentPage * PER_PAGE;
   let pageCount = 10;
 
@@ -80,43 +84,36 @@ const AllPosts = (props) => {
             parentCallback={(allPosts) => setCallbackData(allPosts)}
           />
         </Box>
-        <Box style={{ flex: 1 }}>
-          <Box className={classes.container}>
-            {posts?.length ? (
-              posts
-                .slice(offset, offset + PER_PAGE)
-                .map(({ docID, data }, index) => (
-                  <Box p={1} key={index}>
-                    <Card raised className={classes.cardContainer}>
-                      <CardContent>
-                        <UserPostHeader
-                          docID={docID}
-                          data={data}
-                          email={data.author}
-                        />
-                        <PostContent docID={docID} data={data} />
-                      </CardContent>
-                    </Card>
-                  </Box>
-                ))
-            ) : (
-              <div>
-                <h1>Nothing to see here yet.</h1>
-              </div>
-            )}
-          </Box>
-          <Box display='flex' justifyContent='center'>
-            <CustomPagination
-              pageCount={pageCount}
-              onPageChange={onPageChange}
-            />
-          </Box>
+        <Box className={classes.container}>
+          {posts?.length ? (
+            posts
+              .slice(offset, offset + PER_PAGE)
+              .map(({ docID, data }, index) => (
+                <Box p={1} key={index}>
+                  <Card raised className={classes.cardContainer}>
+                    <CardContent>
+                      <UserPostHeader
+                        docID={docID}
+                        data={data}
+                        email={data.author}
+                      />
+                      <PostContent docID={docID} data={data} />
+                    </CardContent>
+                  </Card>
+                  <CustomPagination
+                    pageCount={pageCount}
+                    onPageChange={onPageChange}
+                  />
+                </Box>
+              ))
+          ) : (
+            <div>
+              <h1>Nothing to see here yet.</h1>
+            </div>
+          )}
         </Box>
       </Box>
     </MainLayout>
   );
 };
-
-AllPosts.propTypes = {};
-
 export default AllPosts;

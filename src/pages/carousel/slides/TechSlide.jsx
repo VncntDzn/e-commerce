@@ -63,7 +63,7 @@ const TechSlide = () => {
           <FluidTypography
             minSize='1.5rem'
             size='5vw'
-            maxSize='3rem'
+            maxSize='2rem'
             fontWeight='500'
             text='SHOP COMPUTERS & ACCESSORIES'
             variant='h1'
@@ -72,7 +72,7 @@ const TechSlide = () => {
           <FluidTypography
             minSize='1rem'
             size='4vw'
-            maxSize='1.4rem'
+            maxSize='1.2rem'
             text='Shop laptops, desktops, monitors, tablets, PC Gaming, hard drives
             and storage accessories and more.'
             color='#000000'

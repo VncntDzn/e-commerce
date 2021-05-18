@@ -1,6 +1,7 @@
 /**
  * User Details is intended for user information.
  * Also it is the component where you can update the user information.
+ * Here you can follow or unfollow the user.
  * @param {string} [email] - the email of the chosen user.
  */
 import { useState } from 'react';
@@ -96,6 +97,10 @@ const UserDetails = ({ email }) => {
         alt='abstract'
       />
       <Avatar className={classes.largeAvatar} src={info[0]?.data.authorPhoto} />
+      {/* Compare if the current user matches the email of the profile.
+       * If true, then the user can update his/her information.
+       * Else the user can follow or unfollow the other user.
+       */}
       {user.email === email ? (
         <>
           <FluidTypography text={user.displayName} />
@@ -111,6 +116,9 @@ const UserDetails = ({ email }) => {
         <>
           <FluidTypography text={info[0]?.data.authorDisplayName} />
           <Box display='flex' justifyContent='space-between'>
+            {/* Display the follow button if the user is not following the visited profile.
+             * Else show unfollow button
+             */}
             {!following[0]?.data.followed && (
               <Button
                 variant='contained'
@@ -127,26 +135,38 @@ const UserDetails = ({ email }) => {
                 Follow
               </Button>
             )}
-
             {following.map(({ data }, i) => (
               <div key={i}>
                 {data.following === email ? (
                   <Button
                     variant='contained'
                     className={classes.button}
+                    onClick={() => handleUnfollow()}
+                    startIcon={<RemoveCircleOutlineIcon />}
                     style={{
                       color: 'white',
                       backgroundColor: 'red',
                       maxWidth: '10rem',
                       width: '8rem',
                     }}
-                    onClick={() => handleUnfollow()}
-                    startIcon={<RemoveCircleOutlineIcon />}
                   >
                     Unfollow
                   </Button>
                 ) : (
-                  <h1>his</h1>
+                  <Button
+                    variant='contained'
+                    color='secondary'
+                    onClick={() => handleFollow()}
+                    className={classes.button}
+                    startIcon={<PersonAddIcon />}
+                    style={{
+                      color: 'white',
+                      width: '8rem',
+                      maxWidth: '10rem',
+                    }}
+                  >
+                    Follow
+                  </Button>
                 )}
               </div>
             ))}

@@ -60,8 +60,8 @@ const BottomNav = () => {
       >
         <BottomNavigationAction label='Feed' value='/' icon={<RssFeedIcon />} />
         <BottomNavigationAction
-          label='Dashboard'
-          value='/all-posts'
+          label='Following'
+          value='/followed-users'
           icon={<DashboardIcon />}
         />
         <BottomNavigationAction

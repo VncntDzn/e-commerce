@@ -7,11 +7,10 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import customTheme from 'theme/customTheme';
 import Macbook from './assets/macbook.png';
 import TV from './assets/tv.png';
-import Clothes from './assets/clothes.png';
-import Makeup from './assets/makeup.png';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,8 +30,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   fluid_header: {
-    fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
+    fontSize: 'clamp(1rem, 3vw, 1.3rem)',
     fontWeight: 500,
+    cursor: 'pointer',
   },
   fluid_paragraph: {
     fontSize: 'clamp(1rem, 4vw, 1.5rem)',
@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Categories = (props) => {
+  const history = useHistory();
   const classes = useStyles();
   return (
     <Grid className={classes.container}>
@@ -78,12 +79,17 @@ const Categories = (props) => {
         <Typography className={classes.fluid_header} variant='caption'>
           Shop by categories
         </Typography>
-        <Typography className={classes.fluid_header} variant='caption'>
+        <Typography
+          className={classes.fluid_header}
+          color='secondary'
+          variant='caption'
+          onClick={() => history.push('all-posts')}
+        >
           All Departments ⟶
         </Typography>
       </Box>
       <Box m={3} className={classes.containerCards}>
-        <Card onClick={() => console.log(1)}>
+        <Card onClick={() => history.push('all-posts')}>
           <CardContent className={classes.card}>
             <img className={classes.image} alt='Macbook' src={Macbook} />
             <Typography className={classes.fluid_paragraph} variant='caption'>
@@ -92,29 +98,11 @@ const Categories = (props) => {
           </CardContent>
         </Card>
         <Hidden xsDown>
-          <Card onClick={() => console.log(1)}>
+          <Card onClick={() => history.push('all-posts')}>
             <CardContent className={classes.card}>
               <img className={classes.image} alt='Macbook' src={TV} />
               <Typography className={classes.fluid_paragraph} variant='caption'>
                 Home Accessories
-              </Typography>
-            </CardContent>
-          </Card>
-        </Hidden>
-        <Hidden mdDown>
-          <Card onClick={() => console.log(1)}>
-            <CardContent className={classes.card}>
-              <img className={classes.image} alt='Macbook' src={Clothes} />
-              <Typography className={classes.fluid_paragraph} variant='caption'>
-                Computers & Accessories
-              </Typography>
-            </CardContent>
-          </Card>
-          <Card onClick={() => console.log(1)}>
-            <CardContent className={classes.card}>
-              <img className={classes.image} alt='Macbook' src={Makeup} />
-              <Typography className={classes.fluid_paragraph} variant='caption'>
-                Makeup Accessories
               </Typography>
             </CardContent>
           </Card>

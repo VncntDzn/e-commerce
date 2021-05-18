@@ -1,77 +1,30 @@
-import React from 'react';
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { MainLayout } from 'layouts';
 import { useFollowActions } from 'helpers';
 import { useSelector } from 'react-redux';
-
 import { makeStyles, Card, CardContent, Box } from '@material-ui/core';
-
-import customTheme from 'theme/customTheme';
 import { CustomPagination } from 'components';
 import UserPostHeader from '../posts/UserPostHeader';
 import PostContent from '../posts/PostContent';
 
 const useStyles = makeStyles((theme) => ({
-  rootContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    [theme.breakpoints.up('md')]: {
-      flexDirection: 'row',
-    },
-  },
-  filterProductsContainer: {
-    flex: 0.2,
-  },
   container: {
     display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: 'column',
     justifyContent: 'space-evenly',
     height: 'fit-content',
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row',
+    },
   },
   cardContainer: {
     margin: '1rem 0',
     height: 'fit-content',
-    width: '20rem',
     display: 'flex',
-    flexDirection: 'column',
     [theme.breakpoints.up('sm')]: {
-      width: '35vw',
+      width: '25vw',
+      flexDirection: 'row',
     },
-    [theme.breakpoints.up('lg')]: {
-      width: '20vw',
-    },
-    [theme.breakpoints.up('xl')]: {
-      width: '15vw',
-    },
-  },
-  pagination: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderRadius: '20px',
-    listStyle: 'none',
-    padding: '0.8rem 0',
-    paddingRight: '1rem',
-    boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '20rem',
-    },
-    [theme.breakpoints.up('md')]: {
-      width: '30rem',
-    },
-  },
-  pageStyle: {
-    cursor: 'pointer',
-  },
-  paginationActive: {
-    backgroundColor: customTheme.palette.secondary.main,
-    color: 'white',
-    padding: theme.spacing(1),
-    borderRadius: '20%',
   },
 }));
 const Followers = () => {
@@ -98,47 +51,39 @@ const Followers = () => {
 
   return (
     <MainLayout>
-      <Box className={classes.rootContainer}>
-        <Box className={classes.container}>
-          {following?.length ? (
-            following
-              .slice(offset, offset + PER_PAGE)
-              .map(({ data }, index) => (
-                <Box p={1} key={index}>
-                  {data.postsByFollowedUser.map(({ data, docID }, index) => (
-                    <Card raised className={classes.cardContainer} key={index}>
-                      <CardContent>
-                        <UserPostHeader
-                          docID={docID}
-                          data={data}
-                          email={data.author}
-                        />
-                        <PostContent docID={docID} data={data} />
-                      </CardContent>
-                    </Card>
-                  ))}
-                </Box>
-              ))
-          ) : (
-            <div>
-              <h1>Nothing to see here yet.</h1>
-            </div>
-          )}
-        </Box>
-        <Box display='flex' justifyContent='center'>
-          <CustomPagination
-            pageCount={pageCount}
-            onPageChange={onPageChange}
-            containerClassName={classes.pagination}
-            pageClassName={classes.pageStyle}
-            activeClassName={classes.paginationActive}
-          />
-        </Box>
+      {following?.length ? (
+        following.slice(offset, offset + PER_PAGE).map(({ data }, index) => (
+          <Box className={classes.container} key={index}>
+            {data.postsByFollowedUser.map(({ data, docID }, index) => (
+              <Card raised className={classes.cardContainer} key={index}>
+                <CardContent>
+                  <UserPostHeader
+                    docID={docID}
+                    data={data}
+                    email={data.author}
+                  />
+                  <PostContent docID={docID} data={data} />
+                </CardContent>
+              </Card>
+            ))}
+          </Box>
+        ))
+      ) : (
+        <div>
+          <h1>Nothing to see here yet.</h1>
+        </div>
+      )}
+      <Box display='flex' justifyContent='center'>
+        <CustomPagination
+          pageCount={pageCount}
+          onPageChange={onPageChange}
+          containerClassName={classes.pagination}
+          pageClassName={classes.pageStyle}
+          activeClassName={classes.paginationActive}
+        />
       </Box>
     </MainLayout>
   );
 };
-
-Followers.propTypes = {};
 
 export default Followers;

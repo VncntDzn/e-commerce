@@ -3,7 +3,7 @@ import { AllPost, FollowedPeoplePosts, Favorites, Home, UserProfile, Signin, Sig
 const routes = [
     {
         name: 'Home',
-        component: FollowedPeoplePosts,
+        component: Home,
         path: '/',
         auth: false
     },
@@ -50,17 +50,25 @@ const routes = [
         auth: true
     },
     {
+        name: 'Followed Posts',
+        component: FollowedPeoplePosts,
+        path: '/followed-users',
+        auth: true
+    },
+
+    {
+        name: 'Favorites',
+        component: Favorites,
+        path: '/favorites',
+        auth: true
+    },
+    {
         name: 'Credits',
         component: Credits,
         path: '/credits',
         auth: false
     },
-    {
-        name: 'Favorites',
-        component: Favorites,
-        path: '/favorites',
-        auth: false
-    },
+
     {
         name: 'Not Found',
         component: NotFound,

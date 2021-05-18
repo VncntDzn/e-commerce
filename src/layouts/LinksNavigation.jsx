@@ -70,8 +70,11 @@ const LinksNavigation = (props) => {
               </div>
             </Button>
 
-            <Button href='#' className={classes.button}>
-              <Typography variant='subtitle1'>Today's Deal</Typography>
+            <Button
+              onClick={() => history.push('/followed-users')}
+              className={classes.button}
+            >
+              <Typography variant='subtitle1'>Following</Typography>
             </Button>
             <Button className={classes.button}>
               <Typography variant='subtitle1'>Gift Cards</Typography>

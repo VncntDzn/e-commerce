@@ -1,9 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Button, makeStyles, Box } from '@material-ui/core';
+/* PeopleDetails - it lists the information of the followed users.
+ * @param {object} [data] - information of the followed users.
+ */
+import { Button, makeStyles, Box } from '@material-ui/core';
 import { FluidTypography } from 'components';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import { useFollowActions } from 'helpers';
+import { UNFOLLOW_PEOPLE } from 'store/slices/peopleSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -12,22 +16,28 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
 }));
-const FollowersDetails = ({ action = 'following', docID }) => {
+const PeopleDetails = ({ action = 'following', data }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const { following } = useFollowActions(docID);
-  let uniqueNames = [];
-  following.filter(({ data }) =>
-    uniqueNames.includes(data.following)
-      ? null
-      : uniqueNames.push(data.following)
-  );
+  const followedID = useSelector((state) => state.people.followedUserID);
+  const { following } = useFollowActions(followedID);
+
+  const handleUnfollow = () => {
+    dispatch(
+      UNFOLLOW_PEOPLE({
+        parentDocID: followedID,
+        childDocID: following[0]?.docID,
+      })
+    );
+  };
   return (
     <Box className={classes.container}>
-      {uniqueNames.map((param) => (
+      {data.map((param) => (
         <Box display='flex' py={1}>
           <FluidTypography text={param} />
           &nbsp;
           <Button
+            onClick={() => handleUnfollow()}
             variant='contained'
             className={classes.button}
             style={{
@@ -46,6 +56,8 @@ const FollowersDetails = ({ action = 'following', docID }) => {
   );
 };
 
-FollowersDetails.propTypes = {};
+PeopleDetails.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
-export default FollowersDetails;
+export default PeopleDetails;

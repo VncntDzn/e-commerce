@@ -1,3 +1,6 @@
+/* UserActivities component shows the tab which contains POST, FOLLOWERS AND FOLLOWING COMPONENTS.
+ * @param {string} [email] - the email of the chosen user.
+ */
 import { useState } from 'react';
 import {
   makeStyles,
@@ -9,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { TabPanel } from 'components';
-import { useFetchPosts, usePeople } from 'helpers';
+import { useFetchPosts, usePeople, useFollowActions } from 'helpers';
 import { ProductPanel } from 'components';
 import UserPosts from '../posts/UserPosts';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
@@ -40,8 +43,17 @@ const UserActivities = ({ email }) => {
     compareTo: null,
     compareFrom: null,
   });
+  // Get the documentID of the chosen user.
+  const { documentArray } = usePeople(email);
+  const { following } = useFollowActions(documentArray[0]?.docID);
 
-  const { documentArray } = usePeople(user.email);
+  // Get the unique names of the following.
+  let uniqueNames = [];
+  following.filter(({ data }) =>
+    uniqueNames.includes(data.following)
+      ? null
+      : uniqueNames.push(data.following)
+  );
   // Get the user's post accordingly.
   let userPosts = [];
   allPosts.map(({ data }) => {
@@ -81,10 +93,13 @@ const UserActivities = ({ email }) => {
       >
         <Tab
           icon={<PostAddRoundedIcon />}
-          label={`${userPosts.length} post/s`}
+          label={`${userPosts?.length} post/s`}
         />
         <Tab icon={<PeopleAltRoundedIcon />} label='142 followers' />
-        <Tab icon={<SupervisorAccountRoundedIcon />} label='552 following' />
+        <Tab
+          icon={<SupervisorAccountRoundedIcon />}
+          label={`${uniqueNames?.length} following`}
+        />
       </Tabs>
 
       <TabPanel value={value} index={0} style={{ width: '100%' }}>
@@ -97,7 +112,7 @@ const UserActivities = ({ email }) => {
         <PeopleDetails action='followers' />
       </TabPanel>
       <TabPanel value={value} index={2} style={{ width: '100%' }}>
-        <PeopleDetails action='following' docID={documentArray[0]?.docID} />
+        <PeopleDetails action='following' data={uniqueNames} />
       </TabPanel>
     </Box>
   );

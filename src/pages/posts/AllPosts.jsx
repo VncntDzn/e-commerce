@@ -5,7 +5,6 @@ import { MainLayout } from 'layouts';
 import { CustomPagination } from 'components';
 import { useFetchPosts } from 'helpers';
 import PostContent from './PostContent';
-import customTheme from 'theme/customTheme';
 import UserPostHeader from './UserPostHeader';
 import FilterProducts from './FilterProducts';
 
@@ -43,32 +42,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('xl')]: {
       width: '15vw',
     },
-  },
-  pagination: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderRadius: '20px',
-    listStyle: 'none',
-    padding: '0.8rem 0',
-    paddingRight: '1rem',
-    boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '20rem',
-    },
-    [theme.breakpoints.up('md')]: {
-      width: '30rem',
-    },
-  },
-  pageStyle: {
-    cursor: 'pointer',
-  },
-  paginationActive: {
-    backgroundColor: customTheme.palette.secondary.main,
-    color: 'white',
-    padding: theme.spacing(1),
-    borderRadius: '20%',
   },
 }));
 const AllPosts = (props) => {
@@ -136,9 +109,6 @@ const AllPosts = (props) => {
             <CustomPagination
               pageCount={pageCount}
               onPageChange={onPageChange}
-              containerClassName={classes.pagination}
-              pageClassName={classes.pageStyle}
-              activeClassName={classes.paginationActive}
             />
           </Box>
         </Box>

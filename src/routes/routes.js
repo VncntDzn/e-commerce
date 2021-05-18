@@ -1,9 +1,9 @@
-import { AllPost, Favorites, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, Credits, NotFound } from 'pages';
+import { AllPost, FollowedPeoplePosts, Favorites, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, Credits, NotFound } from 'pages';
 
 const routes = [
     {
         name: 'Home',
-        component: Home,
+        component: FollowedPeoplePosts,
         path: '/',
         auth: false
     },

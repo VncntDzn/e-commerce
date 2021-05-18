@@ -9,12 +9,13 @@ import {
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { TabPanel } from 'components';
-import { useFetchPosts } from 'helpers';
+import { useFetchPosts, usePeople } from 'helpers';
 import { ProductPanel } from 'components';
 import UserPosts from '../posts/UserPosts';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
 import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
+import PeopleDetails from 'pages/follow/PeopleDetails';
 
 const useStyles = makeStyles((theme) => ({
   tabPanelContainer: {
@@ -39,6 +40,8 @@ const UserActivities = ({ email }) => {
     compareTo: null,
     compareFrom: null,
   });
+
+  const { documentArray } = usePeople(user.email);
   // Get the user's post accordingly.
   let userPosts = [];
   allPosts.map(({ data }) => {
@@ -91,10 +94,10 @@ const UserActivities = ({ email }) => {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1} style={{ width: '100%' }}>
-        Item Two
+        <PeopleDetails action='followers' />
       </TabPanel>
       <TabPanel value={value} index={2} style={{ width: '100%' }}>
-        Item Three
+        <PeopleDetails action='following' docID={documentArray[0]?.docID} />
       </TabPanel>
     </Box>
   );

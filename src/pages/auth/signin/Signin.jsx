@@ -9,6 +9,7 @@ import { LOGIN_USER } from 'store/slices/authSlice';
 import customTheme from 'theme/customTheme';
 import SignupSuccessAnimated from 'lottie/SignupSuccessAnimated';
 import FailedAnimation from 'lottie/FailedAnimation';
+import { INIT_FOLLOW } from 'store/slices/people';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -50,6 +51,9 @@ const Signin = () => {
   const handleSubmission = (values) => {
     const { email, password } = values;
     dispatch(LOGIN_USER({ email, password }));
+    setTimeout(() => {
+      dispatch(INIT_FOLLOW({ email }));
+    }, 3000);
   };
 
   return (

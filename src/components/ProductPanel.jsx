@@ -199,10 +199,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
         fullWidth
       >
         <Box display='flex' justifyContent='center'>
-          <DialogTitle>
-            {categories}
-            {productTitle}
-          </DialogTitle>
+          <DialogTitle>{productTitle}</DialogTitle>
         </Box>
         <Spinner visible={visibility} />
         <CustomDialog

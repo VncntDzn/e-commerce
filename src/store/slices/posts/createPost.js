@@ -19,6 +19,7 @@ const CREATE_POST = createAsyncThunk('createPost', async ({ brand, authorPhoto, 
             sold: 0,
             brand,
             isSelected: false,
+            people: await firestore.collection('people').add({ author }),
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         return "success"

@@ -10,7 +10,7 @@ import {
 } from 'redux-persist'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
-import { authSlice, userSlice, postsSlice, commentSlice, orderSlice } from './slices'
+import { authSlice, userSlice, postsSlice, commentSlice, orderSlice, peopleSlice } from './slices'
 
 const customizedMiddleware = getDefaultMiddleware({
     serializableCheck: false,
@@ -21,13 +21,14 @@ const reducers = combineReducers({
     user: userSlice,
     post: postsSlice,
     comment: commentSlice,
-    order: orderSlice
+    order: orderSlice,
+    people: peopleSlice
 });
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth', 'user', 'posts', 'comment'],
+    whitelist: ['auth', 'user', 'posts', 'comment', 'people',],
 
 };
 

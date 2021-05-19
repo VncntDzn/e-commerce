@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: 'fit-content',
     [theme.breakpoints.up('sm')]: {
-      width: 'fit-content',
+      width: '40vw',
     },
   },
   buttonStyle: {

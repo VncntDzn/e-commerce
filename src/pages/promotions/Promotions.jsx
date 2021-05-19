@@ -1,5 +1,6 @@
 import { Box, Grid, Hidden, Button, makeStyles } from '@material-ui/core';
 import { FluidTypography } from 'components';
+import { useHistory } from 'react-router-dom';
 import customTheme from 'theme/customTheme';
 import Discount from './assets/discount.png';
 
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Promotions = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   return (
     <Grid container justify='space-between' spacing={2}>
       <Grid item container className={classes.ecomm} sm={5} md={5} lg={5}>
@@ -40,7 +42,11 @@ const Promotions = (props) => {
             maxSize='1rem'
           />
           <Box>
-            <Button variant='outlined' style={{ marginTop: '1rem' }}>
+            <Button
+              onClick={() => history.push('/vouchers')}
+              variant='outlined'
+              style={{ marginTop: '1rem' }}
+            >
               See More ⟶
             </Button>
           </Box>
@@ -72,7 +78,11 @@ const Promotions = (props) => {
             maxSize='1rem'
           />
           <Box>
-            <Button variant='outlined' style={{ marginTop: '1rem' }}>
+            <Button
+              onClick={() => history.push('/vouchers')}
+              variant='outlined'
+              style={{ marginTop: '1rem' }}
+            >
               See More ⟶
             </Button>
           </Box>

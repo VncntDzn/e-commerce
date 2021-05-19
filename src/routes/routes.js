@@ -1,4 +1,4 @@
-import { AllPost, FollowedPeoplePosts, Favorites, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, Credits, NotFound } from 'pages';
+import { AllPost, Vouchers, FollowedPeoplePosts, Favorites, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, Credits, NotFound } from 'pages';
 
 const routes = [
     {
@@ -6,6 +6,12 @@ const routes = [
         component: Home,
         path: '/',
         auth: false
+    },
+    {
+        name: 'Vouchers',
+        component: Vouchers,
+        path: '/vouchers',
+        auth: true
     },
     {
         name: 'Signin',

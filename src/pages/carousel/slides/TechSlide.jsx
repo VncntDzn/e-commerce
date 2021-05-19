@@ -117,28 +117,6 @@ const TechSlide = () => {
               <Rating name='size-small' defaultValue={4} size='small' />
             </CardContent>
           </Card>
-          <Hidden only={['xs', 'md', 'lg', 'xl']}>
-            <Card className={classes.card}>
-              <img className={classes.image} src={Headset} alt='Headset' />
-              <CardContent style={{ paddingBottom: 0 }}>
-                <FluidTypography
-                  minSize='1rem'
-                  size='4vw'
-                  maxSize='1.1rem'
-                  text='Computer & Accessories'
-                  color='#000000'
-                />
-                <FluidTypography
-                  minSize='1rem'
-                  size='4vw'
-                  maxSize='1.1rem'
-                  text='JBL T460BT Black Headphones'
-                  color='#000000'
-                />
-                <Rating name='size-small' defaultValue={4} size='small' />
-              </CardContent>
-            </Card>
-          </Hidden>
         </Box>
       </Grid>
     </Grid>

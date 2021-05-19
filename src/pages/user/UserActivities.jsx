@@ -81,7 +81,6 @@ const UserActivities = ({ email }) => {
 
   return (
     <Box className={classes.tabsContainer}>
-      <button onClick={() => console.log(documentArray)}>SAd</button>
       <Tabs
         value={value}
         centered

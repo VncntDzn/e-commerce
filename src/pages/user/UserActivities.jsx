@@ -1,3 +1,6 @@
+/* UserActivities component shows the tab which contains POST, FOLLOWERS AND FOLLOWING COMPONENTS.
+ * @param {string} [email] - the email of the chosen user.
+ */
 import { useState } from 'react';
 import {
   makeStyles,
@@ -9,12 +12,13 @@ import {
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { TabPanel } from 'components';
-import { useFetchPosts } from 'helpers';
+import { useFetchPosts, usePeople, useFollowActions } from 'helpers';
 import { ProductPanel } from 'components';
 import UserPosts from '../posts/UserPosts';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
 import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
+import PeopleDetails from 'pages/follow/PeopleDetails';
 
 const useStyles = makeStyles((theme) => ({
   tabPanelContainer: {
@@ -35,8 +39,31 @@ const UserActivities = ({ email }) => {
   const classes = useStyles();
   const user = useSelector((state) => state.auth.user);
   const [value, setValue] = useState(0);
-  const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
-  const products = allPosts.filter(({ data }) => user.email === data.author);
+  const { allPosts } = useFetchPosts({
+    compareTo: null,
+    compareFrom: null,
+  });
+  // Get the documentID of the chosen user.
+  const { documentArray } = usePeople(email);
+  const { following } = useFollowActions(documentArray[0]?.docID);
+
+  // Get the unique names of the following.
+  let uniqueNames = [];
+  following.filter(({ data }) =>
+    uniqueNames.includes(data.following)
+      ? null
+      : uniqueNames.push(data.following)
+  );
+  // Get the user's post accordingly.
+  let userPosts = [];
+  allPosts.map(({ data }) => {
+    if (user.email === data.author) {
+      userPosts.push(data);
+    } else if (email === data.author) {
+      userPosts.push(data);
+    }
+    return userPosts;
+  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -54,6 +81,7 @@ const UserActivities = ({ email }) => {
 
   return (
     <Box className={classes.tabsContainer}>
+      <button onClick={() => console.log(documentArray)}>SAd</button>
       <Tabs
         value={value}
         centered
@@ -66,27 +94,26 @@ const UserActivities = ({ email }) => {
       >
         <Tab
           icon={<PostAddRoundedIcon />}
-          label={`${products?.length} post/s`}
+          label={`${userPosts?.length} post/s`}
         />
         <Tab icon={<PeopleAltRoundedIcon />} label='142 followers' />
-        <Tab icon={<SupervisorAccountRoundedIcon />} label='552 following' />
+        <Tab
+          icon={<SupervisorAccountRoundedIcon />}
+          label={`${uniqueNames?.length} following`}
+        />
       </Tabs>
 
       <TabPanel value={value} index={0} style={{ width: '100%' }}>
         <Box className={classes.tabPanelContainer}>
-          {user.email === email && (
-            <div>
-              <ProductPanel user={user} action='add' />
-              <UserPosts email={email} user={user} />
-            </div>
-          )}
+          {user.email === email && <ProductPanel user={user} action='add' />}
+          <UserPosts email={email} user={user} />
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1} style={{ width: '100%' }}>
-        Item Two
+        <h2>To be implemented</h2>
       </TabPanel>
       <TabPanel value={value} index={2} style={{ width: '100%' }}>
-        Item Three
+        <PeopleDetails action='following' data={uniqueNames} />
       </TabPanel>
     </Box>
   );

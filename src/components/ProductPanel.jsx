@@ -4,6 +4,7 @@
  * @param {string} [action] - To transform the product panel to add or edit.
  * @param {Boolean} [openEdit] - passed from UserPosts whether to open or not the ProductPanel.
  * @param {function} [closeEdit] - function passed from UserPosts whether to open or not the ProductPanel.
+ * @param {string} [documentID] - document id of the post/product.
  */
 
 import { useState } from 'react';
@@ -149,6 +150,9 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
               authorPhoto: user.photoURL,
             })
           );
+          setTimeout(() => {
+            setOpen(!open);
+          }, 3000);
         } else if (action === 'edit') {
           dispatch(
             UPDATE_POST({
@@ -195,10 +199,7 @@ const ProductPanel = ({ user, action, openEdit, closeEdit, documentID }) => {
         fullWidth
       >
         <Box display='flex' justifyContent='center'>
-          <DialogTitle>
-            {categories}
-            {productTitle}
-          </DialogTitle>
+          <DialogTitle>{productTitle}</DialogTitle>
         </Box>
         <Spinner visible={visibility} />
         <CustomDialog

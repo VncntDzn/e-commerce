@@ -11,8 +11,12 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import FilterListSharpIcon from '@material-ui/icons/FilterListSharp';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 import Authors from './filter/Authors';
 import Brands from './filter/Brands';
+
+const animatedComponents = makeAnimated();
 
 const useStyles = makeStyles((theme) => ({
   scrollArea: {
@@ -21,13 +25,64 @@ const useStyles = makeStyles((theme) => ({
   container: {
     width: 'fit-content',
   },
+  selectContainer: {
+    margin: '0 0.5rem',
+    [theme.breakpoints.up('sm')]: {
+      width: '50vw',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '20rem',
+    },
+  },
+  dialogContainer: {
+    width: '90vw',
+    [theme.breakpoints.up('sm')]: {
+      width: 'fit-content',
+    },
+  },
 }));
+
 const FilterProducts = ({ parentCallback }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(null);
+  const [categories, setCategories] = useState(null);
 
+  let categoriesData = [
+    { label: 'Brands', value: 'brands' },
+    { label: 'Sellers', value: 'sellers' },
+  ];
   parentCallback(data);
+  let content;
+  if (categories === 'brands') {
+    content = (
+      <div>
+        <Select
+          placeholder='Select Categories'
+          closeMenuOnSelect={false}
+          components={animatedComponents}
+          options={categoriesData}
+          className={classes.selectContainer}
+          onChange={({ value }) => setCategories(value)}
+        />
+        <Brands brandsCallback={(filteredPosts) => setData(filteredPosts)} />
+      </div>
+    );
+  } else {
+    content = (
+      <div>
+        <Select
+          placeholder='Select Categories'
+          closeMenuOnSelect={false}
+          components={animatedComponents}
+          options={categoriesData}
+          className={classes.selectContainer}
+          onChange={({ value }) => setCategories(value)}
+        />
+        <Authors authorsCallback={(filteredPosts) => setData(filteredPosts)} />
+      </div>
+    );
+  }
   return (
     <Box className={classes.container}>
       <Hidden lgUp>
@@ -44,20 +99,16 @@ const FilterProducts = ({ parentCallback }) => {
           Filter
         </Button>
       </Hidden>
-      <Hidden mdDown>
-        <Authors authorsCallback={(filteredPosts) => setData(filteredPosts)} />
-        <Brands brandsCallback={(filteredPosts) => setData(filteredPosts)} />
-      </Hidden>
+      <Hidden mdDown>{content}</Hidden>
+
       <Dialog
         onClose={() => setOpen(!open)}
         aria-labelledby='simple-dialog-title'
         open={open}
       >
         <DialogTitle>Filter Options</DialogTitle>
-        <DialogContent>
-          <Authors
-            authorsCallback={(filteredPosts) => setData(filteredPosts)}
-          />
+        <DialogContent className={classes.dialogContainer}>
+          {content}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(!open)}>Close</Button>

@@ -34,7 +34,7 @@ const OrdersCount = ({ docID, data }) => {
         <TextField
           color='secondary'
           defaultValue={0}
-          value={data.orderCount}
+          value={data?.orderCount}
           type='number'
           inputProps={{
             style: {

@@ -1,23 +1,24 @@
 /**
  * User Details is intended for user information.
  * Also it is the component where you can update the user information.
+ * Here you can follow or unfollow the user.
+ * @param {string} [email] - the email of the chosen user.
  */
 import { useState } from 'react';
-import {
-  Button,
-  makeStyles,
-  Avatar,
-  Box,
-  Dialog,
-  DialogActions,
-  TextField,
-} from '@material-ui/core';
+import { Button, makeStyles, Avatar, Box } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { useFetchPosts } from 'helpers';
-import { updateProfile } from 'store/slices/userSlice';
+import { useFetchPosts, usePeople, useFollowActions } from 'helpers';
 import { FluidTypography } from 'components';
-import { firebaseStorage } from 'firebase/firebaseConfig';
+import {
+  FOLLOW_PEOPLE,
+  getUserId,
+  UNFOLLOW_PEOPLE,
+} from 'store/slices/peopleSlice';
 import AbstractArt from './assets/abstractart.jpg';
+import UpdateProfileDialog from './UpdateProfileDialog';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
@@ -59,37 +60,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const UserDetails = ({ email }) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
+  const classes = useStyles();
+  const followedID = useSelector((state) => state.people.followedUserID);
   const user = useSelector((state) => state.auth.user);
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState(null);
-  const [link, setLink] = useState(null);
-  const [disable, setDisable] = useState(true);
-
   const { allPosts } = useFetchPosts({ compareTo: null, compareFrom: null });
+  const { documentArray } = usePeople(user.email);
+  const { following } = useFollowActions(followedID);
   const info = allPosts.filter(({ data }) => email === data.author);
 
-  const handleClose = () => {
-    setOpen(!open);
+  const handleFollow = () => {
+    dispatch(
+      FOLLOW_PEOPLE({
+        docID: documentArray[0].docID,
+        user: email,
+        personToFollow: user.email,
+        postsByFollowedUser: info,
+      })
+    );
+    dispatch(getUserId({ docID: documentArray[0].docID }));
   };
-  const handleUpload = async (files) => {
-    const storageRef = firebaseStorage.ref(`update-user/${user.email}`);
-    let picture = files.target.files[0];
-
-    try {
-      let fileRef = storageRef.child(picture.name);
-      await fileRef.put(picture);
-      setLink(await fileRef.getDownloadURL());
-      setDisable(false);
-    } catch (e) {
-      console.log(e);
-    }
+  const handleUnfollow = () => {
+    dispatch(
+      UNFOLLOW_PEOPLE({
+        parentDocID: followedID,
+        childDocID: following[0]?.docID,
+      })
+    );
   };
-  const updateProfileDetails = () => {
-    dispatch(updateProfile({ name, link }));
-  };
-
   return (
     <Box className={classes.rootContainer}>
       <img
@@ -98,8 +97,11 @@ const UserDetails = ({ email }) => {
         alt='abstract'
       />
       <Avatar className={classes.largeAvatar} src={info[0]?.data.authorPhoto} />
-
-      {user.email === info[0]?.data.author || user ? (
+      {/* Compare if the current user matches the email of the profile.
+       * If true, then the user can update his/her information.
+       * Else the user can follow or unfollow the other user.
+       */}
+      {user.email === email ? (
         <>
           <FluidTypography text={user.displayName} />
           <Button
@@ -111,50 +113,73 @@ const UserDetails = ({ email }) => {
           </Button>
         </>
       ) : (
-        <FluidTypography text={info[0]?.data.authorDisplayName} />
+        <>
+          <FluidTypography text={info[0]?.data.authorDisplayName} />
+          <Box display='flex' justifyContent='space-between'>
+            {/* Display the follow button if the user is not following the visited profile.
+             * Else show unfollow button
+             */}
+            {!following[0]?.data.followed && (
+              <Button
+                variant='contained'
+                color='secondary'
+                className={classes.button}
+                startIcon={<PersonAddIcon />}
+                style={{
+                  color: 'white',
+                  width: '8rem',
+                  maxWidth: '10rem',
+                }}
+                onClick={() => handleFollow()}
+              >
+                Follow
+              </Button>
+            )}
+            {following.map(({ data }, i) => (
+              <div key={i}>
+                {data.following === email ? (
+                  <Button
+                    variant='contained'
+                    className={classes.button}
+                    onClick={() => handleUnfollow()}
+                    startIcon={<RemoveCircleOutlineIcon />}
+                    style={{
+                      color: 'white',
+                      backgroundColor: 'red',
+                      maxWidth: '10rem',
+                      width: '8rem',
+                    }}
+                  >
+                    Unfollow
+                  </Button>
+                ) : (
+                  <Button
+                    variant='contained'
+                    color='secondary'
+                    onClick={() => handleFollow()}
+                    className={classes.button}
+                    startIcon={<PersonAddIcon />}
+                    style={{
+                      color: 'white',
+                      width: '8rem',
+                      maxWidth: '10rem',
+                    }}
+                  >
+                    Follow
+                  </Button>
+                )}
+              </div>
+            ))}
+          </Box>
+        </>
       )}
-
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby='simple-dialog-title'
-        open={open}
-        fullWidth
-      >
-        <Box p={2}>
-          <TextField
-            style={{ margin: 5 }}
-            fullWidth
-            variant='outlined'
-            color='secondary'
-            label='New Full Name'
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            style={{ margin: 5 }}
-            fullWidth
-            variant='outlined'
-            color='secondary'
-            type='file'
-            inputProps={{ accept: 'image/*' }}
-            onChange={handleUpload}
-          />
-        </Box>
-        <DialogActions>
-          <Button
-            color='secondary'
-            variant='outlined'
-            onClick={updateProfileDetails}
-            disabled={disable}
-          >
-            Update
-          </Button>
-          <Button variant='outlined' onClick={handleClose}>
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <UpdateProfileDialog open={open} onClose={() => setOpen(!open)} />
     </Box>
   );
+};
+
+UpdateProfileDialog.propTypes = {
+  email: PropTypes.string.isRequired,
 };
 
 export default UserDetails;

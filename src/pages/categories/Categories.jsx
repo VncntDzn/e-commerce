@@ -7,11 +7,11 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { FluidTypography } from 'components';
 import customTheme from 'theme/customTheme';
 import Macbook from './assets/macbook.png';
 import TV from './assets/tv.png';
-import Clothes from './assets/clothes.png';
-import Makeup from './assets/makeup.png';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,11 +31,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   fluid_header: {
-    fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
+    fontSize: 'clamp(1rem, 3vw, 1.3rem)',
     fontWeight: 500,
-  },
-  fluid_paragraph: {
-    fontSize: 'clamp(1rem, 4vw, 1.5rem)',
+    cursor: 'pointer',
   },
 
   card: {
@@ -71,51 +69,52 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Categories = (props) => {
+  const history = useHistory();
   const classes = useStyles();
   return (
     <Grid className={classes.container}>
       <Box display='flex' justifyContent='space-between' mx={1}>
-        <Typography className={classes.fluid_header} variant='caption'>
-          Shop by categories
-        </Typography>
-        <Typography className={classes.fluid_header} variant='caption'>
+        <FluidTypography
+          minSize='1.2rem'
+          size='4vw'
+          maxSize='1.3rem'
+          text='Shop by categories'
+          color='#000000'
+          fontWeight={500}
+        />
+        <Typography
+          className={classes.fluid_header}
+          color='secondary'
+          variant='caption'
+          onClick={() => history.push('all-posts')}
+        >
           All Departments ⟶
         </Typography>
       </Box>
       <Box m={3} className={classes.containerCards}>
-        <Card onClick={() => console.log(1)}>
+        <Card onClick={() => history.push('all-posts')}>
           <CardContent className={classes.card}>
             <img className={classes.image} alt='Macbook' src={Macbook} />
-            <Typography className={classes.fluid_paragraph} variant='caption'>
-              Computers & Accessories
-            </Typography>
+            <FluidTypography
+              minSize='1rem'
+              size='4vw'
+              maxSize='1.2rem'
+              text='Computers & Accessories'
+              color='#000000'
+            />
           </CardContent>
         </Card>
         <Hidden xsDown>
-          <Card onClick={() => console.log(1)}>
+          <Card onClick={() => history.push('all-posts')}>
             <CardContent className={classes.card}>
               <img className={classes.image} alt='Macbook' src={TV} />
-              <Typography className={classes.fluid_paragraph} variant='caption'>
-                Home Accessories
-              </Typography>
-            </CardContent>
-          </Card>
-        </Hidden>
-        <Hidden mdDown>
-          <Card onClick={() => console.log(1)}>
-            <CardContent className={classes.card}>
-              <img className={classes.image} alt='Macbook' src={Clothes} />
-              <Typography className={classes.fluid_paragraph} variant='caption'>
-                Computers & Accessories
-              </Typography>
-            </CardContent>
-          </Card>
-          <Card onClick={() => console.log(1)}>
-            <CardContent className={classes.card}>
-              <img className={classes.image} alt='Macbook' src={Makeup} />
-              <Typography className={classes.fluid_paragraph} variant='caption'>
-                Makeup Accessories
-              </Typography>
+              <FluidTypography
+                minSize='1rem'
+                size='4vw'
+                maxSize='1.2rem'
+                text='Home Accessories'
+                color='#000000'
+              />
             </CardContent>
           </Card>
         </Hidden>
@@ -123,7 +122,5 @@ const Categories = (props) => {
     </Grid>
   );
 };
-
-Categories.propTypes = {};
 
 export default Categories;

@@ -1,17 +1,17 @@
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
-import Loader from 'react-loader-spinner';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-
 /**
  * Spinner - A wrapper for loader.
  * @param {boolean} visible - whether it will show or not the custom spinner.
  */
 
+import { makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
 const useStyles = makeStyles((theme) => ({
   container: {
     position: 'absolute',
-    backgroundColor: 'rgba(168, 184, 172, 0.3)',
+    backgroundColor: 'rgba(168, 184, 172, 0.4)',
     height: '107vh',
     width: '100vw',
     display: 'flex',
@@ -28,11 +28,11 @@ const Spinner = ({ visible }) => {
     visible && (
       <Loader
         className={classes.container}
-        type='Puff'
-        color='#00BFFF'
+        type='BallTriangle'
+        color='#FCAF18'
         height={100}
         width={100}
-        visible={visible}
+        visible={true}
       />
     )
   );

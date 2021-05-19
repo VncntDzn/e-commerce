@@ -50,7 +50,13 @@ const PostContent = ({ docID, data }) => {
         fontWeight='500'
       />
 
-      <ReactStars count={5} edit={false} size={24} activeColor='#ffd700' />
+      <ReactStars
+        value={data.rating}
+        count={5}
+        edit={false}
+        size={24}
+        activeColor='#ffd700'
+      />
       <Box display='flex' justifyContent='flex-end'>
         <Button
           variant='contained'

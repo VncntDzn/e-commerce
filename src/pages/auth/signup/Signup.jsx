@@ -78,6 +78,7 @@ const Signup = (props) => {
                     variant='contained'
                     fullWidth
                     type='submit'
+                    style={{ color: 'white' }}
                   >
                     Submit
                   </Button>

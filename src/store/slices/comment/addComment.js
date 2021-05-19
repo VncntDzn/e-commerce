@@ -14,6 +14,7 @@ const ADD_COMMENT = createAsyncThunk('addComment', async ({ email, commentorPhot
                 email,
                 comment,
                 commentorPhoto,
+                isEdited: false,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
 

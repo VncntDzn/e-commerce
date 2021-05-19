@@ -15,6 +15,9 @@ import Signup from './auth/signup/Signup';
 import SinglePost from './posts/SinglePost';
 import AllPost from './posts/AllPosts';
 import Orders from './checkout/Orders';
+import Credits from './Credits';
+import Favorites from './Favorites';
+import FollowedPeoplePosts from './follow/FollowedPeoplePosts';
 
 export {
   CarouselProvider,
@@ -34,4 +37,7 @@ export {
   SinglePost,
   AllPost,
   Orders,
+  Credits,
+  Favorites,
+  FollowedPeoplePosts,
 };

@@ -1,4 +1,4 @@
-import { AllPost, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, NotFound } from 'pages';
+import { AllPost, FollowedPeoplePosts, Favorites, Home, UserProfile, Signin, Signup, ForgotPassword, SinglePost, Orders, Credits, NotFound } from 'pages';
 
 const routes = [
     {
@@ -49,6 +49,26 @@ const routes = [
         path: '/checkout',
         auth: true
     },
+    {
+        name: 'Followed Posts',
+        component: FollowedPeoplePosts,
+        path: '/followed-users',
+        auth: true
+    },
+
+    {
+        name: 'Favorites',
+        component: Favorites,
+        path: '/favorites',
+        auth: true
+    },
+    {
+        name: 'Credits',
+        component: Credits,
+        path: '/credits',
+        auth: false
+    },
+
     {
         name: 'Not Found',
         component: NotFound,

@@ -54,9 +54,9 @@ const Comments = ({ docID }) => {
   const handleDeleteComment = () => {
     dispatch(DELETE_COMMENT({ commentID: data.id, docID }));
   };
-  const handleClick = (event, id, { email }) => {
+  const handleClick = (event, id, { email, comment }) => {
     setAnchorEl(event.currentTarget);
-    setData({ id: id, email: email });
+    setData({ id, email, comment });
   };
 
   useEffect(() => {
@@ -123,6 +123,7 @@ const Comments = ({ docID }) => {
                         onClick={(event) =>
                           handleClick(event, commentID, {
                             email: commentData.email,
+                            comment: commentData.comment,
                           })
                         }
                         style={{ padding: 0, marginRight: '-1rem' }}
@@ -132,6 +133,21 @@ const Comments = ({ docID }) => {
                     </Box>
 
                     <FluidTypography text={commentData.comment} color='black' />
+                    {commentData.isEdited && (
+                      <Box
+                        fontStyle='italic'
+                        display='flex'
+                        justifyContent='flex-end'
+                      >
+                        <FluidTypography
+                          text={`edited`}
+                          minSize='0.8rem'
+                          size='0.8rem'
+                          maxSize='0.8rem'
+                          color='black'
+                        />
+                      </Box>
+                    )}
                   </Box>
                 </Box>
               </Box>
@@ -163,7 +179,12 @@ const Comments = ({ docID }) => {
 
           <Dialog onClose={() => setEditDialog(!editDialog)} open={editDialog}>
             <DialogContent>
-              <CommentPanel action='edit' docID={docID} commentID={data.id} />
+              <CommentPanel
+                action='edit'
+                docID={docID}
+                commentID={data.id}
+                prevComment={data.comment}
+              />
             </DialogContent>
           </Dialog>
           <Button onClick={() => setReadMore(!readMore)} color='secondary'>

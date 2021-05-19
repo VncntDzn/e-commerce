@@ -15,7 +15,6 @@ const Authors = ({ authorsCallback }) => {
   const [author, setAuthor] = useState(null);
 
   const { allPosts, filteredPosts } = useFetchPosts({
-    compareTo: 'author',
     compareFrom: author,
   });
 

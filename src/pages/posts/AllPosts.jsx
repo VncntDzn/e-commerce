@@ -5,7 +5,6 @@ import { MainLayout } from 'layouts';
 import { CustomPagination } from 'components';
 import { useFetchPosts } from 'helpers';
 import PostContent from './PostContent';
-import customTheme from 'theme/customTheme';
 import UserPostHeader from './UserPostHeader';
 import FilterProducts from './FilterProducts';
 
@@ -20,11 +19,15 @@ const useStyles = makeStyles((theme) => ({
   },
   filterProductsContainer: {
     flex: 0.2,
+    [theme.breakpoints.up('lg')]: {
+      marginLeft: '-5rem',
+    },
   },
   container: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    flex: 1,
     justifyContent: 'space-evenly',
     height: 'fit-content',
   },
@@ -44,32 +47,6 @@ const useStyles = makeStyles((theme) => ({
       width: '15vw',
     },
   },
-  pagination: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderRadius: '20px',
-    listStyle: 'none',
-    padding: '0.8rem 0',
-    paddingRight: '1rem',
-    boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '20rem',
-    },
-    [theme.breakpoints.up('md')]: {
-      width: '30rem',
-    },
-  },
-  pageStyle: {
-    cursor: 'pointer',
-  },
-  paginationActive: {
-    backgroundColor: customTheme.palette.secondary.main,
-    color: 'white',
-    padding: theme.spacing(1),
-    borderRadius: '20%',
-  },
 }));
 const AllPosts = (props) => {
   const classes = useStyles();
@@ -77,13 +54,13 @@ const AllPosts = (props) => {
   const [callbackData, setCallbackData] = useState(null);
   const status = useSelector((state) => state.post.status);
   const { allPosts } = useFetchPosts({
-    compareTo: 'author',
+    compareTo: null,
   });
   // get the current page
   const onPageChange = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
   };
-  const PER_PAGE = 9;
+  const PER_PAGE = 6;
   const offset = currentPage * PER_PAGE;
   let pageCount = 10;
 
@@ -98,6 +75,7 @@ const AllPosts = (props) => {
   } else {
     pageCount = 0;
   }
+
   return (
     <MainLayout>
       <Box className={classes.rootContainer}>
@@ -106,46 +84,36 @@ const AllPosts = (props) => {
             parentCallback={(allPosts) => setCallbackData(allPosts)}
           />
         </Box>
-        <Box style={{ flex: 1 }}>
-          <Box className={classes.container}>
-            {posts?.length ? (
-              posts
-                .slice(offset, offset + PER_PAGE)
-                .map(({ docID, data }, index) => (
-                  <Box p={1} key={index}>
-                    <Card raised className={classes.cardContainer}>
-                      <CardContent>
-                        <UserPostHeader
-                          docID={docID}
-                          data={data}
-                          email={data.author}
-                        />
-                        <PostContent docID={docID} data={data} />
-                      </CardContent>
-                    </Card>
-                  </Box>
-                ))
-            ) : (
-              <div>
-                <h1>Nothing to see here yet.</h1>
-              </div>
-            )}
-          </Box>
-          <Box display='flex' justifyContent='center'>
-            <CustomPagination
-              pageCount={pageCount}
-              onPageChange={onPageChange}
-              containerClassName={classes.pagination}
-              pageClassName={classes.pageStyle}
-              activeClassName={classes.paginationActive}
-            />
-          </Box>
+        <Box className={classes.container}>
+          {posts?.length ? (
+            posts
+              .slice(offset, offset + PER_PAGE)
+              .map(({ docID, data }, index) => (
+                <Box p={1} key={index}>
+                  <Card raised className={classes.cardContainer}>
+                    <CardContent>
+                      <UserPostHeader
+                        docID={docID}
+                        data={data}
+                        email={data.author}
+                      />
+                      <PostContent docID={docID} data={data} />
+                    </CardContent>
+                  </Card>
+                  <CustomPagination
+                    pageCount={pageCount}
+                    onPageChange={onPageChange}
+                  />
+                </Box>
+              ))
+          ) : (
+            <div>
+              <h1>Nothing to see here yet.</h1>
+            </div>
+          )}
         </Box>
       </Box>
     </MainLayout>
   );
 };
-
-AllPosts.propTypes = {};
-
 export default AllPosts;

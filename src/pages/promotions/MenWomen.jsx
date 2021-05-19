@@ -6,30 +6,16 @@ import {
   Button,
   makeStyles,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import { FluidTypography } from 'components';
 import customTheme from 'theme/customTheme';
 import GirlFashion from './assets/girl_fashion.png';
 import ManFashion from './assets/man_fashion.png';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  ecommBasics: {
+  ecomm: {
     backgroundColor: customTheme.palette.secondary.light,
     margin: '1rem ',
-  },
-  ecommDeals: {
-    backgroundColor: customTheme.palette.secondary.light,
-    margin: '1rem',
-  },
-  fluid_header: {
-    fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
-    fontWeight: 500,
-  },
-  fluid_paragraph: {
-    fontSize: '1rem',
   },
   image: {
     objectFit: 'contain',
@@ -38,10 +24,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const MenWomen = (props) => {
+  const history = useHistory();
   const classes = useStyles();
   return (
-    <Grid container className={classes.container} spacing={2}>
-      <Grid item container className={classes.ecommBasics} sm={5} md={5} lg={5}>
+    <Grid container justify='space-between' spacing={2}>
+      <Grid item container className={classes.ecomm} sm={5} md={5} lg={5}>
         <Box
           mx={3}
           display='flex'
@@ -63,7 +50,11 @@ const MenWomen = (props) => {
             size='1.1rem'
           />
           <Box>
-            <Button variant='outlined' style={{ marginTop: '1rem' }}>
+            <Button
+              onClick={() => history.push('/all-posts')}
+              variant='outlined'
+              style={{ marginTop: '1rem' }}
+            >
               See More ⟶
             </Button>
           </Box>
@@ -76,7 +67,7 @@ const MenWomen = (props) => {
               justifyContent='center'
               pl={5}
             >
-              <Typography className={classes.fluid_paragraph}>
+              <Typography>
                 <blockquote cite='https://manofmany.com/fashion/mens-fashion-trends/best-fashion-quotes'>
                   “Fashion is an art. You express who you are through what
                   you’re wearing.” – Daniele Donato
@@ -93,22 +84,33 @@ const MenWomen = (props) => {
           </Box>
         </Hidden>
       </Grid>
-      <Grid item container className={classes.ecommDeals} md={5} sm={5} lg={5}>
+      <Grid item container className={classes.ecomm} md={5} sm={5} lg={5}>
         <Box
           mx={3}
           display='flex'
           flexDirection='column'
           justifyContent='center'
         >
-          <Typography className={classes.fluid_header}>
-            Comfy styles for him
-          </Typography>
-          <Typography className={classes.fluid_paragraph}>
-            Shop E-comm Fashion including clothing, shoes, jewelry, watches,
-            bags and more.
-          </Typography>
+          <FluidTypography
+            minSize='1.1rem'
+            size='1.5rem'
+            maxSize='3rem'
+            fontWeight={500}
+            text='Comfy styles for him'
+          />
+          <FluidTypography
+            minSize='1.1rem'
+            size='1.5rem'
+            maxSize='3rem'
+            text='Shop E-comm Fashion including clothing, shoes, jewelry, watches,
+            bags and more.'
+          />
           <Box>
-            <Button variant='outlined' style={{ marginTop: '1rem' }}>
+            <Button
+              onClick={() => history.push('/all-posts')}
+              variant='outlined'
+              style={{ marginTop: '1rem' }}
+            >
               See More ⟶
             </Button>
           </Box>
@@ -141,7 +143,5 @@ const MenWomen = (props) => {
     </Grid>
   );
 };
-
-MenWomen.propTypes = {};
 
 export default MenWomen;

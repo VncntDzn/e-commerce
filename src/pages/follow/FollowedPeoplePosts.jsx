@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     height: 'fit-content',
     [theme.breakpoints.up('sm')]: {
       flexDirection: 'row',
@@ -66,22 +66,19 @@ const Followers = () => {
                 </CardContent>
               </Card>
             ))}
+            <Box display='flex' justifyContent='center'>
+              <CustomPagination
+                pageCount={pageCount}
+                onPageChange={onPageChange}
+              />
+            </Box>
           </Box>
         ))
       ) : (
-        <div>
+        <Box display='flex' justifyContent='center'>
           <h1>Nothing to see here yet.</h1>
-        </div>
+        </Box>
       )}
-      <Box display='flex' justifyContent='center'>
-        <CustomPagination
-          pageCount={pageCount}
-          onPageChange={onPageChange}
-          containerClassName={classes.pagination}
-          pageClassName={classes.pageStyle}
-          activeClassName={classes.paginationActive}
-        />
-      </Box>
     </MainLayout>
   );
 };

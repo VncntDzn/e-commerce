@@ -1,4 +1,4 @@
-### `2 months to build the first version of E-comm`
+### `Exactly 2 months to build the first version of E-comm`
 
 ## Getting Started with Create React App
 

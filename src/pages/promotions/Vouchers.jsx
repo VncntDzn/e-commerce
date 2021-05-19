@@ -1,15 +1,12 @@
 import { MainLayout } from 'layouts';
 import {
   Box,
-  Grid,
-  Hidden,
   Button,
   makeStyles,
   List,
   ListItem,
   ListItemText,
 } from '@material-ui/core';
-import { FluidTypography } from 'components';
 import Sale from './assets/sales.jpg';
 
 const useStyles = makeStyles((theme) => ({

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   filterProductsContainer: {
     flex: 0.2,
     [theme.breakpoints.up('lg')]: {
-      marginLeft: '-5rem',
+      marginLeft: '-3rem',
     },
   },
   container: {
@@ -107,9 +107,9 @@ const AllPosts = (props) => {
                 </Box>
               ))
           ) : (
-            <div>
+            <Box display='flex' justifyContent='center'>
               <h1>Nothing to see here yet.</h1>
-            </div>
+            </Box>
           )}
         </Box>
       </Box>

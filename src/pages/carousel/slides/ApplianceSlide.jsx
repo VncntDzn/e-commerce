@@ -120,32 +120,6 @@ const ApplianceSlide = () => {
               <Rating name='size-small' defaultValue={4} size='small' />
             </CardContent>
           </Card>
-          <Hidden only={['xs', 'md', 'lg', 'xl']}>
-            <Card className={classes.card}>
-              <img
-                className={classes.image}
-                src={Refrigerator}
-                alt='Refrigerator'
-              />
-              <CardContent style={{ paddingBottom: 0 }}>
-                <FluidTypography
-                  minSize='1rem'
-                  size='4vw'
-                  maxSize='1.1rem'
-                  text='Appliances'
-                  color='#000000'
-                />
-                <FluidTypography
-                  minSize='1rem'
-                  size='4vw'
-                  maxSize='1.1rem'
-                  text='Samsung Refrigerator'
-                  color='#000000'
-                />
-                <Rating name='size-small' defaultValue={4} size='small' />
-              </CardContent>
-            </Card>
-          </Hidden>
         </Box>
       </Grid>
     </Grid>

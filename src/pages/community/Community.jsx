@@ -1,11 +1,5 @@
-import {
-  Button,
-  Typography,
-  Box,
-  Grid,
-  Hidden,
-  makeStyles,
-} from '@material-ui/core';
+import { Button, Box, Grid, Hidden, makeStyles } from '@material-ui/core';
+import { FluidTypography } from 'components';
 import customTheme from 'theme/customTheme';
 import HappyPeople from './assets/community.png';
 
@@ -46,17 +40,34 @@ const Community = (props) => {
         className={classes.container}
       >
         <Grid item className={classes.containerSlogan} md={6} lg={5}>
-          <Typography className={classes.fluid_paragraph}>
-            Discover E-comm
-          </Typography>
-          <Typography className={classes.fluid_header}>
-            SUBSCRIBE TO THE NEWS
-          </Typography>
-          <Typography className={classes.fluid_paragraph} variant='h6'>
-            Be aware of all discounts and bargains! Don't miss your benefit!
-          </Typography>
+          <FluidTypography
+            text='Discover E-comm'
+            minSize='1rem'
+            size='1rem'
+            maxSize='1.3rem'
+            fontWeight={500}
+          />
+          <FluidTypography
+            text='SUBSCRIBE TO THE NEWS'
+            minSize='1.3rem'
+            size='2.5rem'
+            maxSize='4rem'
+            fontWeight={700}
+            color='black'
+          />
+          <FluidTypography
+            text={`Be aware of all discounts and bargains! Don't miss your benefit!`}
+            minSize='1rem'
+            size='1.5rem'
+            maxSize='1.9rem'
+          />
           <Box width={'100%'} mt={2}>
-            <Button variant='outlined'>Subscribe</Button>
+            <Button
+              variant='outlined'
+              onClick={() => alert('To be implemented')}
+            >
+              Subscribe
+            </Button>
           </Box>
         </Grid>
 

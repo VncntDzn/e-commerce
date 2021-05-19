@@ -74,16 +74,19 @@ const UserPosts = ({ email }) => {
                   <PostContent docID={docID} data={data} />
                 </CardContent>
               </Card>
+              <Box display='flex' justifyContent='center'>
+                <CustomPagination
+                  pageCount={pageCount}
+                  onPageChange={onPageChange}
+                />
+              </Box>
             </Box>
           ))
         ) : (
-          <div>
+          <Box display='flex' justifyContent='center'>
             <h1>Nothing to see here yet.</h1>
-          </div>
+          </Box>
         )}
-      </Box>
-      <Box display='flex' justifyContent='center'>
-        <CustomPagination pageCount={pageCount} onPageChange={onPageChange} />
       </Box>
     </Box>
   );

@@ -18,9 +18,11 @@ import Orders from './checkout/Orders';
 import Credits from './Credits';
 import Favorites from './Favorites';
 import FollowedPeoplePosts from './follow/FollowedPeoplePosts';
+import Vouchers from './promotions/Vouchers';
 
 export {
   CarouselProvider,
+  Vouchers,
   Recommendations,
   Categories,
   ShippingBanner,

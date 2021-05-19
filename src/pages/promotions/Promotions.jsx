@@ -1,60 +1,52 @@
-import {
-  Typography,
-  Box,
-  Grid,
-  Hidden,
-  Button,
-  makeStyles,
-} from '@material-ui/core';
+import { Box, Grid, Hidden, Button, makeStyles } from '@material-ui/core';
+import { FluidTypography } from 'components';
+import { useHistory } from 'react-router-dom';
 import customTheme from 'theme/customTheme';
 import Discount from './assets/discount.png';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  ecommBasics: {
+  ecomm: {
     backgroundColor: customTheme.palette.secondary.light,
     margin: '1rem ',
   },
-  ecommDeals: {
-    backgroundColor: customTheme.palette.secondary.light,
-    margin: '1rem',
-  },
-  fluid_header: {
-    fontSize: 'clamp(1.2rem, 3vw, 1.7rem)',
-    fontWeight: 500,
-  },
-  fluid_paragraph: {
-    fontSize: '1rem',
-  },
   image: {
     objectFit: 'contain',
-
     height: '10rem',
     width: '10rem',
   },
 }));
 const Promotions = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   return (
-    <Grid container className={classes.container} spacing={2}>
-      <Grid item container className={classes.ecommBasics} sm={5} md={5} lg={5}>
+    <Grid container justify='space-between' spacing={2}>
+      <Grid item container className={classes.ecomm} sm={5} md={5} lg={5}>
         <Box
           mx={3}
           display='flex'
           flexDirection='column'
           justifyContent='center'
         >
-          <Typography className={classes.fluid_header}>
-            E-comm Basics
-          </Typography>
-          <Typography className={classes.fluid_paragraph}>
-            Shop Today's Deals, Lightning Deals, and limited-time discounts
-          </Typography>
+          <FluidTypography
+            text='E-comm Basics'
+            minSize='1.1rem'
+            size='1.5rem'
+            maxSize='3rem'
+            fontWeight={500}
+          />
+
+          <FluidTypography
+            text={`Shop Today's Deals, Lightning Deals, and limited-time discounts`}
+            minSize='1rem'
+            size='1.2rem'
+            maxSize='1rem'
+          />
           <Box>
-            <Button variant='outlined' style={{ marginTop: '1rem' }}>
+            <Button
+              onClick={() => history.push('/vouchers')}
+              variant='outlined'
+              style={{ marginTop: '1rem' }}
+            >
               See More ⟶
             </Button>
           </Box>
@@ -65,21 +57,32 @@ const Promotions = (props) => {
           </Box>
         </Hidden>
       </Grid>
-      <Grid item container className={classes.ecommDeals} md={5} sm={5} lg={5}>
+      <Grid item container className={classes.ecomm} md={5} sm={5} lg={5}>
         <Box
           mx={3}
           display='flex'
           flexDirection='column'
           justifyContent='center'
         >
-          <Typography className={classes.fluid_header}>
-            Deals & Promotions
-          </Typography>
-          <Typography className={classes.fluid_paragraph}>
-            Shop Today's Deals, Lightning Deals, and limited-time discounts
-          </Typography>
+          <FluidTypography
+            text='Deals & Promotions'
+            minSize='1.1rem'
+            size='1.5rem'
+            maxSize='3rem'
+            fontWeight={500}
+          />
+          <FluidTypography
+            text={`Shop Today's Deals, Lightning Deals, and limited-time discounts`}
+            minSize='1rem'
+            size='1.2rem'
+            maxSize='1rem'
+          />
           <Box>
-            <Button variant='outlined' style={{ marginTop: '1rem' }}>
+            <Button
+              onClick={() => history.push('/vouchers')}
+              variant='outlined'
+              style={{ marginTop: '1rem' }}
+            >
               See More ⟶
             </Button>
           </Box>
@@ -93,7 +96,5 @@ const Promotions = (props) => {
     </Grid>
   );
 };
-
-Promotions.propTypes = {};
 
 export default Promotions;

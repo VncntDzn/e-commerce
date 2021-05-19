@@ -13,7 +13,7 @@ const AccountMenu = ({ anchorEl, onClose }) => {
   const user = useSelector((state) => state.auth.user);
 
   const allPostUser = allPosts.filter(
-    ({ data }) => data.author === currentUser.email
+    ({ data }) => data.author === currentUser?.email
   );
   const logout = () => {
     dispatch(LOGOUT_USER());

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { firestore } from 'firebase/firebaseConfig';
 import firebase from 'firebase/firebaseConfig';
 
-const INIT_FOLLOW = createAsyncThunk('initFollow', async ({ email, followers = null, personToFollow = null }) => {
+const INIT_FOLLOW = createAsyncThunk('initFollow', async ({ email, }) => {
     try {
         await firestore.collection('people')
             .add({

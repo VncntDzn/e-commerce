@@ -2,18 +2,26 @@
  * @param {object} [data] - information of the followed users.
  */
 import { Button, makeStyles, Box } from '@material-ui/core';
-import { FluidTypography } from 'components';
 import { useFollowActions } from 'helpers';
 import { UNFOLLOW_PEOPLE } from 'store/slices/peopleSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 const useStyles = makeStyles((theme) => ({
   container: {
-    border: '3px solid red',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  detailsContainer: {
+    [theme.breakpoints.up('md')]: {
+      width: '60vw',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '50vw',
+    },
   },
 }));
 const PeopleDetails = ({ action = 'following', data }) => {
@@ -31,10 +39,17 @@ const PeopleDetails = ({ action = 'following', data }) => {
     );
   };
   return (
-    <Box className={classes.container}>
+    <Box>
       {data.map((param) => (
-        <Box display='flex' py={1}>
-          <FluidTypography text={param} />
+        <Box
+          display='flex'
+          py={1}
+          justifyContent='space-between'
+          className={classes.detailsContainer}
+        >
+          <Button color='secondary' startIcon={<AccountBoxIcon />}>
+            {param}
+          </Button>
           &nbsp;
           <Button
             onClick={() => handleUnfollow()}

@@ -19,7 +19,6 @@ import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
 import PostAddRoundedIcon from '@material-ui/icons/PostAddRounded';
 import PeopleDetails from 'pages/follow/PeopleDetails';
-import Followers from 'pages/follow/Followers';
 
 const useStyles = makeStyles((theme) => ({
   tabPanelContainer: {
@@ -82,6 +81,7 @@ const UserActivities = ({ email }) => {
 
   return (
     <Box className={classes.tabsContainer}>
+      <button onClick={() => console.log(documentArray)}>SAd</button>
       <Tabs
         value={value}
         centered
@@ -110,7 +110,7 @@ const UserActivities = ({ email }) => {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1} style={{ width: '100%' }}>
-        <Followers />
+        <h2>To be implemented</h2>
       </TabPanel>
       <TabPanel value={value} index={2} style={{ width: '100%' }}>
         <PeopleDetails action='following' data={uniqueNames} />

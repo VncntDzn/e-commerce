@@ -14,8 +14,8 @@ import {
 import { useNotifications } from 'helpers';
 import { UPDATE_POST } from 'store/slices/posts';
 import { useDispatch } from 'react-redux';
-import ConfirmationDialog from './ConfirmationDialog';
 import { UPDATE_ITEM } from 'store/slices/checkout';
+import ConfirmationDialog from './ConfirmationDialog';
 
 const TotalAmount = ({ rating, index }) => {
   const SHIPPING_FEE = 50;

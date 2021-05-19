@@ -8,6 +8,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { FluidTypography } from 'components';
 import customTheme from 'theme/customTheme';
 import Macbook from './assets/macbook.png';
 import TV from './assets/tv.png';
@@ -33,9 +34,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 'clamp(1rem, 3vw, 1.3rem)',
     fontWeight: 500,
     cursor: 'pointer',
-  },
-  fluid_paragraph: {
-    fontSize: 'clamp(1rem, 4vw, 1.5rem)',
   },
 
   card: {
@@ -76,9 +74,14 @@ const Categories = (props) => {
   return (
     <Grid className={classes.container}>
       <Box display='flex' justifyContent='space-between' mx={1}>
-        <Typography className={classes.fluid_header} variant='caption'>
-          Shop by categories
-        </Typography>
+        <FluidTypography
+          minSize='1.2rem'
+          size='4vw'
+          maxSize='1.3rem'
+          text='Shop by categories'
+          color='#000000'
+          fontWeight={500}
+        />
         <Typography
           className={classes.fluid_header}
           color='secondary'
@@ -92,18 +95,26 @@ const Categories = (props) => {
         <Card onClick={() => history.push('all-posts')}>
           <CardContent className={classes.card}>
             <img className={classes.image} alt='Macbook' src={Macbook} />
-            <Typography className={classes.fluid_paragraph} variant='caption'>
-              Computers & Accessories
-            </Typography>
+            <FluidTypography
+              minSize='1rem'
+              size='4vw'
+              maxSize='1.2rem'
+              text='Computers & Accessories'
+              color='#000000'
+            />
           </CardContent>
         </Card>
         <Hidden xsDown>
           <Card onClick={() => history.push('all-posts')}>
             <CardContent className={classes.card}>
               <img className={classes.image} alt='Macbook' src={TV} />
-              <Typography className={classes.fluid_paragraph} variant='caption'>
-                Home Accessories
-              </Typography>
+              <FluidTypography
+                minSize='1rem'
+                size='4vw'
+                maxSize='1.2rem'
+                text='Home Accessories'
+                color='#000000'
+              />
             </CardContent>
           </Card>
         </Hidden>
@@ -111,7 +122,5 @@ const Categories = (props) => {
     </Grid>
   );
 };
-
-Categories.propTypes = {};
 
 export default Categories;

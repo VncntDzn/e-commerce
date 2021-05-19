@@ -26,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 'clamp(1rem, 4vw, 1.3rem)',
     color: `${customTheme.palette.tertiary.dark}`,
   },
+  imageContainer: {
+    objectFit: 'contain',
+    height: 'fit-content',
+    width: '31rem',
+  },
 }));
 const Community = (props) => {
   const classes = useStyles();
@@ -57,7 +62,11 @@ const Community = (props) => {
 
         <Hidden smDown>
           <Grid lg={3} item md={6}>
-            <img src={HappyPeople} alt='Puppy inside a box' />
+            <img
+              src={HappyPeople}
+              className={classes.imageContainer}
+              alt='People'
+            />
           </Grid>
         </Hidden>
       </Box>

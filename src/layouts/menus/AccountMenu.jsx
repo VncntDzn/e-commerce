@@ -19,7 +19,6 @@ const AccountMenu = ({ anchorEl, onClose }) => {
     dispatch(LOGOUT_USER());
     history.push('/');
   };
-
   return (
     <Router>
       <Menu
@@ -45,7 +44,7 @@ const AccountMenu = ({ anchorEl, onClose }) => {
             <MenuItem
               onClick={() =>
                 history.push(
-                  `/profile/${allPostUser[0]?.data.author || user.email}`
+                  `/profile/${allPostUser[0]?.data?.author || user.email}`
                 )
               }
             >

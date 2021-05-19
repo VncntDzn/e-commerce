@@ -12,6 +12,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     placeContent: 'center',
   },
+  imageContainer: {
+    objectFit: 'contain',
+    height: 'fit-content',
+    width: '31rem',
+  },
 }));
 
 const ShippingBanner = (props) => {
@@ -55,7 +60,11 @@ const ShippingBanner = (props) => {
 
         <Hidden smDown>
           <Grid lg={3} item md={6}>
-            <img src={puppy} alt='Puppy inside a box' />
+            <img
+              src={puppy}
+              className={classes.imageContainer}
+              alt='Puppy inside a box'
+            />
           </Grid>
         </Hidden>
       </Box>

@@ -1,15 +1,14 @@
 import {
   Card,
   CardContent,
-  CardActions,
   Button,
-  Typography,
   Box,
   Grid,
   Hidden,
   makeStyles,
 } from '@material-ui/core';
 import { FluidTypography } from 'components';
+import { useHistory } from 'react-router-dom';
 import Rating from '@material-ui/lab/Rating';
 import customTheme from 'theme/customTheme';
 import Headset from '../assets/headset.png';
@@ -55,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const TechSlide = () => {
+  const history = useHistory();
   const classes = useStyles();
   return (
     <Grid className={classes.container} container direction='row'>
@@ -78,7 +78,12 @@ const TechSlide = () => {
             color='#000000'
           />
           <Box mt={1}>
-            <Button variant='outlined'>View More</Button>
+            <Button
+              variant='outlined'
+              onClick={() => history.push('/all-posts')}
+            >
+              View More
+            </Button>
           </Box>
         </Box>
       </Grid>
@@ -95,25 +100,43 @@ const TechSlide = () => {
               <img className={classes.image} src={Headset} alt='Headset' />
             </Hidden>
             <CardContent style={{ paddingBottom: 0 }}>
-              <Typography>Computer & Accessories</Typography>
-              <Typography>JBL T460BT Black Headphones</Typography>
+              <FluidTypography
+                minSize='1rem'
+                size='4vw'
+                maxSize='1.1rem'
+                text='Computer & Accessories'
+                color='#000000'
+              />
+              <FluidTypography
+                minSize='1rem'
+                size='4vw'
+                maxSize='1.1rem'
+                text='JBL T460BT Black Headphones'
+                color='#000000'
+              />
               <Rating name='size-small' defaultValue={4} size='small' />
             </CardContent>
-            <CardActions style={{ padding: 0 }}>
-              <Button variant='text'>View More</Button>
-            </CardActions>
           </Card>
           <Hidden only={['xs', 'md', 'lg', 'xl']}>
             <Card className={classes.card}>
               <img className={classes.image} src={Headset} alt='Headset' />
               <CardContent style={{ paddingBottom: 0 }}>
-                <Typography>Computer & Accessories</Typography>
-                <Typography>JBL T460BT Black Headphones</Typography>
+                <FluidTypography
+                  minSize='1rem'
+                  size='4vw'
+                  maxSize='1.1rem'
+                  text='Computer & Accessories'
+                  color='#000000'
+                />
+                <FluidTypography
+                  minSize='1rem'
+                  size='4vw'
+                  maxSize='1.1rem'
+                  text='JBL T460BT Black Headphones'
+                  color='#000000'
+                />
                 <Rating name='size-small' defaultValue={4} size='small' />
               </CardContent>
-              <CardActions style={{ padding: 0 }}>
-                <Button variant='text'>View More</Button>
-              </CardActions>
             </Card>
           </Hidden>
         </Box>

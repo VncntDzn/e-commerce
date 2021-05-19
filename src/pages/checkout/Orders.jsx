@@ -1,5 +1,5 @@
 /**
- * Orders Page - the root file for orders.
+ * Orders Page - the root file for orders component.
  */
 import { useState } from 'react';
 import { MainLayout } from 'layouts';

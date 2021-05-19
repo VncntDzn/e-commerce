@@ -1,6 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ScrollArea from 'react-scrollbar';
+/**
+ * Orders history.
+ * @param {Boolean} [open] - whether to open or not the dialog.
+ * @param {Function} [onClose] - to close the dialog.
+ */
 import {
   Button,
   Dialog,
@@ -11,6 +13,8 @@ import {
 } from '@material-ui/core';
 import { useNotifications } from 'helpers';
 import { FluidTypography } from 'components';
+import ScrollArea from 'react-scrollbar';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -61,6 +65,9 @@ const OrdersHistory = ({ open, onClose }) => {
   );
 };
 
-OrdersHistory.propTypes = {};
+OrdersHistory.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default OrdersHistory;
